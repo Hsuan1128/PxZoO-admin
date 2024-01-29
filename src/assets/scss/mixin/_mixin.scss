@@ -1,0 +1,13 @@
+@mixin defaultMemSize() {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 40vw;
+}
+
+@mixin defaultMemH2() {
+  color: $primaryColorGreen;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,166 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans+TC:wght@400;500;700;900&family=Press+Start+2P&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+//專題字體
+$font: "Montserrat", "Noto Sans TC";
+$decorateFont: "Press Start 2P", "Montserrat";
+//PC
+$pcFontH2: clamp(1.5rem, 2.5vw, 2.3rem);
+$pcFontH3: clamp(1.1rem, 1.5vw, 1.4rem);
+$pcFontH4: clamp(0.9rem, 1.2vw, 1.1rem);
+$pcFontH5: clamp(0.8rem, 1vw, 0.9rem);
+
+//Mobile
+$phFontH2: clamp(1.5rem, 2.5vw, 2.3rem);
+$phFontH3: clamp(1.2rem, 1.6vw, 1.5rem);
+$phFontH4: clamp(1rem, 1.3vw, 1.2rem);
+$phFontH5: clamp(0.9rem, 1vw, 1rem);
+
+//----pc文字----
+
+//大標
+.pcBigTitle {
+  font-size: $pcFontH2;
+  font-family: $font;
+  font-weight: 900;
+  line-height: 150%;
+  @media (width <= 768px) {
+    //ph尺寸
+    font-size: $phFontH2;
+  }
+}
+
+//小標
+.pcSmTitle {
+  font-size: $pcFontH3;
+  font-family: $font;
+  font-weight: 700;
+  line-height: 150%;
+  @media (width <= 768px) {
+    //ph尺寸
+    font-size: $phFontH3;
+  }
+}
+//內文
+.pcInnerText {
+  font-size: $pcFontH4;
+  font-family: $font;
+  font-weight: 500;
+  line-height: 150%;
+  @media (width <= 768px) {
+    //ph尺寸
+    font-size: $phFontH4;
+    line-height: 180%;
+  }
+}
+//註解
+.pcMarkText {
+  font-size: $pcFontH5;
+  font-family: $font;
+  font-weight: 500;
+  line-height: 150%;
+  @media (width <= 768px) {
+    //ph尺寸
+    font-size: $phFontH5;
+  }
+}
+
+//----手機文字----
+
+//大標
+.phBigTitle {
+  font-size: $phFontH2;
+  font-family: $font;
+  font-weight: 900;
+  line-height: 150%;
+}
+
+//小標
+.phSmTitle {
+  font-size: $phFontH3;
+  font-family: $font;
+  font-weight: 700;
+  line-height: 150%;
+}
+//內文
+.phInnerText {
+  font-size: $phFontH4;
+  font-family: $font;
+  font-weight: 500;
+  line-height: 180%;
+}
+//註解
+.phMarkText {
+  font-size: $phFontH5;
+  font-family: $font;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+//--------------裝飾文字--------------
+
+//----pc裝飾文字----
+.pcDecBigTitle {
+  font-size: $pcFontH2;
+  font-family: $decorateFont;
+  font-weight: 900;
+  line-height: 150%;
+  @media (width <= 768px) {
+    //ph尺寸
+    font-size: $phFontH2;
+  }
+}
+
+//小標
+.pcDecSmTitle {
+  font-size: $pcFontH3;
+  font-family: $decorateFont;
+  font-weight: 700;
+  line-height: 150%;
+}
+//內文
+.pcDecInnerText {
+  font-size: $pcFontH4;
+  font-family: $decorateFont;
+  font-weight: 500;
+  line-height: 150%;
+}
+//註解
+.pcDecMarkText {
+  font-size: $pcFontH5;
+  font-family: $decorateFont;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+//----手機裝飾文字----
+
+//大標
+.phDecBigTitle {
+  font-size: $phFontH2;
+  font-family: $decorateFont;
+  font-weight: 900;
+  line-height: 150%;
+}
+
+//小標
+.phDecSmTitle {
+  font-size: $phFontH3;
+  font-family: $decorateFont;
+  font-weight: 700;
+  line-height: 150%;
+}
+//內文
+.phDecInnerText {
+  font-size: $phFontH4;
+  font-family: $decorateFont;
+  font-weight: 500;
+  line-height: 150%;
+}
+//註解
+.phDecMarkText {
+  font-size: $phFontH5;
+  font-family: $decorateFont;
+  font-weight: 500;
+  line-height: 150%;
+}

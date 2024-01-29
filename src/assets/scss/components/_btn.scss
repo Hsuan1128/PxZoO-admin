@@ -1,0 +1,307 @@
+$Sidebar_icon_top: -60px;
+$Sidebar_icon_rigth: 70px;
+//篩選按鈕側邊欄html結構
+//側邊欄主架構
+// <aside class="Sidebar">
+//側邊欄上方動物icon
+//     <img class="Sidebar_icon" src="@/assets/images/park/pk_Sidebar_icon_crab.png" alt="螃蟹icon">
+
+//ul裡面的li是主要存放按鈕的區塊
+//     <ul class="Sidebar_filter_btns">
+//         <li class="filter_btn_item">
+//         <img src="@/assets/images/park/pk_filter_icon_Overview.svg" alt="篩選icon">
+//         <p class="pcInnerText">園區總攬</p>
+//         </li>
+
+//導引按鈕(我還沒讓它收起來時可以自動變icon)
+//     <div class="Sidebar_guide">
+//         <img  src="@/assets/images/park/pk_Sidebar_guide_icon.svg" alt="導引icon">
+//     </div>
+// </aside>
+
+//篩選按鈕側邊欄scss
+.Sidebar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  position: absolute;
+  top: 24.7%;
+  left: -14%;
+  transition: 0.3s;
+  @media (max-width:768px) {
+    width: 300px;
+    height: 80px;
+    top: 50%;
+    left: -29.5%;
+  }
+  @media (max-width:480px) {
+    width: 163px;
+    height: 80px;
+    top: 25%;
+    left: -29.5%;
+  }
+  &:hover {
+    @media (min-width:1280px) {
+      transition: 0.3s;
+      left: 0;
+    }
+  }
+  .Sidebar_icon {
+    position: absolute;
+    top: $Sidebar_icon_top;
+    right: $Sidebar_icon_rigth;
+    width: 4.2vw;
+    @media (max-width: 1746px) {
+      top: $Sidebar_icon_top * 0.91;
+      right: $Sidebar_icon_rigth * 0.91;
+    }
+    @media (max-width: 1536px) {
+      top: $Sidebar_icon_top * 0.8;
+      right: $Sidebar_icon_rigth * 0.8;
+    }
+    @media (max-width: 1280px) {
+      top: $Sidebar_icon_top * 0.66;
+      right: $Sidebar_icon_rigth * 0.66;
+    }
+    @media (max-width: 768px) {
+      width: 12vw;
+      top: -22vh;
+      right: 13vw;
+    }
+    @media (max-width: 480px) {
+      width: 13vw;
+      top: -9vh;
+      right: 14vw;
+    }
+  }
+  .Sidebar_filter_btns {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    .filter_btn_item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 19px;
+      width: 13.6vw;
+      height: 6.2vh;
+      background-color: $bgColorSecGray;
+      color: $mainTextColor;
+      @media (max-width:768px) {
+        width: 200px;
+        height: 12vh;
+        gap: 10px;
+      }
+      @media (max-width:480px) {
+        justify-content: start;
+        width: 110px;
+        height: 6vh;
+        gap: 10px;
+      }
+      &:hover {
+        @media (min-width:1280px) {
+          cursor: pointer;
+          color: $primaryColorGreen;
+        }
+      }
+      img {
+        width: 1.47vw;
+        height: 2.5vh;
+        @media (max-width:768px) {
+          width: 4vw;
+          height: 4vh;
+        }
+        @media (max-width:480px) {
+          width: 5vw;
+        }
+      }
+      p{
+        @media (max-width:768px) {
+          font-size: 20px;
+        }
+        @media (max-width:480px) {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  .Sidebar_guide {
+    width: 3.31vw;
+    height: 6.01vh;
+    background-color: $bgColorSecGray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 1.1vw;
+      height: 3.7vh;
+    }
+    @media (max-width:768px) {
+      width: 300px;
+      height: 12vh;
+      img {
+        width: 6vw;
+        height: 6vh;
+      }
+    }
+    @media (max-width:480px) {
+      width: 60px;
+      height: 6vh;
+      img {
+        width: 3.5vw;
+        height: 3.5vh;
+      }
+    }
+  }
+}
+
+.Sidebar_guide_rotate {
+  transform: rotate(180deg);
+}
+
+//------按鈕scss(沒有icon版本)------
+
+//html結構
+// <button class="defaultBtn pcInnerText">
+// (這邊輸入按鈕的文字)
+// <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
+// </button>
+
+//css樣式
+.defaultBtn {
+  position: relative;
+  border: 2px solid $mainTextColor;
+  box-shadow: 4px 4px 0 $mainTextColor;
+  width: 120px;
+  height: 35px;
+  text-align: center;
+  cursor: pointer;
+  background-color: $bgColorWhite;
+  color: $mainTextColor;
+  @media (width <= 768px) {
+    width: 100px;
+    height: 30px;
+  }
+
+  &:hover {
+    background-color: $primaryColorYellow;
+  }
+  img {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    bottom: 0.3vw;
+    right: 0.3vw;
+  }
+}
+
+//------含有icon的按鈕------
+
+//html結構
+
+// <button class="iconBtn pcInnerText">
+//       <p class="iconText">
+//圖片src改成自己的
+//         <img
+//           src="@/assets/images/login/icon/comment.svg"
+//           alt=""
+//           class="buttonIcon"
+//         />
+//         (這邊輸入按鈕的文字)
+//       </p>
+//       <img
+//         src="@/assets/images/login/icon/btnArrow.svg"
+//         alt=""
+//         class="arrowIcon"
+//       />
+//     </button>
+
+//css樣式
+.iconBtn {
+  position: relative;
+  border: 2px solid $mainTextColor;
+  box-shadow: 4px 4px 0 $mainTextColor;
+  width: 120px;
+  height: 35px;
+  cursor: pointer;
+  background-color: $bgColorWhite;
+  color: $mainTextColor;
+  &:hover {
+    background-color: $primaryColorYellow;
+  }
+  .arrowIcon {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    bottom: 3px;
+    right: 3px;
+  }
+  .iconText {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 0 1vw;
+    gap: 0.8vw;
+    align-items: center;
+    .buttonIcon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+//------消息頁&投票頁外文字外框------
+
+// 1.橘色外框(含投票時間、投票方式)
+// <div class="newsFrame">
+// <img
+//   src="../assets/images/news/newsFrame/orangeFrame.svg"
+//   alt="orangeFrame"
+//   class="newsFramePic"
+// />
+// <p class="newsFrameText pcInnerText">最新消息</p>
+// </div>
+
+// 2.綠色外框
+// <div class="newsFrame">
+//     <img
+//       src="../assets/images/news/newsFrame/greenFrame.svg"
+//       alt="greenFrame"
+//       class="newsFramePic"
+//     />
+//     <p class="newsFrameText pcInnerText">園區動態</p>
+//   </div>
+
+// 3.藍色外框
+// <div class="newsFrame">
+// <img
+//   src="../assets/images/news/newsFrame/blueFrame.svg"
+//   alt="blueFrame"
+//   class="newsFramePic"
+// />
+// <p class="newsFrameText pcInnerText">動物知識</p>
+// </div>
+
+.newsFrame {
+  position: relative;
+  width: 120px;
+  height: 35px;
+  .newsFramePic {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  .newsFrameText {
+    letter-spacing: 2px;
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top: 0.6vw;
+    color: #fff;
+    z-index: 2;
+  }
+}

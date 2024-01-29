@@ -1,0 +1,152 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+main.loginMain {
+  height: 100vh;
+  width: 100%;
+  max-width: 1920px;
+  overflow: hidden;
+  .inputArea {
+    height: 80%;
+    width: 100%;
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1920px;
+    background-color: $bgColorLightgray;
+    position: relative;
+    .logoG {
+      position: absolute;
+      top: 20px;
+      width: 250px;
+      height: 200px;
+    }
+    .cloudsun {
+      position: absolute;
+      right: 0;
+      top: -15px;
+      width: 250px;
+      height: 200px;
+    }
+    .cloudb {
+      position: absolute;
+      left: 0;
+      top: 15px;
+      width: 250px;
+      height: 200px;
+    }
+    .meerkats {
+      z-index: 10;
+      position: absolute;
+      bottom: -10px;
+      width: 300px;
+      height: 80px;
+      display: flex;
+      .meerkat {
+        width: 33%;
+        height: 100%;
+      }
+    }
+    .acc {
+      width: 300px;
+      display: flex;
+      align-items: center;
+      .img {
+        width: 35px;
+        height: 35px;
+        margin: 0 5px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      input {
+        height: 30px;
+        width: 100%;
+        background-color: #fff;
+        border: transparent;
+        font-size: 16px;
+        &:focus {
+          outline: none;
+        }
+        &::placeholder {
+          padding: 5px;
+          color: $inputTextColor;
+        }
+      }
+    }
+    .psw {
+      width: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .img {
+        width: 35px;
+        height: 35px;
+        margin: 0 5px;
+        padding-left: 2px;
+        img {
+          width: 90%;
+          height: 90%;
+        }
+      }
+      input {
+        height: 30px;
+        width: 100%;
+        background-color: #fff;
+        border: transparent;
+        font-size: 16px;
+        &:focus {
+          outline: none;
+        }
+        &::placeholder {
+          padding: 5px;
+          color: $inputTextColor;
+        }
+      }
+    }
+  }
+  .grassArea {
+    background-color: $bgColorLightgray;
+    position: relative;
+    width: 100%;
+    height: 20%;
+    display: flex;
+    align-items: flex-end;
+    .tree3 {
+      position: absolute;
+      top: -285px;
+      right: -45px;
+      width: 300px;
+      height: 300px;
+    }
+    .tree8 {
+      position: absolute;
+      top: -275px;
+      left: -45px;
+      width: 250px;
+      height: 300px;
+    }
+    .grasses5 {
+      position: absolute;
+      top: -60px;
+      right: 280px;
+      width: 120px;
+      height: 100px;
+    }
+    .grasses7 {
+      position: absolute;
+      top: -65px;
+      left: 260px;
+      width: 100px;
+      height: 80px;
+    }
+    .grass {
+      width: 100%;
+    }
+  }
+}
