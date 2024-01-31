@@ -13,7 +13,7 @@
           alt="staff"
           class="sidebarIcon"
         />
-        <RouterLink to="/">後台管理</RouterLink>
+        <RouterLink to="/staff">後台管理</RouterLink>
       </li>
       <li>
         <img
@@ -30,7 +30,7 @@
           class="sidebarIcon"
         />
         <p>留言管理</p>
-        <span>{{ messageIsOpen ? "^" : "ˇ" }}</span>
+        <span>{{ messageIsOpen ? "▲" : "▼" }}</span>
         <ul v-if="messageIsOpen" class="innerList">
           <li>
             <RouterLink to="/">會員留言</RouterLink>
@@ -55,13 +55,13 @@
           class="sidebarIcon"
         />
         <p>投票管理</p>
-        <span>{{ voteIsOpen ? "^" : "ˇ" }}</span>
+        <span> {{ voteIsOpen ? "▲" : "▼" }}</span>
         <ul v-if="voteIsOpen" class="innerList">
           <li>
-            <RouterLink to="/">會員留言</RouterLink>
+            <RouterLink to="/">投票活動</RouterLink>
           </li>
           <li>
-            <RouterLink to="/">檢舉留言</RouterLink>
+            <RouterLink to="/">投票紀錄</RouterLink>
           </li>
         </ul>
       </li>
@@ -93,13 +93,13 @@
           class="sidebarIcon"
         />
         <p>銷售管理</p>
-        <span>{{ saleOpen ? "^" : "ˇ" }}</span>
+        <span>{{ saleOpen ? "▲" : "▼" }}</span>
         <ul v-if="saleOpen" class="innerList">
           <li>
-            <RouterLink to="/">會員留言</RouterLink>
+            <RouterLink to="/">訂單總覽</RouterLink>
           </li>
           <li>
-            <RouterLink to="/">檢舉留言</RouterLink>
+            <RouterLink to="/">銷售統計</RouterLink>
           </li>
         </ul>
       </li>

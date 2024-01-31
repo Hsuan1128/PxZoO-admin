@@ -14,12 +14,17 @@ const router = createRouter({
     {
       path: "/home",
       name: "home",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import("../views/homeView.vue"),
       meta: {
         title: "首頁",
+      },
+    },
+    {
+      path: "/staff",
+      name: "staff",
+      component: () => import("../views/staffView.vue"),
+      meta: {
+        title: "後臺管理",
       },
     },
   ],
