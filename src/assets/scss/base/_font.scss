@@ -32,9 +32,7 @@ $phFontH5: clamp(0.9rem, 1vw, 1rem);
 
 //小標
 .pcSmTitle {
-  font-size: $pcFontH3;
-  font-family: $font;
-  font-weight: 700;
+
   line-height: 150%;
   @media (width <= 768px) {
     //ph尺寸

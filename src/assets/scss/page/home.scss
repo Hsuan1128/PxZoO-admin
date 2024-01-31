@@ -1,0 +1,58 @@
+.home {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("/src/assets/images/main/grid.svg");
+  background-color: $primaryColorGreen;
+  background-size: cover;
+  background-position: center 90%;
+  background-repeat: no-repeat;
+  position: relative;
+  .homeLogo {
+    position: absolute;
+    top: 200px;
+    left: 550px;
+  }
+  .welcome {
+    position: absolute;
+    top: 320px;
+    left: 650px;
+    color: #fff;
+    font-size: $pcFontH2;
+    font-family: $font;
+    font-weight: 500;
+    line-height: 150%;
+  }
+  .homeAnimals {
+    position: absolute;
+    bottom: 130px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    left: 350px;
+    width: 800px;
+    height: 150px;
+    .homeAnimal {
+      width: 80px;
+      height: 50%;
+      &:nth-child(2) {
+        width: 150px;
+        height: 70%;
+      }
+      &:nth-child(3) {
+        width: 150px;
+        height: 65%;
+      }
+      &:nth-child(4) {
+        width: 60px;
+      }
+      &:nth-child(5) {
+        width: 150px;
+        height: 60%;
+      }
+      &:nth-child(6) {
+        width: 85px;
+        height: 40%;
+      }
+    }
+  }
+}

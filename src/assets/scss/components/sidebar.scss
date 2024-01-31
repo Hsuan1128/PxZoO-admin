@@ -1,0 +1,81 @@
+.sidebar {
+  z-index: 20;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $bgColorLightgray;
+  .sidebarLogo {
+    position: absolute;
+    top: 30px;
+  }
+  .outerList {
+    position: absolute;
+    width: 100%;
+    top: 90px;
+    height: 455px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    li {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      .innerList {
+        width: 100%;
+        li {
+          padding-left: 20px;
+          margin: 0 0 5px 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          a {
+            font-size: $pcFontH4;
+            font-family: $font;
+            font-weight: 500;
+            line-height: 150%;
+          }
+        }
+      }
+      span {
+        position: absolute;
+      }
+      img {
+        width: 19px;
+        height: 19px;
+      }
+      a {
+        text-decoration: none;
+        color: $mainTextColor;
+        font-size: $pcFontH3;
+        font-family: $font;
+        font-weight: 700;
+      }
+      p {
+        cursor: pointer;
+        text-decoration: none;
+        color: $mainTextColor;
+        font-size: $pcFontH3;
+        font-family: $font;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .land {
+    height: 180px;
+    width: 100%;
+    position: absolute;
+    bottom: -70px;
+  }
+}

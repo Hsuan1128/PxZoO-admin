@@ -42,7 +42,7 @@
         </div>
         <input type="password" placeholder="密碼" />
       </div>
-      <button type="submit" class="defaultBtn pcInnerText">
+      <button type="submit" class="defaultBtn pcInnerText" @click="toMainPage">
         登入
         <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
       </button>
@@ -77,3 +77,16 @@
     </section>
   </main>
 </template>
+
+<script>
+export default {
+  data() {
+    return {};
+  },
+  methods: {
+    toMainPage() {
+      this.$router.push("home");
+    },
+  },
+};
+</script>
