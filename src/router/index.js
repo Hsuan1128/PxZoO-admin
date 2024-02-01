@@ -24,7 +24,7 @@ const router = createRouter({
       name: "staff",
       component: () => import("../views/staffView.vue"),
       meta: {
-        title: "後臺管理",
+        title: "後台管理",
       },
     },
   ],

@@ -11,16 +11,19 @@
   background-color: $bgColorLightgray;
   .sidebarLogo {
     position: absolute;
-    top: 30px;
+    top: -45px;
+    width: 130px;
+    height: 190px;
   }
   .outerList {
     position: absolute;
-    width: 70%;
-    top: 90px;
-    height: 455px;
+    width: 60%;
+    top: 75px;
+    left: 50px;
+    height: 480px;
     display: flex;
     flex-direction: column;
-    align-items: self-start;
+    align-items: flex-start;
     justify-content: space-evenly;
     span {
       display: flex;
@@ -39,13 +42,16 @@
         width: 100%;
         li {
           padding-left: 20px;
-          margin: 0 0 5px 0;
+          margin: 1px 0;
           display: flex;
+          text-align: center;
           flex-direction: column;
           justify-content: center;
-          align-items: center;
           a {
-            font-size: $pcFontH4;
+            margin: 2px 0;
+            width: 100%;
+            text-align: center;
+            font-size: $pcFontH5;
             font-family: $font;
             font-weight: 500;
             line-height: 150%;
@@ -59,7 +65,7 @@
       a {
         text-decoration: none;
         color: $mainTextColor;
-        font-size: $pcFontH3;
+        font-size: $pcFontH4;
         font-family: $font;
         font-weight: 700;
       }
@@ -67,7 +73,7 @@
         cursor: pointer;
         text-decoration: none;
         color: $mainTextColor;
-        font-size: $pcFontH3;
+        font-size: $pcFontH4;
         font-family: $font;
         font-weight: 700;
       }
