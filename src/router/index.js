@@ -51,6 +51,14 @@ const router = createRouter({
         title: "銷售統計",
       },
     },
+    {
+      path: "/comment",
+      name: "comment",
+      component: () => import("../views/commentView.vue"),
+      meta: {
+        title: "評論管理",
+      },
+    },
   ],
 });
 //跳轉頁面時跳到頂端
