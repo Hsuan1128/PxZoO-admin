@@ -28,11 +28,35 @@ const router = createRouter({
       },
     },
     {
-      path: "/tickets",
-      name: "tickets",
-      component: () => import("../views/ticketsView.vue"),
+      path: "/member",
+      name: "member",
+      component: () => import("../views/memberView.vue"),
       meta: {
-        title: "門票管理",
+        title: "會員管理",
+      },
+    },
+    {
+      path: "/comment",
+      name: "comment",
+      component: () => import("../views/commentView.vue"),
+      meta: {
+        title: "會員留言",
+      },
+    },
+    {
+      path: "/report",
+      name: "report",
+      component: () => import("../views/reportView.vue"),
+      meta: {
+        title: "檢舉留言",
+      },
+    },
+    {
+      path: "/news",
+      name: "news",
+      component: () => import("../views/newsView.vue"),
+      meta: {
+        title: "消息管理",
       },
     },
     {
@@ -44,19 +68,51 @@ const router = createRouter({
       },
     },
     {
+      path: "/voteActivity",
+      name: "voteActivity",
+      component: () => import("../views/voteActivityView.vue"),
+      meta: {
+        title: "投票活動",
+      },
+    },
+    {
+      path: "/votes",
+      name: "votes",
+      component: () => import("../views/votesView.vue"),
+      meta: {
+        title: "投票紀錄",
+      },
+    },
+    {
+      path: "/questions",
+      name: "questions",
+      component: () => import("../views/questionsView.vue"),
+      meta: {
+        title: "學堂管理",
+      },
+    },
+    {
+      path: "/tickets",
+      name: "tickets",
+      component: () => import("../views/ticketsView.vue"),
+      meta: {
+        title: "門票管理",
+      },
+    },
+    {
+      path: "/orders",
+      name: "orders",
+      component: () => import("../views/ordersView.vue"),
+      meta: {
+        title: "訂單總覽",
+      },
+    },
+    {
       path: "/charts",
       name: "charts",
       component: () => import("../views/chartsView.vue"),
       meta: {
         title: "銷售統計",
-      },
-    },
-    {
-      path: "/comment",
-      name: "comment",
-      component: () => import("../views/commentView.vue"),
-      meta: {
-        title: "評論管理",
       },
     },
   ],

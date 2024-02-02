@@ -3,7 +3,7 @@
     <section class="staffArea">
       <div class="staffForm">
         <div class="titleSearch">
-          <h2 class="pcSmTitle">門票管理</h2>
+          <h2 class="pcSmTitle">消息管理</h2>
           <div class="searchArea">
             <button class="search pcInnerText">查詢</button>
             <div class="inputArea">
