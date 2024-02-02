@@ -84,7 +84,7 @@
           src="../assets/images/sidebar/ticket.svg"
           alt="animal"
           class="sidebarIcon"
-        /><RouterLink to="/">門票管理</RouterLink>
+        /><RouterLink to="/tickets">門票管理</RouterLink>
       </li>
       <li @click="toggle('sale')">
         <img

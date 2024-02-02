@@ -27,6 +27,30 @@ const router = createRouter({
         title: "後台管理",
       },
     },
+    {
+      path: "/tickets",
+      name: "tickets",
+      component: () => import("../views/ticketsView.vue"),
+      meta: {
+        title: "門票管理",
+      },
+    },
+    {
+      path: "/animal",
+      name: "animal",
+      component: () => import("../views/animalView.vue"),
+      meta: {
+        title: "動物管理",
+      },
+    },
+    {
+      path: "/charts",
+      name: "charts",
+      component: () => import("../views/chartsView.vue"),
+      meta: {
+        title: "銷售統計",
+      },
+    },
   ],
 });
 //跳轉頁面時跳到頂端
