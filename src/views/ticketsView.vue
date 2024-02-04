@@ -12,10 +12,6 @@
             <strong> {{ row.name }}</strong>
           </template>
 
-          <template #status="{ row }">
-            <Switch v-model="row.active" />
-          </template>
-
           <template #action="{ row, index }">
             <Button
               type="primary"
@@ -97,14 +93,14 @@ export default {
     ticketsRevise,
   },
   created() {
-    axios.get('http://localhost/phpLab/pxzoo/test.php')
+    axios.get('http://localhost/phpLab/pxzoo/ticketsShow.php')
     .then(response => {
       this.data = response.data; // 假設返回的數據是一個數組
     })
     .catch(error => {
       console.error("Error fetching data: ", error);
     });
-    }
+  }
 };
 </script>
 
