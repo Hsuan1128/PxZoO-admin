@@ -3,11 +3,11 @@
   <section class="staffArea">
     <div class="staffForm">
       <div class="titleSearch">
-        <h2 class="pcSmTitle">門票管理xd</h2>
+        <h2 class="pcSmTitle">門票管理</h2>
       </div>
 
       <div class="formArea">
-        <Table stripe :columns="columns" :data="data" ref="table">
+        <Table stripe :columns="columns" :data="data" ref="table" class="custom-table">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
@@ -26,7 +26,7 @@
               <img src="../assets/images/formicon/revise.svg" alt=""/>
             </Button>
             
-            </template>
+          </template>
         </Table>
       </div>
     </div>
@@ -44,6 +44,8 @@ import Switch from "@/components/switch.vue";
 import grass from "@/components/grass.vue";
 import {Table} from "view-ui-plus";
 import ticketsRevise from "@/components/ticketsRevise.vue"
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -78,51 +80,14 @@ export default {
           align: "right",
         },
       ],
-      data: [
-        {
-          tickets_id:"1",
-          tickets_name:"成人票",
-          tickets_price:"100",
-          tickets_rule:"18~64歲",
-          tickets_changetime:"2024/02/04 16:38:21"
-        },
-        {
-          tickets_id:"2",
-          tickets_name:"學生票",
-          tickets_price:"80",
-          tickets_rule:"12歲以上持學生證者",
-          tickets_changetime:"2024/02/04 16:38:21"
-        },
-        {
-          tickets_id:"3",
-          tickets_name:"團體票",
-          tickets_price:"60",
-          tickets_rule:"15人以上適用",
-          tickets_changetime:"2024/02/04 16:38:21"
-        },
-        {
-          tickets_id:"4",
-          tickets_name:"兒童票",
-          tickets_price:"40",
-          tickets_rule:"4~11歲",
-          tickets_changetime:"2024/02/04 16:38:21"
-        },
-        {
-          tickets_id:"5",
-          tickets_name:"愛心票",
-          tickets_price:"40",
-          tickets_rule:"65歲以上",
-          tickets_changetime:"2024/02/04 16:38:21"
-        },
-        
-      ],
+      data: [],
     };
   },
   methods: {
     updateReviseSwitch(newValue) {
       this.ReviseSwitch = newValue;
       this.$emit('change', this.ReviseSwitch);
-    }
+    },
   },
   components: {
     sidebar,
@@ -131,6 +96,15 @@ export default {
     Table,
     ticketsRevise,
   },
+  created() {
+    axios.get('http://localhost/phpLab/pxzoo/test.php')
+    .then(response => {
+      this.data = response.data; // 假設返回的數據是一個數組
+    })
+    .catch(error => {
+      console.error("Error fetching data: ", error);
+    });
+    }
 };
 </script>
 
