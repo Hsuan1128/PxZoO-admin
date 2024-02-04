@@ -1,9 +1,9 @@
 <template>
   <sidebar />
-  <section class="staffArea">
-    <div class="staffForm">
+  <section class="voteActivityArea">
+    <div class="voteActivityForm">
       <div class="titleSearch">
-        <h2 class="pcSmTitle">投票活動管理</h2>
+        <h2 class="pcSmTitle">投票管理|投票活動</h2>
         <div class="searchArea">
           <button class="search pcInnerText">查詢</button>
           <div class="inputArea">
@@ -64,36 +64,42 @@ export default {
       columns: [
         {
           title: "編號",
-          key: "sta_id",
-          align: "center",
+          key: "vote_activity_id",
+          align: "left",
         },
         {
-          title: "職位",
-          key: "sta_pos",
+          title: "活動名稱",
+          key: "vote_activity_name",
           width: 200,
-          align: "center",
+          align: "left",
         },
         {
-          title: "信箱",
-          key: "sta_email",
+          title: "內容",
+          key: "vote_activity_content",
           width: 180,
-          align: "center",
+          align: "left",
         },
         {
-          title: "帳號",
-          key: "sta_acc",
+          title: "年月",
+          key: "vote_activity_date",
         },
         {
-          title: "密碼",
-          key: "sta_psw",
-
-          align: "center",
+          title: "第一名動物",
+          key: "animal_id_1",
+          width: 180,
+          align: "left",
         },
         {
-          title: "狀態",
-          slot: "status",
-
-          align: "center",
+          title: "第二名動物",
+          slot: "animal_id_2",
+          width: 180,
+          align: "left",
+        },
+        {
+          title: "第三名動物",
+          slot: "animal_id_3",
+          width: 180,
+          align: "left",
         },
         {
           title: "刪改",
@@ -101,22 +107,22 @@ export default {
           align: "center",
         },
       ],
-      data: [
-        {
-          sta_id: "1",
-          sta_pos: "超級管理員",
-          sta_email: "test@gmail.com",
-          sta_acc: "test",
-          sta_psw: "123",
-        },
-        {
-          sta_id: "2",
-          sta_pos: "管理員",
-          sta_email: "test@gmail.com",
-          sta_acc: "test",
-          sta_psw: "123",
-        },
-      ],
+      // data: [
+      //   {
+      //     sta_id: "1",
+      //     sta_pos: "超級管理員",
+      //     sta_email: "test@gmail.com",
+      //     sta_acc: "test",
+      //     sta_psw: "123",
+      //   },
+      //   {
+      //     sta_id: "2",
+      //     sta_pos: "管理員",
+      //     sta_email: "test@gmail.com",
+      //     sta_acc: "test",
+      //     sta_psw: "123",
+      //   },
+      // ],
     };
   },
   methods: {
