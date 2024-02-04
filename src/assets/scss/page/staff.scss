@@ -69,6 +69,15 @@
         border-radius: 20px;
         width: 20px;
       }
+      .custom-table {
+        .ivu-table-cell {
+          font-size: $pcFontH5;
+          font-family: $font;
+          font-weight: 500;
+          line-height: 150%;
+          color: $mainTextColor;
+        }
+      }
     }
     .add {
       width: 80px;

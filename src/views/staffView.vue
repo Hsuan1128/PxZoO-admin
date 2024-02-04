@@ -15,7 +15,13 @@
         </div>
       </div>
       <div class="formArea">
-        <Table stripe :columns="columns" :data="data" ref="table">
+        <Table
+          stripe
+          :columns="columns"
+          :data="data"
+          ref="table"
+          class="custom-table"
+        >
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
@@ -65,35 +71,37 @@ export default {
         {
           title: "編號",
           key: "sta_id",
-          align: "center",
+          align: "left",
         },
         {
           title: "職位",
           key: "sta_pos",
+          color: "blue",
           width: 200,
-          align: "center",
+          align: "left",
         },
         {
           title: "信箱",
           key: "sta_email",
           width: 180,
-          align: "center",
+          align: "left",
         },
         {
           title: "帳號",
           key: "sta_acc",
+          align: "left",
         },
         {
           title: "密碼",
           key: "sta_psw",
 
-          align: "center",
+          align: "left",
         },
         {
           title: "狀態",
           slot: "status",
 
-          align: "center",
+          align: "left",
         },
         {
           title: "刪改",

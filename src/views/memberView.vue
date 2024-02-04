@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="formArea">
-        <Table stripe :columns="columns" :data="data">
+        <Table stripe :columns="columns" :data="data" class="custom-table">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
