@@ -22,7 +22,7 @@
               class="trash"
               size="small"
               style="margin-right: 5px"
-              @click="show(index)">
+              @click="ReviseSwitch = !ReviseSwitch">
               <img src="../assets/images/formicon/revise.svg" alt=""/>
             </Button>
             
@@ -30,6 +30,8 @@
         </Table>
       </div>
     </div>
+
+    <ticketsRevise v-show="ReviseSwitch" :ReviseSwitch="ReviseSwitch" @update-switch="ReviseSwitch = $event"/>
 
     <grass />
 
@@ -41,10 +43,12 @@ import sidebar from "@/components/sidebar.vue";
 import Switch from "@/components/switch.vue";
 import grass from "@/components/grass.vue";
 import {Table} from "view-ui-plus";
+import ticketsRevise from "@/components/ticketsRevise.vue"
 
 export default {
   data() {
     return {
+      ReviseSwitch:false,
       columns: [
         {
           title: "編號",
@@ -116,20 +120,27 @@ export default {
     };
   },
   methods: {
-    
+    updateReviseSwitch(newValue) {
+      this.ReviseSwitch = newValue;
+      this.$emit('change', this.ReviseSwitch);
+    }
   },
   components: {
     sidebar,
     Switch,
     grass,
     Table,
+    ticketsRevise,
   },
 };
 </script>
 
-<style>
+<style lang="scss">
 .trash {
   border: transparent;
   background-color: transparent;
+  &:hover{
+    cursor: pointer;
+  }
 }
 </style>
