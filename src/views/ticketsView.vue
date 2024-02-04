@@ -1,93 +1,135 @@
 <template>
-    <sidebar />
-    <section class="staffArea">
-      <div class="staffForm">
-        <div class="titleSearch">
-          <h2 class="pcSmTitle">門票管理</h2>
-          <div class="searchArea">
-            <button class="search pcInnerText">查詢</button>
-            <div class="inputArea">
-              <input type="text" placeholder="請輸入後台人員資訊" />
-              <button class="scope">
-                <img src="../assets/images/formicon/scope.svg" alt="scope" />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="formArea">
-          <table class="formTable">
-            <thead>
-              <tr>
-                <th v-for="title in titles" :key="title" class="pcInnerText">
-                  {{ title }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="list in lists" class="pcInnerText">
-                <td>{{ list.num }}</td>
-                <td>{{ list.title }}</td>
-                <td>{{ list.email }}</td>
-                <td>{{ list.acc }}</td>
-                <td>{{ list.psw }}</td>
-                <td><Switch /></td>
-                <td>
-                  <img :src="list.edit" alt="icon" />
-                  <img v-if="list.remove" :src="list.remove" alt="icon" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="add">
-          <img src="@/assets/images/formicon/plus.svg" alt="add" class="add" />
-  
-          <p class="pcInnerText">新增</p>
-        </div>
+  <sidebar />
+  <section class="staffArea">
+    <div class="staffForm">
+      <div class="titleSearch">
+        <h2 class="pcSmTitle">門票管理</h2>
       </div>
-      <grass />
-    </section>
-  </template>
-  
-  <script>
-  import sidebar from "@/components/sidebar.vue";
-  import Switch from "@/components/switch.vue";
-  import grass from "@/components/grass.vue";
-  const revise = new URL("../assets/images/formicon/revise.svg", import.meta.url)
-    .href;
-  const rm = new URL("../assets/images/formicon/delete.svg", import.meta.url)
-    .href;
-  export default {
-    data() {
-      return {
-        titles: ["No.", "職位", "信箱", "帳號", "密碼", "狀態", "刪改"],
-        lists: [
-          {
-            num: "1",
-            title: "超級管理員",
-            email: "test@gmail.com",
-            acc: "test",
-            psw: "123",
-            edit: revise,
-            remove: "",
-          },
-          {
-            num: "2",
-            title: "管理員",
-            email: "test@gmail.com",
-            acc: "test",
-            psw: "123",
-            edit: revise,
-            remove: rm,
-          },
-        ],
-      };
-    },
-    components: {
-      sidebar,
-      Switch,
-      grass,
-    },
-  };
-  </script>
-  
+
+      <div class="formArea">
+        <Table stripe :columns="columns" :data="data" ref="table">
+          <template #name="{ row }">
+            <strong> {{ row.name }}</strong>
+          </template>
+
+          <template #status="{ row }">
+            <Switch v-model="row.active" />
+          </template>
+
+          <template #action="{ row, index }">
+            <Button
+              type="primary"
+              class="trash"
+              size="small"
+              style="margin-right: 5px"
+              @click="show(index)">
+              <img src="../assets/images/formicon/revise.svg" alt=""/>
+            </Button>
+            
+            </template>
+        </Table>
+      </div>
+    </div>
+
+    <grass />
+
+  </section>
+</template>
+
+<script>
+import sidebar from "@/components/sidebar.vue";
+import Switch from "@/components/switch.vue";
+import grass from "@/components/grass.vue";
+import {Table} from "view-ui-plus";
+
+export default {
+  data() {
+    return {
+      columns: [
+        {
+          title: "編號",
+          key: "tickets_id",
+          width:70,
+        },
+        {
+          title: "門票名稱",
+          key: "tickets_name",
+        },
+        {
+          title: "門票票價",
+          key: "tickets_price",
+        },
+        {
+          title: "門票使用規則",
+          key: "tickets_rule",
+          width:170,
+        },
+        {
+          title: "門票修改時間",
+          key: "tickets_changetime",
+          width:170,
+        },
+        {
+          title: "刪改",
+          slot: "action",
+          align: "right",
+        },
+      ],
+      data: [
+        {
+          tickets_id:"1",
+          tickets_name:"成人票",
+          tickets_price:"100",
+          tickets_rule:"18~64歲",
+          tickets_changetime:"2024/02/04 16:38:21"
+        },
+        {
+          tickets_id:"2",
+          tickets_name:"學生票",
+          tickets_price:"80",
+          tickets_rule:"12歲以上持學生證者",
+          tickets_changetime:"2024/02/04 16:38:21"
+        },
+        {
+          tickets_id:"3",
+          tickets_name:"團體票",
+          tickets_price:"60",
+          tickets_rule:"15人以上適用",
+          tickets_changetime:"2024/02/04 16:38:21"
+        },
+        {
+          tickets_id:"4",
+          tickets_name:"兒童票",
+          tickets_price:"40",
+          tickets_rule:"4~11歲",
+          tickets_changetime:"2024/02/04 16:38:21"
+        },
+        {
+          tickets_id:"5",
+          tickets_name:"愛心票",
+          tickets_price:"40",
+          tickets_rule:"65歲以上",
+          tickets_changetime:"2024/02/04 16:38:21"
+        },
+        
+      ],
+    };
+  },
+  methods: {
+    
+  },
+  components: {
+    sidebar,
+    Switch,
+    grass,
+    Table,
+  },
+};
+</script>
+
+<style>
+.trash {
+  border: transparent;
+  background-color: transparent;
+}
+</style>
