@@ -93,7 +93,7 @@ export default {
     ticketsRevise,
   },
   created() {
-    axios.get('http://localhost/phpLab/pxzoo/ticketsShow.php')
+    axios.get(`${import.meta.env.VITE_API_URL}/ticketsShow.php`)
     .then(response => {
       this.data = response.data; // 假設返回的數據是一個數組
     })
