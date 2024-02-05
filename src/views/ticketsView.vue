@@ -3,7 +3,7 @@
   <section class="staffArea">
     <div class="staffForm">
       <div class="titleSearch">
-        <h2 class="pcSmTitle">門票管理</h2>
+        <h2 class="pcSmTitle">門票管理xd</h2>
       </div>
 
       <div class="formArea">
@@ -44,7 +44,6 @@ import Switch from "@/components/switch.vue";
 import grass from "@/components/grass.vue";
 import {Table} from "view-ui-plus";
 import ticketsRevise from "@/components/ticketsRevise.vue"
-
 export default {
   data() {
     return {

@@ -1,9 +1,9 @@
 <template>
   <sidebar />
-  <section class="staffArea">
-    <div class="staffForm">
+  <section class="voteActivityArea">
+    <div class="voteActivityForm">
       <div class="titleSearch">
-        <h2 class="pcSmTitle">投票管理|投票紀錄</h2>
+        <h2 class="pcSmTitle">投票管理|投票活動</h2>
         <div class="searchArea">
           <button class="search pcInnerText">查詢</button>
           <div class="inputArea">
@@ -71,50 +71,41 @@ export default {
         {
           title: "編號",
           key: "vote_activity_id",
-          width: 70,
-          align: "center",
+          align: "left",
         },
         {
           title: "活動名稱",
-          key: "vote_activity_name", 
-          width: 130,
+          key: "vote_activity_name",
+          width: 200,
           align: "left",
         },
         {
           title: "內容",
           key: "vote_activity_content",
-          width: 160,
+          width: 180,
           align: "left",
         },
         {
           title: "年月",
           key: "vote_activity_date",
-          width: 110,
-          align: "left",
         },
         {
           title: "第一名動物",
           key: "animal_id_1",
-          width: 110,
+          width: 180,
           align: "left",
         },
         {
           title: "第二名動物",
-          key: "animal_id_2",
-          width: 110,
+          slot: "animal_id_2",
+          width: 180,
           align: "left",
         },
         {
           title: "第三名動物",
-          key: "animal_id_3",
-          width: 110,
+          slot: "animal_id_3",
+          width: 180,
           align: "left",
-        },
-        {
-          title: "狀態",
-          slot: "status",
-          width: 100,
-          align: "center",
         },
         {
           title: "刪改",
@@ -123,28 +114,22 @@ export default {
           align: "center",
         },
       ],
-      data: [
-        {
-          vote_activity_id: 1,
-          vote_activity_name: "12月動物投票",
-          vote_activity_content: "大象以其智慧...",
-          vote_activity_date: "2023-12",
-          animal_id_1: "威廉",
-          animal_id_2: "索拉",
-          animal_id_3: "曼陀",
-        },
-       
-        {
-          vote_activity_id: 2,
-          vote_activity_name: "1月動物投票",
-          vote_activity_content: "大象以其智慧...",
-          vote_activity_date: "2024-1",
-          animal_id_1: "威廉",
-          animal_id_2: "索拉",
-          animal_id_3: "曼陀",
-        },
-       
-      ],
+      // data: [
+      //   {
+      //     sta_id: "1",
+      //     sta_pos: "超級管理員",
+      //     sta_email: "test@gmail.com",
+      //     sta_acc: "test",
+      //     sta_psw: "123",
+      //   },
+      //   {
+      //     sta_id: "2",
+      //     sta_pos: "管理員",
+      //     sta_email: "test@gmail.com",
+      //     sta_acc: "test",
+      //     sta_psw: "123",
+      //   },
+      // ],
     };
   },
   methods: {

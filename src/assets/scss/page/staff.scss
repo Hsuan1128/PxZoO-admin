@@ -78,6 +78,30 @@
           color: $mainTextColor;
         }
       }
+      .formTable {
+        width: 100%;
+        margin: 15px 0;
+        thead {
+          width: 30px;
+          th {
+            text-align: left;
+            padding: 20px 0;
+            border-bottom: 2px solid black;
+          }
+        }
+        tr {
+          width: 100%;
+          td {
+            text-align: left;
+            padding-top: 10px;
+            img {
+              width: 20px;
+              height: 20px;
+              margin-right: 5px;
+            }
+          }
+        }
+      }
     }
     .add {
       width: 80px;
@@ -95,27 +119,3 @@
     }
   }
 }
-// .formTable {
-//   width: 100%;
-//   margin: 15px 0;
-//   thead {
-//     width: 30px;
-//     th {
-//       text-align: left;
-//       padding: 20px 0;
-//       border-bottom: 2px solid black;
-//     }
-//   }
-//   tr {
-//     width: 100%;
-//     td {
-//       text-align: left;
-//       padding-top: 10px;
-//       img {
-//         width: 20px;
-//         height: 20px;
-//         margin-right: 5px;
-//       }
-//     }
-//   }
-// }
