@@ -3,11 +3,11 @@
   <section class="staffArea">
     <div class="staffForm">
       <div class="titleSearch">
-        <h2 class="pcSmTitle">後台管理</h2>
+        <h2 class="pcSmTitle">留言管理 | 檢舉留言</h2>
         <div class="searchArea">
           <button class="search pcInnerText">查詢</button>
           <div class="inputArea">
-            <input type="text" placeholder="請輸入後台人員資訊" />
+            <input type="text" placeholder="請輸入留言資訊" />
             <button class="scope">
               <img src="../assets/images/formicon/scope.svg" alt="scope" />
             </button>
@@ -15,7 +15,13 @@
         </div>
       </div>
       <div class="formArea">
-        <Table stripe :columns="columns" :data="data" ref="table">
+        <Table
+          stripe
+          :columns="columns"
+          :data="data"
+          ref="table"
+          class="custom-table"
+        >
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
@@ -43,11 +49,11 @@
           <Page :total="100" />
         </template>
       </div>
-      <div class="add">
+      <!-- <div class="add">
         <img src="@/assets/images/formicon/plus.svg" alt="add" class="add" />
 
         <p class="pcInnerText">新增</p>
-      </div>
+      </div> -->
     </div>
     <grass />
   </section>
@@ -64,58 +70,66 @@ export default {
       columns: [
         {
           title: "編號",
-          key: "sta_id",
-          align: "center",
+          key: "report_id",
+          align: "left",
         },
         {
-          title: "職位",
-          key: "sta_pos",
-          width: 200,
-          align: "center",
+          title: "檢舉原因",
+          key: "report_text",
+          width: 450,
+          align: "left",
         },
         {
-          title: "信箱",
-          key: "sta_email",
-          width: 180,
-          align: "center",
+          title: "檢舉類別",
+          key: "report_type",
+          width: 100,
+          align: "left",
         },
         {
-          title: "帳號",
-          key: "sta_acc",
+          title: "檢舉時間",
+          key: "report_date",
+          width:180,
+          align: "left",
         },
         {
-          title: "密碼",
-          key: "sta_psw",
-
-          align: "center",
+          title: "處理狀態",
+          key: "report_status",
+          width:120,
+          align: "left",
         },
-        {
-          title: "狀態",
-          slot: "status",
-
-          align: "center",
-        },
-        {
-          title: "刪改",
-          slot: "action",
-          align: "center",
+        {//因為這個壞板
+          title: "處理時間",
+          key: "report_altertime",
+          width:180,
+          align: "left",
         },
       ],
       data: [
         {
-          sta_id: "1",
-          sta_pos: "超級管理員",
-          sta_email: "test@gmail.com",
-          sta_acc: "test",
-          sta_psw: "123",
+          report_id: "1",
+          report_text: "宣揚或促使暴力行為的內容。",
+          report_type: "暴力",
+          report_date: "2024-01-07  16:38:21",
+          report_status: "未審核",
+          report_altertime: "2024-01-10  16:38:21",
         },
         {
-          sta_id: "2",
-          sta_pos: "管理員",
-          sta_email: "test@gmail.com",
-          sta_acc: "test",
-          sta_psw: "123",
+          report_id: "2",
+          report_text: "裸露、色情內容或性暗示的內容。",
+          report_type: "裸露",
+          report_date: "2024-01-07  16:38:21",
+          report_status: "審核未通過",
+          report_altertime: "2024-01-10  16:38:21",
         },
+        {
+          report_id: "3",
+          report_text: "任何涉及兒童的不當內容或性剝削。",
+          report_type: "涉及兒童",
+          report_date: "2024-01-07  16:38:21",
+          report_status: "審核通過",
+          report_altertime: "2024-01-10  16:38:21",
+        },
+        
       ],
     };
   },
