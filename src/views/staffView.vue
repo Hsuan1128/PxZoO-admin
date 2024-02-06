@@ -64,6 +64,7 @@ import sidebar from "@/components/sidebar.vue";
 import Switch from "@/components/switch.vue";
 import grass from "@/components/grass.vue";
 import { Table, Page } from "view-ui-plus";
+import axios from "axios";
 export default {
   data() {
     return {
@@ -109,23 +110,18 @@ export default {
           align: "center",
         },
       ],
-      data: [
-        {
-          sta_id: "1",
-          sta_pos: "超級管理員",
-          sta_email: "test@gmail.com",
-          sta_acc: "test",
-          sta_psw: "123",
-        },
-        {
-          sta_id: "2",
-          sta_pos: "管理員",
-          sta_email: "test@gmail.com",
-          sta_acc: "test",
-          sta_psw: "123",
-        },
-      ],
+      data: [],
     };
+  },
+  created() {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/staff.php`)
+      .then((res) => {
+        this.data = res.data;
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   },
   methods: {
     remove(index) {
