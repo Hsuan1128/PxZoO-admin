@@ -7,7 +7,7 @@
         <div class="searchArea">
           <button class="search pcInnerText">查詢</button>
           <div class="inputArea">
-            <input type="text" placeholder="請輸入後台人員資訊" />
+            <input type="text" placeholder="請輸入會員資訊" />
             <button class="scope">
               <img src="../assets/images/formicon/scope.svg" alt="scope" />
             </button>
@@ -36,6 +36,7 @@
 import sidebar from "@/components/sidebar.vue";
 import Switch from "@/components/switch.vue";
 import grass from "@/components/grass.vue";
+import axios from "axios";
 import { Table, Page } from "view-ui-plus";
 export default {
   data() {
@@ -60,7 +61,7 @@ export default {
         {
           title: "信箱",
           key: "mem_email",
-          width: 150,
+          width: 180,
           align: "left",
         },
         {
@@ -86,45 +87,18 @@ export default {
           align: "center",
         },
       ],
-      data: [
-        {
-          mem_id: 1,
-          mem_name: "喔挖",
-          mem_title: "先生",
-          mem_email: "123@gmail.com",
-          mem_pic: "123.png",
-          mem_birthbay: "2000/11/11",
-          mem_phone: "0922111445",
-        },
-        {
-          mem_id: 2,
-          mem_name: "酷喔",
-          mem_title: "先生",
-          mem_email: "456@gmail.com",
-          mem_pic: "456.png",
-          mem_birthbay: "1990/11/11",
-          mem_phone: "0928411445",
-        },
-        {
-          mem_id: 3,
-          mem_name: "欸欸",
-          mem_title: "小姐",
-          mem_email: "745@gmail.com",
-          mem_pic: "452.png",
-          mem_birthbay: "2004/11/11",
-          mem_phone: "0922852445",
-        },
-        {
-          mem_id: 4,
-          mem_name: "哈哈",
-          mem_title: "先生",
-          mem_email: "789@gmail.com",
-          mem_pic: "789.png",
-          mem_birthbay: "2002/2/11",
-          mem_phone: "0925211445",
-        },
-      ],
+      data: [],
     };
+  },
+  created() {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/member.php`)
+      .then((res) => {
+        this.data = res.data;
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   },
   methods: {},
   components: {
