@@ -64,6 +64,7 @@ import sidebar from "@/components/sidebar.vue";
 import Switch from "@/components/switch.vue";
 import grass from "@/components/grass.vue";
 import { Table, Page } from "view-ui-plus";
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -71,6 +72,16 @@ export default {
         {
           title: "編號",
           key: "report_id",
+          align: "left",
+        },
+        {
+          title: "檢舉人編號",
+          key: "mem_id",
+          align: "left",
+        },
+        {
+          title: "檢舉留言",
+          key: "com_id",
           align: "left",
         },
         {
@@ -88,49 +99,29 @@ export default {
         {
           title: "檢舉時間",
           key: "report_date",
-          width:180,
+          width:170,
           align: "left",
         },
         {
           title: "處理狀態",
           key: "report_status",
-          width:120,
+          width:80,
           align: "left",
         },
-        {//因為這個壞板
+        {
+          title: "處理者",
+          key: "sta_id",
+          width:80,
+          align: "left",
+        },
+        {
           title: "處理時間",
           key: "report_altertime",
-          width:180,
+          width:170,
           align: "left",
         },
       ],
-      data: [
-        {
-          report_id: "1",
-          report_text: "宣揚或促使暴力行為的內容。",
-          report_type: "暴力",
-          report_date: "2024-01-07  16:38:21",
-          report_status: "未審核",
-          report_altertime: "2024-01-10  16:38:21",
-        },
-        {
-          report_id: "2",
-          report_text: "裸露、色情內容或性暗示的內容。",
-          report_type: "裸露",
-          report_date: "2024-01-07  16:38:21",
-          report_status: "審核未通過",
-          report_altertime: "2024-01-10  16:38:21",
-        },
-        {
-          report_id: "3",
-          report_text: "任何涉及兒童的不當內容或性剝削。",
-          report_type: "涉及兒童",
-          report_date: "2024-01-07  16:38:21",
-          report_status: "審核通過",
-          report_altertime: "2024-01-10  16:38:21",
-        },
-        
-      ],
+      data: [],
     };
   },
   methods: {
@@ -144,6 +135,16 @@ export default {
     grass,
     Table,
   },
+  created() {
+    // axios.get(`${import.meta.env.VITE_API_URL}/ticketsShow.php`)
+    axios.get(`${import.meta.env.VITE_API_URL}/report.php`)
+    .then(response => {
+      this.data = response.data; // 假設返回的數據是一個數組
+    })
+    .catch(error => {
+      console.error("Error fetching data: ", error);
+    });
+  }
 };
 </script>
 <style>
