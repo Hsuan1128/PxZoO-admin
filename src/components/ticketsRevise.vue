@@ -25,7 +25,7 @@
             </button>
     
             <button class="defaultBtn pcInnerText" @click="updateReviseSwitch">
-                回到列表
+                返回列表
                 <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
             </button>
         </div>
