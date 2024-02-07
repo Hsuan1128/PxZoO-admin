@@ -1,14 +1,31 @@
-import "./assets/scss/style.scss";
-
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import ViewUIPlus from "view-ui-plus";
+
+import "./assets/scss/style.scss";
+
+const vueApp = createApp(App);
+
+vueApp.use(createPinia());
+vueApp.use(router);
+
+import { 
+    Button, Table, Page, Space, Switch,
+    
+    // Input, Select, Option, Upload, InputNumber, Badge,
+} from 'view-ui-plus';
+import "view-ui-plus/dist/styles/viewuiplus.css";
+
+// import ViewUIPlus from "view-ui-plus";
 import App from "./App.vue";
 import router from "./router";
-import "view-ui-plus/dist/styles/viewuiplus.css";
-const app = createApp(App);
 
-app.use(createPinia());
-app.use(router);
+vueApp.component('Button', Button)
+vueApp.component('Table', Table)
+vueApp.component('Page', Page)
+vueApp.component('Space', Space)
+vueApp.component('Switch', Switch)
+// vueApp.component('Upload', Upload)
+// vueApp.component('InputNumber', InputNumber)
+// vueApp.component('Badge', Badge)
 
-app.mount("#app");
+vueApp.mount("#app");
