@@ -64,6 +64,7 @@ import sidebar from "@/components/sidebar.vue";
 import Switch from "@/components/switch.vue";
 import grass from "@/components/grass.vue";
 import { Table, Page } from "view-ui-plus";
+import axios from 'axios'; // 導入axios套件
 export default {
   data() {
     return {
@@ -94,76 +95,7 @@ export default {
         },
       ],
       data: [
-        {
-          votes_id: 1,
-          vote_activity_name: "12月動物投票",
-          animal_name: "小虎",
-          vote_count: "105",
-         
-        },
-        {
-          votes_id: 2,
-          vote_activity_name: "12月動物投票",
-          animal_name: "索拉",
-          vote_count: "105",
-         
-        },
-        {
-          votes_id: 3,
-          vote_activity_name: "12月動物投票",
-          animal_name: "曼陀",
-          vote_count: "105",
-         
-        },
-        {
-          votes_id: 4,
-          vote_activity_name: "12月動物投票",
-          animal_name: "蘇菲",
-          vote_count: "105",
-         
-        },
-        {
-          votes_id: 5,
-          vote_activity_name: "12月動物投票",
-          animal_name: "蒙奇 ",
-          vote_count: "105",
-         
-        },
-        {
-          votes_id: 6,
-          vote_activity_name: "12月動物投票",
-          animal_name: "斑斑",
-          vote_count: "105",
-         
-        },
-        {
-          votes_id: 7,
-          vote_activity_name: "12月動物投票",
-          animal_name: "寶拉",
-          vote_count: "105",
-         
-        },
-        {
-          votes_id: 8,
-          vote_activity_name: "12月動物投票",
-          animal_name: "小雪",
-          vote_count: "105",
-         
-        },
-        {
-          votes_id: 9,
-          vote_activity_name: "12月動物投票",
-          animal_name: "小雪",
-          vote_count: "105",
-         
-        },
-        {
-          votes_id: 10,
-          vote_activity_name: "12月動物投票",
-          animal_name: "小雪",
-          vote_count: "105",
-         
-        },
+       
       ],
     };
   },
@@ -178,6 +110,15 @@ export default {
     grass,
     Table,
   },
+  created(){
+    axios.get(`${import.meta.env.VITE_API_URL}/votesshow.php`)
+    .then(response => {
+      this.data = response.data; // 假設返回的數據是一個數組
+    })
+    .catch(error => {
+      console.error("Error fetching data: ", error);
+    });
+  }
 };
 </script>
 <style>
