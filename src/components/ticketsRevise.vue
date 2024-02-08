@@ -4,23 +4,23 @@
             <h1>編輯門票內容</h1>
             <div class="Revise_content">
                 <div class="Revise_content_align">
-                    <label for="" class="pcInnerText">門票名稱</label>
-                    <input type="text" placeholder="學生票">
+                    <label for="ticketsName" class="pcInnerText">門票名稱</label>
+                    <input type="text" :placeholder="rowdata.tickets_name" id="ticketsName">
                 </div>
     
                 <div class="Revise_content_align">
-                    <label for="" class="pcInnerText">門票價錢</label>
-                    <input type="text" placeholder="40">
+                    <label for="ticketsPrice" class="pcInnerText">門票價錢</label>
+                    <input type="text" :placeholder="rowdata.tickets_price" id="ticketsPrice">
                 </div>
     
                 <div class="Revise_content_align">
-                    <label for="" class="pcInnerText">門票使用規則</label>
-                    <textarea class="Revise_textarea" placeholder="12歲以上持有學生票可使用"></textarea>
+                    <label for="ticketsRule" class="pcInnerText">門票使用規則</label>
+                    <textarea class="Revise_textarea" :placeholder="rowdata.tickets_rule" id="ticketsRule"></textarea>
                 </div>
             </div>
             
             <div class="Revise_btns">
-                <button class="defaultBtn pcInnerText" @click="ConfirmSwitch = !ConfirmSwitch">
+                <button class="defaultBtn pcInnerText" @click="ConfirmSwitch =!ConfirmSwitch ">
                     儲存
                     <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                 </button>
@@ -41,6 +41,10 @@ import ticketsConfirm from "@/components/ticketsConfirm.vue"
 export default {
     props:{
         ReviseSwitch:false,
+        rowdata: {
+            type: Array,
+            required: true,
+        }
     },
     data() {
         return {

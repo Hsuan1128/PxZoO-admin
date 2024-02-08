@@ -18,7 +18,7 @@
               class="trash"
               size="small"
               style="margin-right: 5px"
-              @click="ReviseSwitch = !ReviseSwitch">
+              @click="TicketModification(row)">
               <img src="../assets/images/formicon/revise.svg" alt=""/>
             </Button>
             
@@ -27,7 +27,8 @@
       </div>
     </div>
 
-    <ticketsRevise v-show="ReviseSwitch" :ReviseSwitch="ReviseSwitch" @update-switch="ReviseSwitch = $event"/>
+    <ticketsRevise v-show="ReviseSwitch" :rowdata="rowdata" :ReviseSwitch="ReviseSwitch" @update-switch="ReviseSwitch = $event"/>
+
 
     <grass />
 
@@ -77,6 +78,7 @@ export default {
         },
       ],
       data: [],
+      rowdata:[]
     };
   },
   methods: {
@@ -84,6 +86,10 @@ export default {
       this.ReviseSwitch = newValue;
       this.$emit('change', this.ReviseSwitch);
     },
+    TicketModification(row){
+      this.ReviseSwitch = !this.ReviseSwitch
+      this.rowdata = row;
+    }
   },
   components: {
     sidebar,
