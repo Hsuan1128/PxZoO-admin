@@ -31,12 +31,12 @@
                 </button>
             </div>
         </div>
-        <cofirm v-show="ConfirmSwitch" :ConfirmSwitch="ConfirmSwitch" @update-switch="ConfirmSwitch = $event"/>
+        <ticketsConfirm v-show="ConfirmSwitch" :ConfirmSwitch="ConfirmSwitch" @update-switch="ConfirmSwitch = $event"/>
     </div>
 </template>
 
 <script>
-import cofirm from "@/components/confirm.vue"
+import ticketsConfirm from "@/components/ticketsConfirm.vue"
 
 export default {
     props:{
@@ -57,7 +57,7 @@ export default {
         },
     },
     components: {
-        cofirm,
+        ticketsConfirm,
     },
 };
 </script>
