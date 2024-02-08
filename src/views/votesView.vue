@@ -7,7 +7,7 @@
         <div class="searchArea">
           <button class="search pcInnerText">查詢</button>
           <div class="inputArea">
-            <input type="text" placeholder="請輸入後台人員資訊" />
+            <input type="text" placeholder="請輸入投票紀錄資訊" />
             <button class="scope">
               <img src="../assets/images/formicon/scope.svg" alt="scope" />
             </button>
