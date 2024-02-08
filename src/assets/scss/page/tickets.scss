@@ -1,113 +1,138 @@
-.staffArea {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    .staffForm {
-      position: relative;
-      margin-right: 150px;
-      width: 65%;
-      height: 85%;
-      .titleSearch {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        height: 10%;
-        h2 {
-          color: $primaryColorGreen;
-        }
-        .searchArea {
+//門票修改hmtl
+// <div class="Revise_bg">
+//         <div class="Revise">
+//             <h1>編輯門票內容</h1>
+//             <div class="Revise_content">
+//                 <div class="Revise_content_align">
+//                     <label for="" class="pcInnerText">門票名稱</label>
+//                     <input type="text" placeholder="學生票">
+//                 </div>
+    
+//                 <div class="Revise_content_align">
+//                     <label for="" class="pcInnerText">門票價錢</label>
+//                     <input type="text" placeholder="40">
+//                 </div>
+    
+//                 <div class="Revise_content_align">
+//                     <label for="" class="pcInnerText">門票使用規則</label>
+//                     <textarea class="Revise_textarea" placeholder="12歲以上持有學生票可使用"></textarea>
+//                 </div>
+//             </div>
+            
+//             <div class="Revise_btns">
+//                 <button class="defaultBtn pcInnerText">
+//                     儲存
+//                     <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
+//                 </button>
+        
+//                 <button class="defaultBtn pcInnerText">
+//                     返回列表
+//                     <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
+//                 </button>
+//             </div>
+//         </div>
+//     </div>
+
+//門票修改內容css
+.Revise_bg{
+  width: 100%;
+  height: 100%;
+  background-color: #000000dc;
+  position: absolute;
+  z-index: 21;
+  .Revise{
+      width: 73.64vw;
+      height: 45vw;
+      background-color: #f5efeb;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      z-index: 10;
+      h1{
+          margin-top: 2vw;
+          text-align: center;
+      }
+      .Revise_content{
+          width: 60.82vw;
+          margin: 3vw auto 0;
           display: flex;
-          height: 30px;
-          gap: 15px;
-          .search {
-            cursor: pointer;
-            border: transparent;
-            background-color: #fff;
-          }
-          .inputArea {
-            display: flex;
-            input {
-              height: 100%;
-              border: transparent;
-              background-color: $inputColor;
-              padding-inline: 8px;
-              &::placeholder {
-                font-size: $pcFontH5;
-                font-family: $font;
-                font-weight: 500;
-                line-height: 150%;
-              }
-              &:focus {
-                outline: none;
-              }
-            }
-            .scope {
-              border: transparent;
+          flex-direction: column;
+          align-items: center;
+          gap: 1.5vw;
+          .Revise_content_align{
               display: flex;
-              align-items: center;
-            }
+              width: 100%;
+              label{
+                  margin-right: 20px;
+                  display: block;
+                  width: 15%;
+              }
+              input{
+                  width: 85%;
+                  height: 2vw;
+                  padding-inline: 8px;
+                  border: none;
+              }
+              .Revise_textarea{
+                  width: 85%;
+                  height: 10vw;
+                  resize: none;
+                  padding-inline: 8px;
+                  border: none;
+              }
           }
-        }
       }
-      .formArea {
-        width: 100%;
-        height: 90%;
-        overflow-x: auto;
-        &::-webkit-scrollbar {
-          height: 5px;
-          width: 50px;
-        }
-        &::-webkit-scrollbar-track {
-          overflow: hidden;
-        }
-        &::-webkit-scrollbar-thumb {
-          background-color: #ccc;
-          border-radius: 20px;
-          width: 20px;
-        }
+      .Revise_btns{
+          width: 280px;
+          margin: 14.5vw auto 0;
+          display: flex;
+          justify-content: space-between;
       }
-      .add {
-        width: 80px;
-        display: flex;
-        justify-content: center;
-        position: absolute;
-        right: 20px;
-        bottom: 20px;
-        img {
-          bottom: 3px;
-          left: 0;
-          width: 18px;
-          height: 18px;
-        }
-      }
-    }
   }
-  // .formTable {
-  //   width: 100%;
-  //   margin: 15px 0;
-  //   thead {
-  //     width: 30px;
-  //     th {
-  //       text-align: left;
-  //       padding: 20px 0;
-  //       border-bottom: 2px solid black;
-  //     }
-  //   }
-  //   tr {
-  //     width: 100%;
-  //     td {
-  //       text-align: left;
-  //       padding-top: 10px;
-  //       img {
-  //         width: 20px;
-  //         height: 20px;
-  //         margin-right: 5px;
-  //       }
-  //     }
-  //   }
-  // }
-  
+}
+
+//門票修改確認彈窗css
+.confirm_bg{
+  width: 100%;
+  height: 100%;
+  background-color: #000000dc;
+  position: absolute;
+  z-index: 30;
+  .confirm{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      .confirm_content{
+          width: 636px;
+          height: 277px;
+          background-color: #f5efeb;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          p{
+              margin-top: 80px;
+              font-size: 24px;
+          }
+          .confirm_btns{
+              display: flex;
+              gap: 40px;
+              margin-top: 65px;
+              position: relative;
+              z-index: 31;
+          }
+      }
+      .confirm_img{
+          position: absolute;
+          top: 0;
+          left: 0;
+          transform: translate(-2.1%,-4.9%);
+          width: 665px;
+          height: 305px;
+          img{
+              width: 100%;
+          }
+      }
+  }
+}
