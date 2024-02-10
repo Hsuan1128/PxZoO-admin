@@ -31,7 +31,11 @@
                 </button>
             </div>
         </div>
-        <ticketsConfirm v-show="ConfirmSwitch" :ConfirmSwitch="ConfirmSwitch" @update-switch="ConfirmSwitch = $event" :confirm-data="confirmData"/>
+        <ticketsConfirm v-show="ConfirmSwitch" 
+        :ConfirmSwitch="ConfirmSwitch" 
+        @update-switch="ConfirmSwitch = $event" 
+        :confirm-data="confirmData"
+        @trigger-update-revise-switch="updateReviseSwitch"/>
     </div>
 </template>
 

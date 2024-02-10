@@ -47,6 +47,8 @@ import axios from 'axios';
                 })
                 .then(() => {
                     this.updataConfirmSwitch()
+                    window.location.reload();
+                    this.$emit('trigger-update-revise-switch')
                 })
                 .catch(error => {
                     console.error('更新錯誤:', error);
