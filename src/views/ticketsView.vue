@@ -83,7 +83,9 @@ export default {
   },
   methods: {
     TicketModification(row){
+      //控制修改視窗的顯示/隱藏
       this.ReviseSwitch = !this.ReviseSwitch
+      //把我們所點擊的資料帶入rowdata的參數裡
       this.rowdata = row;
     }
   },

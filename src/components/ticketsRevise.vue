@@ -45,6 +45,7 @@ import ticketsConfirm from "@/components/ticketsConfirm.vue"
 export default {
     props:{
         ReviseSwitch:false,
+        //把rowdata引入到父組件裡使用這個參數
         rowdata: {
             type: Object,
             required: true,
@@ -53,6 +54,7 @@ export default {
     data() {
         return {
             ConfirmSwitch:false,
+            //建立v-model的參數,才能綁定到input上
             editedTicketsName: '',
             editedTicketsPrice: '',
             editedTicketsRule: ''
@@ -60,9 +62,11 @@ export default {
     },
     methods: {
         updateReviseSwitch() {
+            //從這個組件傳送控制修改彈窗的顯示/隱藏參數數值
             this.$emit('update-switch', !this.ReviseSwitch);
         },
         prepareConfirmData() {
+            //把資料傳送到ticketsConfirm的組件
             this.confirmData = {
                 ticketsName: this.editedTicketsName,
                 ticketsPrice: this.editedTicketsPrice,
@@ -71,6 +75,7 @@ export default {
             };
         },
         ticketsRevise(){
+            //判斷輸入資料的情況做出對應的行為
             if (this.editedTicketsName && this.editedTicketsPrice && this.editedTicketsRule) {
                 if (this.rowdata.tickets_name != this.editedTicketsName || 
                     this.rowdata.tickets_price != this.editedTicketsPrice || 

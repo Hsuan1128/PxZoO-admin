@@ -38,17 +38,22 @@ import axios from 'axios';
         },
         methods: {
             updataConfirmSwitch(){
+                //控制修改確認彈窗的顯示/隱藏
                 this.$emit('update-switch', !this.ConfirmSwitch)
             },transferData(){
+                //引入修改的PHP
                 axios.post(`${import.meta.env.VITE_API_URL}/ticketsRevise.php`, this.confirmData,{
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 })
                 .then(() => {
+                    //關閉修改確認的彈窗
                     this.updataConfirmSwitch()
-                    window.location.reload();
+                    //關閉修改的彈窗
                     this.$emit('trigger-update-revise-switch')
+                    //重新整理頁面讓資料更新成更改後的
+                    window.location.reload();
                 })
                 .catch(error => {
                     console.error('更新錯誤:', error);
