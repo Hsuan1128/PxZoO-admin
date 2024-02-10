@@ -4,7 +4,7 @@
             <div class="confirm_content">
                 <p class="pcInnerText">門票資訊有變更，是否儲存</p>
                 <div class="confirm_btns">
-                    <button class="defaultBtn pcInnerText">
+                    <button class="defaultBtn pcInnerText" @click="transferData">
                         儲存
                         <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                     </button>
@@ -22,9 +22,14 @@
 </template>
 
 <script>
+import axios from 'axios';
     export default {
         props:{
-            ConfirmSwitch:false
+            ConfirmSwitch:false,
+            confirmData: {
+                type: Object,
+                default: () => ({})
+            },
         },
         data() {
             return {
@@ -34,8 +39,19 @@
         methods: {
             updataConfirmSwitch(){
                 this.$emit('update-switch', !this.ConfirmSwitch)
-                console.log(ConfirmSwitch);
-            }
+            },transferData(){
+                axios.post(`${import.meta.env.VITE_API_URL}/ticketsRevise.php`, this.confirmData,{
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(() => {
+                    this.updataConfirmSwitch()
+                })
+                .catch(error => {
+                    console.error('更新錯誤:', error);
+                });
+            },
         },
         components: {
         },
