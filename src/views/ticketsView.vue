@@ -82,10 +82,6 @@ export default {
     };
   },
   methods: {
-    updateReviseSwitch(newValue) {
-      this.ReviseSwitch = newValue;
-      this.$emit('change', this.ReviseSwitch);
-    },
     TicketModification(row){
       this.ReviseSwitch = !this.ReviseSwitch
       this.rowdata = row;
