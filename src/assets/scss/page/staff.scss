@@ -8,8 +8,8 @@
   .staffForm {
     position: relative;
     margin-right: 150px;
-    width: 65%;
-    height: 85%;
+    width: 70%;
+    height: 90%;
     .titleSearch {
       display: flex;
       align-items: center;
@@ -55,7 +55,7 @@
     }
     .formArea {
       width: 100%;
-      height: 90%;
+      height: 80%;
       overflow-x: auto;
       overflow-y: auto;
       &::-webkit-scrollbar {
@@ -117,15 +117,16 @@
       }
     }
     .add {
-      width: 80px;
+      width: 60px;
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
+      align-content: center;
       position: absolute;
-      right: 20px;
+      right: 0px;
       bottom: 20px;
 
       img {
-        bottom: 3px;
+        bottom: 5px;
         left: 0;
         width: 18px;
         height: 18px;

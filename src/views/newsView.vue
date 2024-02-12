@@ -100,8 +100,26 @@ export default {
           align: "left",
         },
         {
-          title: "描述",
-          key: "news_text",
+          title: "描述1",
+          key: "news_text_1",
+          width: 400,
+          align: "left",
+        },
+        {
+          title: "描述2",
+          key: "news_text_2",
+          width: 400,
+          align: "left",
+        },
+        {
+          title: "描述3",
+          key: "news_text_3",
+          width: 400,
+          align: "left",
+        },
+        {
+          title: "描述4",
+          key: "news_text_4",
           width: 400,
           align: "left",
         },
