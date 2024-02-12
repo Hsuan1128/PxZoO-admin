@@ -34,7 +34,7 @@
               class="trash"
               size="small"
               style="margin-right: 5px"
-              @click="updatereviseSwitch(index, row.question_id)">
+              @click="QuestionModification(row)">
               <img src="../assets/images/formicon/revise.svg" alt=""
             /></Button>
             <Button
@@ -54,7 +54,8 @@
         <p class="pcInnerText">新增</p>
       </div>
     </div>
-    <questionrevise v-show="reviseSwitch" :reviseSwitch="reviseSwitch" :question_id="reviseQuestionId" @update-switch="reviseSwitch = $event"/>
+    <questionrevise v-show="ReviseSwitch" :rowdata="rowdata" :ReviseSwitch="ReviseSwitch" @update-switch="ReviseSwitch = $event"/>
+
 
 <grass />
     <questionadd v-show="addSwitch" :addSwitch="addSwitch" @update-switch="addSwitch = $event"/>
@@ -78,7 +79,6 @@ export default {
     return {
      addSwitch: false,
       reviseSwitch: false,
-      reviseQuestionId: null, // 新增這個屬性來存儲要修改的 question_id
       columns: [
         {
           title: "No.",
@@ -166,9 +166,8 @@ export default {
           align: "center",
         },
       ],
-      data: [
-      
-      ],
+      data: [],
+      rowdata:[]
      
     };
   },
@@ -177,9 +176,9 @@ export default {
       this.addSwitch = newValue;
       this.$emit('change', this.addSwitch);
     },
-    updatereviseSwitch(index, question_id) {
-      this.reviseSwitch = !this.reviseSwitch;
-      this.reviseQuestionId = question_id; // 存儲要修改的 question_id
+    QuestionModification(row){
+      this.ReviseSwitch = !this.ReviseSwitch
+      this.rowdata = row;
     },
 remove(index) {
         const rowData = this.data[index]; // 獲取要刪除的資料列
@@ -206,7 +205,6 @@ remove(index) {
     Table,
     questionadd,
     questionrevise,
-
 },
   created(){
     axios.get(`${import.meta.env.VITE_API_URL}/questionShow.php`)
