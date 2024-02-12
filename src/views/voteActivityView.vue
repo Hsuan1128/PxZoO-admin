@@ -15,13 +15,7 @@
         </div>
       </div>
       <div class="formArea">
-        <Table
-          stripe
-          :columns="columns"
-          :data="data"
-          ref="table"
-          class="custom-table"
-        >
+        <Table stripe :columns="columns" :data="data" ref="table" class="custom-table">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
@@ -29,45 +23,36 @@
             <Switch v-model="row.active" />
           </template>
           <template #action="{ row, index }">
-            <Button
-              type="primary"
-              class="trash"
-              size="small"
-              style="margin-right: 5px"
-              @click="show(index)"
-              ><img src="../assets/images/formicon/revise.svg" alt=""
-            /></Button>
-            <Button
-              type="error"
-              class="trash"
-              size="small"
-              @click="remove(index)"
-              ><img src="../assets/images/formicon/delete.svg" alt="" /></Button
-          ></template>
+            <Button type="primary" class="trash" size="small" style="margin-right: 5px" @click="show(index)"><img
+                src="../assets/images/formicon/revise.svg" alt="" /></Button>
+            <Button type="error" class="trash" size="small" @click="remove(index)"><img
+                src="../assets/images/formicon/delete.svg" alt="" /></Button></template>
         </Table>
         <template>
           <Page :total="100" />
         </template>
       </div>
-      <div class="add">
-        <img src="@/assets/images/formicon/plus.svg" alt="add" class="add" />
-
+      <div class="add" @click="addSwitch = !addSwitch">
+        <img src="@/assets/images/formicon/plus.svg" alt="add" class="add">
         <p class="pcInnerText">新增</p>
       </div>
     </div>
+    <voteActivityadd v-show="addSwitch" :addSwitch="addSwitch" @update-switch="addSwitch = $event" />
     <grass />
   </section>
 </template>
 
 <script>
 import sidebar from "@/components/sidebar.vue";
-import Switch from "@/components/switch.vue";
+import Switch from "@/components/switchShelves.vue";
 import grass from "@/components/grass.vue";
 import { Table, Page } from "view-ui-plus";
 import axios from 'axios'; // 導入axios套件
+import voteActivityadd from "@/components/voteActivityadd.vue";
 export default {
   data() {
     return {
+      addSwitch: false,
       columns: [
         {
           title: "編號",
@@ -121,19 +106,37 @@ export default {
         {
           title: "刪改",
           slot: "action",
-          width: 110,
+          width: 130,
           align: "center",
         },
       ],
       data: [
-      
-       
+
+
       ],
     };
   },
   methods: {
+    updateaddSwitch(newValue) {
+      this.addSwitch = newValue;
+      this.$emit('change', this.addSwitch);
+    },
     remove(index) {
-      this.data.splice(index, 1);
+      const rowData = this.data[index]; // 獲取要刪除的資料列
+      const vote_activity_id = rowData.vote_activity_id; // 假設資料中有一個名為 vote_activity_id 的欄位作為唯一標識
+
+      // 向後端發送 DELETE 請求
+      axios.delete(`${import.meta.env.VITE_API_URL}/voteActivitydelete.php`, {
+        data: { id: vote_activity_id } // 傳遞要刪除的資料列的 ID
+      })
+        .then(response => {
+          // 成功刪除後處理前端資料
+          this.data.splice(index, 1);
+          console.log("資料已成功刪除");
+        })
+        .catch(error => {
+          console.error("刪除資料時發生錯誤: ", error);
+        });
     },
   },
   components: {
@@ -141,15 +144,16 @@ export default {
     Switch,
     grass,
     Table,
+    voteActivityadd
   },
-  created(){
+  created() {
     axios.get(`${import.meta.env.VITE_API_URL}/voteActivityshow.php`)
-    .then(response => {
-      this.data = response.data; // 假設返回的數據是一個數組
-    })
-    .catch(error => {
-      console.error("Error fetching data: ", error);
-    });
+      .then(response => {
+        this.data = response.data; // 假設返回的數據是一個數組
+      })
+      .catch(error => {
+        console.error("Error fetching data: ", error);
+      });
   }
 };
 </script>

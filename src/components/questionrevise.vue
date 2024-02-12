@@ -1,16 +1,16 @@
 <template>
      <div class="Revise_bg">
     <div class="Revise">
-        <h1>修改題庫內容</h1>
+        <h1>編輯題庫內容</h1>
         <div class="Revise_content">
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">題目內容</label>
-                <input type="text" id="question_text" :placeholder="rowdata.question_text">
+                <input type="text" v-model="question_text" :placeholder="rowdata.question_text">
             </div>
 
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">選項A</label>
-                <input type="text" id="question_option_a"  :placeholder="rowdata.question_option_a">
+                <input type="text" v-model="question_option_a"  :placeholder="rowdata.question_option_a">
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">圖片A</label>
@@ -18,7 +18,7 @@
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">選項B</label>
-                <input type="text" id="question_option_b" :placeholder="rowdata.question_option_b">
+                <input type="text" v-model="question_option_b" :placeholder="rowdata.question_option_b">
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">圖片B</label>
@@ -26,7 +26,7 @@
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">選項C</label>
-                <input type="text" id="question_option_c" :placeholder="rowdata.question_option_c">
+                <input type="text" v-model="question_option_c" :placeholder="rowdata.question_option_c">
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">圖片C</label>
@@ -34,7 +34,7 @@
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">選項D</label>
-                <input type="text" id="question_option_d" :placeholder="rowdata.question_option_d">
+                <input type="text" v-model="question_option_d" :placeholder="rowdata.question_option_d">
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">圖片D</label>
@@ -42,18 +42,18 @@
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">正確答案</label>
-                <input type="text" id="question_correctanswer" :placeholder="rowdata.question_correctanswer">
+                <input type="text" v-model="question_correctanswer" :placeholder="rowdata.question_correctanswer">
             </div>
 
 
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">解析</label>
-                <textarea class="Revise_textarea" id="question_answer_illustrate" :placeholder="rowdata.question_answer_illustrate"></textarea>
+                <textarea class="Revise_textarea" v-model="question_answer_illustrate" :placeholder="rowdata.question_answer_illustrate"></textarea>
             </div>
         </div>
 
         <div class="Revise_btns">
-            <button class="defaultBtn pcInnerText" @click="ConfirmSwitch =!ConfirmSwitch ">
+            <button class="defaultBtn pcInnerText" @click="questionRevise">
                 儲存
                 <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
             </button>
@@ -63,39 +63,117 @@
                 <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
             </button>
         </div>
-        <confirm_question v-show="ConfirmSwitch" :ConfirmSwitch="ConfirmSwitch" @update-switch="ConfirmSwitch = $event"/>
-    </div></div>
+        
+    </div>
+    <Confirm_question v-show="ConfirmSwitch" 
+        :ConfirmSwitch="ConfirmSwitch" 
+        @update-switch="ConfirmSwitch = $event" 
+        :confirm-data="confirmData"
+        @trigger-update-revise-switch="updateReviseSwitch"/>
+    </div>
 </template>
   
 <script>
 
-import confirm_question from "@/components/confirm_question.vue"
+import Confirm_question from "@/components/confirm_question.vue";
 
 export default {
     props: {
         ReviseSwitch: false,
         rowdata: {
-            type: Array,
+            type: Object,
             required: true,
         }
     },
     data() {
         return {
-            ConfirmSwitch: false
+
+            ConfirmSwitch: false,
+            
+            confirmData: {
+            question_text: '',
+            question_option_a: '',
+            question_img_a: ''  ,
+            question_option_b: '',
+            question_img_b: '',
+            question_option_c: '',
+            question_img_c: '',
+            question_option_d: '',
+            question_img_d: '',
+            question_correctanswer: '',
+            question_answer_illustrate: '',
+        } ,
+            uploadImagePlaceholder: '請上傳圖片',
         };
     },
     methods: {
         updateReviseSwitch() {
+            //從這個組件傳送控制修改彈窗的顯示/隱藏參數數值
             this.$emit('update-switch', !this.ReviseSwitch);
         },
-        updateConfirmSwitch(newValue) {
-            this.ConfirmSwitch = newValue;
-            this.$emit('change', this.ConfirmSwitch);
+       handleFileChange(field, event) {
+    const file = event.target.files[0];
+    
+    // 如果圖片以 base64 格式存儲在資料庫中，可以直接賦值給對應的屬性
+    this[field] = URL.createObjectURL(file);
+
+    // 如果需要其他格式，您可能需要使用 FileReader 來讀取文件內容並進行轉換
+},
+        prepareConfirmData() {
+            //把資料傳送到ticketsConfirm的組件
+            this.confirmData = {
+                question_text: this.question_text,
+                question_option_a: this.question_option_a,
+                question_img_a: this.question_img_a,
+                question_option_b: this.rowdata.question_option_b,
+                question_img_b: this.rowdata.question_img_b,
+                question_option_c: this.rowdata.question_option_c,
+                question_img_c: this.rowdata.question_img_c,
+                question_option_d: this.rowdata.question_option_d,
+                question_img_d: this.rowdata.question_img_d,
+                question_correctanswer: this.rowdata.question_correctanswer,
+                question_answer_illustrate: this.rowdata.question_answer_illustrate,
+                question_id: this.rowdata.question_id,
+            };
         },
+        questionRevise(){
+            //判斷輸入資料的情況做出對應的行為
+            if (this.question_text && 
+                this.question_option_a && 
+                this.question_img_a &&
+                this.question_option_b &&
+                this.question_img_b &&
+                this.question_option_c &&
+                this.question_img_c &&
+                this.question_option_d &&
+                this.question_img_d &&
+                this.question_correctanswer &&
+                this.question_answer_illustrate ) {
+                if (this.rowdata.question_text != this.question_text || 
+                    this.rowdata.question_option_a != this.question_option_a || 
+                    this.rowdata.question_img_a != this.question_img_a || 
+                    this.rowdata.question_option_b != this.question_option_b || 
+                    this.rowdata.question_img_b != this.question_img_b || 
+                    this.rowdata.question_option_c != this.question_option_c || 
+                    this.rowdata.question_img_c != this.question_img_c || 
+                    this.rowdata.question_option_d != this.question_option_d || 
+                    this.rowdata.question_img_d != this.question_img_d || 
+                    this.rowdata.question_correctanswer != this.question_correctanswer || 
+                    this.rowdata.question_answer_illustrate != this.question_answer_illustrate
+                    ) {
+                    this.ConfirmSwitch = !this.ConfirmSwitch;
+                    this.prepareConfirmData()
+                } else {
+                    this.updateReviseSwitch();
+                }
+            } else {
+                alert("請填寫所有欄位");
+            }
+        }
     },
     components: {
-        confirm_question,
-    },
+    Confirm_question,
+},
 };
 </script>
   
