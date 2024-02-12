@@ -72,29 +72,31 @@ export default {
         {
           title: "編號",
           key: "com_id",
+          width: 70,
           align: "left",
         },
         {
           title: "留言內容",
           key: "com_text",
-          width: 420,
+          width: 450,
           align: "left",
         },
         {
           title: "留言照片",
           key: "com_pic",
-          width: 120,
+          width: 180,
           align: "left",
         },
         {
           title: "留言時間",
           key: "com_date",
-          width:170,
+          width: 180,
           align: "left",
         },
         {
           title: "狀態",
           slot: "status",
+          width: 110,
           align: "left",
         },
         // {
@@ -119,7 +121,7 @@ export default {
   },
   created() {
     // axios.get(`${import.meta.env.VITE_API_URL}/ticketsShow.php`)
-    axios.get(`${import.meta.env.VITE_API_URL}/comment.php`)
+    axios.get(`${import.meta.env.VITE_API_URL}/commentShow.php`)
     .then(response => {
       this.data = response.data; // 假設返回的數據是一個數組
     })

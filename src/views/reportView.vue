@@ -72,16 +72,19 @@ export default {
         {
           title: "編號",
           key: "report_id",
+          width: 70,
           align: "left",
         },
         {
           title: "檢舉人編號",
           key: "mem_id",
+          width: 120,
           align: "left",
         },
         {
-          title: "檢舉留言",
+          title: "檢舉留言編號",
           key: "com_id",
+          width: 130,
           align: "left",
         },
         {
@@ -99,25 +102,25 @@ export default {
         {
           title: "檢舉時間",
           key: "report_date",
-          width:170,
+          width: 180,
           align: "left",
         },
         {
           title: "處理狀態",
           key: "report_status",
-          width:80,
+          width: 100,
           align: "left",
         },
         {
           title: "處理者",
           key: "sta_id",
-          width:80,
+          width: 100,
           align: "left",
         },
         {
           title: "處理時間",
           key: "report_altertime",
-          width:170,
+          width: 180,
           align: "left",
         },
       ],
@@ -137,7 +140,7 @@ export default {
   },
   created() {
     // axios.get(`${import.meta.env.VITE_API_URL}/ticketsShow.php`)
-    axios.get(`${import.meta.env.VITE_API_URL}/report.php`)
+    axios.get(`${import.meta.env.VITE_API_URL}/reportShow.php`)
     .then(response => {
       this.data = response.data; // 假設返回的數據是一個數組
     })

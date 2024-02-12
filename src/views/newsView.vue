@@ -61,7 +61,7 @@
 
 <script>
 import sidebar from "@/components/sidebar.vue";
-import Switch from "@/components/switch.vue";
+import Switch from "@/components/switchShelves.vue";
 import grass from "@/components/grass.vue";
 import { Table, Page } from "view-ui-plus";
 import axios from 'axios';
@@ -72,13 +72,13 @@ export default {
         {
           title: "編號",
           key: "news_id",
-          width: 100,
+          width: 70,
           align: "left",
         },
         {
           title: "標題",
           key: "news_title",
-          width: 200,
+          width: 250,
           align: "left",
         },
         {
@@ -96,22 +96,25 @@ export default {
         {
           title: "圖片",
           key: "news_pic",
+          width: 180,
           align: "left",
         },
         {
           title: "描述",
           key: "news_text",
-          width: 300,
+          width: 400,
           align: "left",
         },
         {
           title: "狀態",
           slot: "status",
+          width: 110,
           align: "left",
         },
         {
           title: "刪改",
           slot: "action",
+          width: 130,
           align: "center",
         },
       ],
@@ -131,7 +134,7 @@ export default {
   },
   created() {
     // axios.get(`${import.meta.env.VITE_API_URL}/ticketsShow.php`)
-    axios.get(`${import.meta.env.VITE_API_URL}/news.php`)
+    axios.get(`${import.meta.env.VITE_API_URL}/newsShow.php`)
     .then(response => {
       this.data = response.data; // 假設返回的數據是一個數組
     })
