@@ -37,6 +37,15 @@
 
       </div>
     </div>
+
+    <ordersRevise 
+    :orderData="selectedOrder" 
+    :orderDetailData="orderDetail" 
+    @newDetail="updateDetail" 
+
+    @closeRevise="reviseToggle"
+    v-if="showRevise"
+    />
       
     <grass />
   </section>
@@ -46,11 +55,13 @@
 import axios from 'axios';
 import sidebar from "@/components/sidebar.vue";
 import grass from "@/components/grass.vue";
+import ordersRevise from "@/components/orders/ordersRevise.vue"
 
 export default {
   components: {
     sidebar,
     grass,
+    ordersRevise,
   },
   data() {
     return {
@@ -144,10 +155,49 @@ export default {
         console.error("Error fetching data: ", error);
       })
     },
+    fetchOrderDetail(val) {
+      // 取得訂單明細資料
+      axios.get(`${import.meta.env.VITE_API_URL}/orderDetailShow.php`, {
+        params: {
+          ord_id: val,
+        }
+      })
+      .then(response => {
+        this.orderDetail = response.data;
+      })
+      .catch(error => {
+        console.error("Error fetching data: ", error);
+      })
+    },
     openRevise(row) {
       this.selectedOrder = row;
       this.showRevise = true;
       this.fetchOrderDetail(row.ord_id);
+    },
+    reviseToggle(bool){
+      this.showRevise=bool;
+    },
+    updateDetail(staff, status, bool){
+      // 修改訂單明細
+      // staff待串接
+      axios.post(`${import.meta.env.VITE_API_URL}/alterOrder.php`, {
+        sta_id: staff,
+        ord_status: status,
+        ord_id: this.selectedOrder.ord_id,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then( response => {
+        this.fetchOrders();
+
+        this.reviseToggle(bool);
+        return response.data;
+      })
+      .catch(error=>{
+        console.error("Error fetching data:", error);
+      })
     },
   },
   created(){
