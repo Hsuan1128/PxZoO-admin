@@ -9,7 +9,7 @@ vueApp.use(createPinia());
 vueApp.use(router);
 
 import { 
-    Button, Table, Page, Space, Switch,
+    Button, Table, Page, Space, Switch, DatePicker
     
     // Input, Select, Option, Upload, InputNumber, Badge,
 } from 'view-ui-plus';
@@ -24,7 +24,7 @@ vueApp.component('Table', Table)
 vueApp.component('Page', Page)
 vueApp.component('Space', Space)
 vueApp.component('Switch', Switch)
-// vueApp.component('Upload', Upload)
+vueApp.component('DatePicker', DatePicker)
 // vueApp.component('InputNumber', InputNumber)
 // vueApp.component('Badge', Badge)
 

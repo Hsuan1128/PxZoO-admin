@@ -1,1 +1,136 @@
+@mixin pcSmTitle { //小標
+    font-size: $pcFontH3;
+    font-family: $font;
+    font-weight: 700;
+    line-height: 150%;
+    @media (width <= 768px) {
+      //ph尺寸
+        font-size: $phFontH3;
+    }
+}
+@mixin pcInnerText { //內文
+    font-size: $pcFontH4;
+    font-family: $font;
+    font-weight: 500;
+    line-height: 150%;
+    @media (width <= 768px) {
+      //ph尺寸
+        font-size: $phFontH4;
+        line-height: 180%;
+    }
+}
+@mixin pcMarkText {  //註解
+    font-size: $pcFontH5;
+    font-family: $font;
+    font-weight: 500;
+    line-height: 150%;
+    @media (width <= 768px) {
+      //ph尺寸
+        font-size: $phFontH5;
+    }
+}
+.charts{
+    @include pcInnerText;
+    span, h2, caption{ @include pcSmTitle; }
+    .chartsHead{
+        div>span:first-of-type{ @include pcInnerText; }
+    }
+}
+.staffArea .charts .chartsHead{
+    height: 80px; //為了蓋掉舊框架
+}
+.chartsHead, .chartsBody{
+    section{
+        padding: 8px;
+    }
+    // >section:nth-of-type(odd){
+    //     background-color: $inputColor;
+    // }
+}
+.chartsHead, .chartsBody section{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    >*{
+        // width: 100px;
+    }
+}
+.chartsHead{
+    p{
+        text-align: right;
+        @include pcMarkText;
+    }
+    section{
+        cursor: pointer;
+        width: 100%;
+        border-bottom: 1px solid #e8eaec;
+    }
+}
+.chartsBody{
+    table{
+        width: 50%;
+        height: max-content;
+    }
+    table *{
+        text-align: right;
+        vertical-align: middle;
+        width: max-content;
+    }
+    caption{
+        margin-bottom: 20px;
+    }
+    tr{ height: 50px; }
+    thead th{ font-weight: 400; }
+    thead span{ @include pcInnerText; }
+    th:first-of-type{
+        text-align: left;
+        padding-left: 20px;
+        width: 100px;
+        font-weight: 400;
+    }
+    td{
+        padding-right: 20px;
+        @include pcMarkText;
+    }
+    thead th:not(:first-of-type), td{
+        padding-right: 20px;
+    }
 
+    main{ // 之後換成圖
+        height: 300px;
+        width: 50%;
+        outline: 1px solid seagreen;
+    }
+    .option1{
+        color: $secColorblue;
+        width: 140px;
+    }
+    .option2{
+        color: $primaryColorGreen;
+        width: 140px;
+    }
+
+}
+
+// DatePicker
+.datePicker{
+    @include pcMarkText;
+    span{ @include pcMarkText; }
+    input{ width: 208px; }
+    .datePicker1 .ivu-input{
+        color: $secColorblue;
+    }
+    .datePicker2 .ivu-input{
+        color: $primaryColorGreen;
+    }
+    .ivu-space, .ivu-input{
+        cursor: pointer;
+    }
+    .ivu-picker-panel-sidebar{
+        width: 103px;
+        margin-left: -100px;
+    }
+    .ivu-picker-panel-icon-btn{
+        margin-top: 8px;
+    }
+}
