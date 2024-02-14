@@ -47,7 +47,7 @@
         </div>
         <input type="password" placeholder="密碼" v-model="sta_au4a83" />
       </div>
-      <button type="submit" class="defaultBtn pcInnerText" @click="staffLogin">
+      <button type="submit" class="defaultBtn pcInnerText" @click="toMainPage">
         登入
         <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
       </button>
@@ -114,8 +114,6 @@ export default {
       const bodyFormData = new FormData();
       bodyFormData.append("sta_acc", this.sta_acc);
       bodyFormData.append("sta_psw", this.sta_au4a83);
-
-      // 請記得將php埋入跨域
       apiInstance({
         method: "post",
         url: `${import.meta.env.VITE_API_URL}/staffLogin.php`,
