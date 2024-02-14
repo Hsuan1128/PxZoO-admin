@@ -1,1 +1,22 @@
+.pages {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 33%;
+    bottom: 20px;
+    li{
+        padding: 0 22.5px;
+    }
+  }
+#animalRevise{
 
+    overflow: auto;
+    width: 73.64vw;
+    height: 90vh;
+    background-color: #f5efeb;
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%,-50%);
+    z-index: 10;
+}

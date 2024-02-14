@@ -29,3 +29,5 @@ vueApp.component('DatePicker', DatePicker)
 // vueApp.component('Badge', Badge)
 
 vueApp.mount("#app");
+
+
