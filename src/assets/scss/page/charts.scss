@@ -43,14 +43,11 @@
     section{
         padding: 8px;
     }
-    // >section:nth-of-type(odd){
-    //     background-color: $inputColor;
-    // }
 }
 .chartsHead, .chartsBody section{
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    // gap: 20px;
     >*{
         // width: 100px;
     }
@@ -63,10 +60,19 @@
     section{
         cursor: pointer;
         width: 100%;
-        border-bottom: 1px solid #e8eaec;
+        // border-bottom: 1px solid #e8eaec;
+        background-color: $inputColor;
+    }
+    section+section{
+        border-left: 1px solid #e8eaec;
     }
 }
+.staffArea .charts .chartsBody{
+    height: max-content; //為了蓋掉舊框架
+}
 .chartsBody{
+    border: 1px solid #e8eaec;
+
     table{
         width: 50%;
         height: max-content;
@@ -88,12 +94,15 @@
         width: 100px;
         font-weight: 400;
     }
-    td{
-        padding-right: 20px;
-        @include pcMarkText;
+    td{ padding-right: 20px; }
+    tbody *{
+        vertical-align: bottom;
     }
     thead th:not(:first-of-type), td{
         padding-right: 20px;
+    }
+    td, thead th:not(:first-of-type)thead span{
+        @include pcMarkText;
     }
 
     main{ // 之後換成圖

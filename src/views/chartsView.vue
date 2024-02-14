@@ -8,7 +8,7 @@
           <Space size="large" wrap>
             <DatePicker type="daterange"
             :start-date="new Date()"
-            :options="options1"  
+            :options="dateOP1"  
             :editable="false" 
             format="yyyy/MM/dd" 
             placement="bottom-end" 
@@ -20,7 +20,7 @@
 
             <DatePicker type="daterange"
             :start-date="new Date()"
-            :options="options2"  
+            :options="dateOP2"  
             :editable="false" 
             format="yyyy/MM/dd" 
             placement="bottom-end" 
@@ -36,53 +36,29 @@
           <section class="people" @click="toggle('people')">
             <div>
               入園人數
-              <span>{{ peopleOpen ? "▼" : "▲" }}</span>
+              <span>{{ open1 ? "▼" : "▲" }}</span>
             </div>
-            
-            <p><span> 300 </span>人</p>
-
-            <div class="empty">
-              <!-- 匯入
-              select ticktype, sum(qty) orders
-              where tidate=selected
-              group by ticktype
-              join orders_detail -->
-            </div>
+            <p><span> {{this.datePickers[1].totalPeople}} </span>人</p>
           </section>
           
           <section class="tiqty" @click="toggle('tiqty')">
             <div>
               票種統計
-              <span>{{ tiqtyOpen ? "▼" : "▲" }}</span>
+              <span>{{ open2 ? "▼" : "▲" }}</span>
             </div>
             <p><span> 300 </span>張</p>
-
-            <div class="empty">
-              <!-- 匯入
-              select tiname, sum(qty)
-              from orders
-              where tidate=selected
-              group by tiname
-              join tickets
-              join orders_detail  -->
-            </div>
           </section>
 
           <section class="money" @click="toggle('money')">
             <div>
               銷售金額
-              <span>{{ moneyOpen ? "▼" : "▲" }}</span>
+              <span>{{ open3 ? "▼" : "▲" }}</span>
             </div>
             <p><span> 5670 </span>元</p>
-            <div class="empty">
-              <!-- 匯入
-              select sum(tiprice), sum(couprice), sum(payprice)
-              from orders
-              where tidate=selected -->
-            </div>
           </section>
       </div>
       <div class="formArea chartsBody">
+
         <section class="people" v-show="peopleOpen">
           <table>
             <caption>入園人數</caption>
@@ -91,128 +67,35 @@
                 <th>統計日期</th>
                 <th class="option1">
                   {{this.datePickers[1].startDateData}}
-                  <span v-show="this.datePickers[1].startDateData !== this.datePickers[1].endDateData">
-                    <br v-if="comparison"> - {{this.datePickers[1].endDateData}}
+                  <span v-show="dateArr1">
+                     - {{this.datePickers[1].endDateData}}
                   </span>
                 </th>
                 <th class="option2" v-show="comparison">
                   {{this.datePickers[2].startDateData}}
-                  <span v-show="this.datePickers[2].startDateData !== this.datePickers[2].endDateData">
-                    <br>
+                  <span v-show="dateArr2">
                      - {{this.datePickers[2].endDateData}}
                   </span>
                 </th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <th>實體票券</th>
-                <td><span> 300 </span>人</td>
-                <td v-show="comparison"><span> 400 </span>人</td>
-              </tr>
-              <tr>
-                <th>數位票券</th>
-                <td><span> 570 </span>人</td>
-                <td v-show="comparison"><span> 420 </span>人</td>
-              </tr>
-            </tbody>
+          <tbody>
+            <tr>
+              <th>實體票券</th>
+              <td><span> {{this.datePickers[1].totalDigitalTicket}} </span>人</td>
+              <td v-show="comparison"><span> {{this.datePickers[2].totalDigitalTicket}} </span>人</td>
+            </tr>
+            <tr>
+              <th>數位票券</th>
+              <td><span> {{this.datePickers[1].totalEntityTicket}} </span>人</td>
+              <td v-show="comparison"><span> {{this.datePickers[2].totalEntityTicket}} </span>人</td>
+            </tr>
+
+          </tbody>
           </table>
           <main>我是圖表</main>
         </section>
 
-        <section class="tiqty" v-show="tiqtyOpen">
-          <table>
-            <caption>票種統計</caption>
-            <thead>
-              <tr>
-                <th>統計日期</th>
-                <th class="option1">
-                  {{this.datePickers[1].startDateData}}
-                  <span v-show="this.datePickers[1].startDateData !== this.datePickers[1].endDateData">
-                    <br v-if="comparison"> - {{this.datePickers[1].endDateData}}
-                  </span>
-                </th>
-                <th class="option2" v-show="comparison">
-                  {{this.datePickers[2].startDateData}}
-                  <span v-show="this.datePickers[2].startDateData !== this.datePickers[2].endDateData">
-                    <br>
-                     - {{this.datePickers[2].endDateData}}
-                  </span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>成人票</th>
-                <td><span> 300 </span>張</td>
-                <td v-show="comparison"><span> 400 </span>張</td>
-              </tr>
-              <tr>
-                <th>學生票</th>
-                <td><span> 120 </span>張</td>
-                <td v-show="comparison"><span> 30 </span>張</td>
-              </tr>
-              <tr>
-                <th>團體票</th>
-                <td><span> 450 </span>張</td>
-                <td v-show="comparison"><span> 320 </span>張</td>
-              </tr>
-              <tr>
-                <th>兒童票</th>
-                <td><span> 12 </span>張</td>
-                <td v-show="comparison"><span> 93 </span>張</td>
-              </tr>
-              <tr>
-                <th>愛心票</th>
-                <td><span> 15 </span>張</td>
-                <td v-show="comparison"><span> 40 </span>張</td>
-              </tr>
-            </tbody>
-          </table>
-          <main>我是圖表</main>
-        </section>
-
-        <section class="money" v-show="moneyOpen">
-          <table>
-            <caption>銷售金額</caption>
-            <thead>
-              <tr>
-                <th>統計日期</th>
-                <th class="option1">
-                  {{this.datePickers[1].startDateData}}
-                  <span v-show="this.datePickers[1].startDateData !== this.datePickers[1].endDateData">
-                    <br v-if="comparison"> - {{this.datePickers[1].endDateData}}
-                  </span>
-                </th>
-                <th class="option2" v-show="comparison">
-                  {{this.datePickers[2].startDateData}}
-                  <span v-show="this.datePickers[2].startDateData !== this.datePickers[2].endDateData">
-                    <br>
-                     - {{this.datePickers[2].endDateData}}
-                  </span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>付款金額</th>
-                <td><span> 5670 </span>元</td>
-                <td v-show="comparison"><span> 7890 </span>元</td>
-              </tr>
-              <tr>
-                <th>票券金額</th>
-                <td><span> 1310 </span>元</td>
-                <td v-show="comparison"><span> 9230 </span>元</td>
-              </tr>
-              <tr>
-                <th>優惠金額</th>
-                <td><span> 150 </span>元</td>
-                <td v-show="comparison"><span> 470 </span>元</td>
-              </tr>
-            </tbody>
-          </table>
-          <main>我是圖表</main>
-        </section>
       </div>
     </div>
       
@@ -221,6 +104,7 @@
 </template>
   
 <script>
+import axios from 'axios';
 import sidebar from "@/components/sidebar.vue";
 import grass from "@/components/grass.vue";
 // import { stringifyQuery } from "vue-router";
@@ -232,60 +116,19 @@ export default {
   },
   data() {
     return {
-      options1: {
-        shortcuts: [
-          {
-            text: '今日',
-            value () {
-              return [new Date(), new Date()];
-            },
-          },
-          {
-            text: '昨日',
-            value () {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-                return [date, date];
-            },
-          },
-          {
-            text: '明日',
-            value () {
-              const date = new Date();
-              date.setTime(date.getTime() + 3600 * 1000 * 24);
-                return [date, date];
-            },
-          },
-          {
-            text: '過去 7 天',
-            value () {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              return [start, end];
-            }
-          },
-          {
-            text: '過去 30 天',
-            value () {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              return [start, end];
-            }
-          },
-          {
-            text: '過去 90 天',
-            value () {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              return [start, end];
-            }
-          }
-        ]
+      dateOP1: {
+        shortcuts: Array.from({ length: 12 }, (_, i) => {
+          const start = new Date();
+          start.setMonth(i, 1); // 設定為該月的第一天
+          const end = new Date();
+          end.setMonth(i + 1, 0); // 設定為該月的最後一天
+          return {
+            text: `今年 ${i + 1}月`,
+            value: () => [start, end],
+          };
+        }),
       },
-      options2: {
+      dateOP2: {
         shortcuts: [
           {
             text: '今日',
@@ -344,27 +187,68 @@ export default {
           endDate: new Date(),
           startDateData: null,
           endDateData: null,
+          people1: {},
+          tiqty1: {},
+          money1: {},
+          totalDigitalTicket: 0,
+          totalEntityTicket: 0,
+          totalPeople: 0,
+
         },
         2: {
           startDate: new Date(),
           endDate: new Date(),
           startDateData: null,
           endDateData: null,
+          people2: {},
+          tiqty2: {},
+          money2: {},
+          totalDigitalTicket: 0,
+          totalEntityTicket: 0,
         },
       },
       comparison: false,
       peopleOpen: true,
-      tiqtyOpen: false,
-      moneyOpen: false,
+      open1: true,
+      open2: false,
+      open3: false,
     }
   },
   methods: {
+    fetchChartData(num) {
+      // 取得訂單明細資料
+      axios.get(`${import.meta.env.VITE_API_URL}/chartsQtyShow.php`, {
+        params: {
+          startDate: this.datePickers[num].startDate.toLocaleDateString('en-CA'),
+          endDate: this.datePickers[num].endDate.toLocaleDateString('en-CA'),
+        }
+      })
+      .then(response => {
+        // console.log('response',response);
+        
+        this.datePickers[num][`people${num}`] = response.data.result1;
+        // console.log(typeof response.data.result1);
+        console.log('人', this.datePickers[1]['people1']);
+        // console.log('人0', this.datePickers[1]['people1'][0]);
+        // console.log('typeof',typeof this.datePickers[1]['people1']);
+        this.datePickers[num][`tiqty${num}`] = response.data.result2;
+        this.datePickers[num][`money${num}`] = response.data.result3;
+        this.getChartData(num);
+        // console.log('chartData', this.datePickers[num].chartData);
+        // this.tiqtyData = response.result2;
+        // console.log(this.chartData);
+        // console.log(this.tiqtyData);
+      })
+      .catch(error => {
+        console.error("Error fetching data: ", error);
+      })
+    },
     toggle(chart){
-      this[`${chart}Open`] = true; //模板字面量
-      let chartArr = ['people', 'tiqty', 'money'];
-      chartArr.forEach(string => {
-        if(string !== chart){
-          this[`${string}Open`] = false;
+      this[`open${chart}`] = true; //模板字面量
+      let chartArr = [1,2,3];
+      chartArr.forEach(num => {
+        if(num !== chart){
+          this[`open${chart}`] = false;
         }
       })
     },
@@ -377,27 +261,24 @@ export default {
       });
     },
     clearDate(num){
-      // const picker = this.datepickers[num];
       this.datePickers[num].startDate=new Date();
       this.datePickers[num].endDate=new Date();
       
       this.datePickers[num].startDateData=this.initDateData();
       this.datePickers[num].endDateData=this.initDateData();
-      // console.log(this.startDate1, this.endDate1, this.startDateData1, this.endDateData1);
+
+      this.datePickers[num].totalDigitalTicket=0;
+      this.datePickers[num].totalEntityTicket=0;
+      this.datePickers[num].totalPeople=0;
+
     },
     getDateComputed(num, value){
-      console.log(value);
-      console.log('datepickers', this.datePickers);
+      // console.log(value);
+      // console.log('datepickers', this.datePickers);
 
       if (value.length === 2 && value[0] instanceof Date && value[1] instanceof Date){
-        // console.log("true");
-      //   // const picker = this.datepickers[num];
-      //   // console.log("value", value);
         this.datePickers[num].startDate=value[0];
         this.datePickers[num].endDate=value[1];
-
-      //   // console.log("startDate", this.startDate);
-      //   // console.log("endDate", this.endDate);
 
         this.datePickers[num].startDateData=value[0].toLocaleDateString('zh-TW', {
           year: 'numeric',
@@ -409,8 +290,6 @@ export default {
           month: '2-digit',
           day: '2-digit',
         });
-      //   // console.log("startDateData", this.startDateData);
-      //   // console.log("endDateData", this.endDateData);
       }
     },
     dateChange(){
@@ -418,13 +297,33 @@ export default {
         this.comparison = true;
       }else{ this.comparison = false; }
     },
+    getChartData(num){
+      console.log("get");
+      
+      // this.clearDate(num);
+
+      this.datePickers[num][`people${num}`].forEach(item => {
+        this.datePickers[num].totalDigitalTicket += parseInt(item.digitalTicket, 10);
+        this.datePickers[num].totalEntityTicket += parseInt(item.entityTicket, 10);
+        
+      // console.log( this.datePickers[num].totalDigitalTicket, this.datePickers[num].totalEntityTicket);
+      });
+      this.datePickers[num].totalPeople = this.datePickers[num].totalDigitalTicket + this.datePickers[num].totalEntityTicket;
+    }
   },
   computed:{
+    dateArr1(){
+      return this.datePickers[1].startDateData !== this.datePickers[1].endDateData;
+    },
+    dateArr2(){
+      return this.datePickers[2].startDateData !== this.datePickers[2].endDateData;
+    },
     date1: {
       get() {},
       set(value) {
         this.getDateComputed(1, value);
         this.dateChange();
+        this.fetchChartData(1);
       },
     },
     date2: {
@@ -432,19 +331,23 @@ export default {
       set(value) {
         this.getDateComputed(2, value);
         this.dateChange();
+        this.fetchChartData(2);
       },
     },
   },
   created(){
+    // datePicker init
     for (let i = 1; i <=  Object.keys(this.datePickers).length; i++) {
-      // const picker = ;
-      // console.log(`第${i}組開始日期`, picker);
+      // 連接資料庫
+      this.fetchChartData(i);
+
+      // console.log('init', this.datePickers[i].startDate);
+      // console.log('init', this.datePickers[i].startDate.toLocaleDateString('en-CA'));
 
       this.datePickers[i].startDateData = this.initDateData();
-
-      // console.log(`第${i}組初始後`, picker.startDateData);
       this.datePickers[i].endDateData = this.initDateData();
     }
+
   },
 };
 </script>
