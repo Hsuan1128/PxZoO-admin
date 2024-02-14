@@ -52,7 +52,7 @@
             </div>
             
             <div class="Revise_btns">
-                <button v-show="ordStatus && this.orderData.ord_status !== this.alterStatus" class="defaultBtn pcInnerText" @click="orderSave">
+                <button v-show="ordStatus && this.alterStatus !==false" class="defaultBtn pcInnerText" @click="orderSave">
                     儲存
                     <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                 </button>
@@ -107,16 +107,17 @@ export default {
         },
         closeRevise() {
             console.log('tests',this.alterStatus);
-            if(this.alterStatus !== '' && this.orderData.ord_altertime === null){
+            console.log('tests',this.orderData.ord_altertime);
+
+            if(this.alterStatus !== false && this.orderData.ord_altertime === null){
                 this.openConfirm=true;
             }else{
                 this.$emit('closeRevise', false);
             }
-            console.log('testf',this.alterStatus);
         },
         updateAlterStatus(){
-            this.alterStatus='';
-            this.closeRevise();
+            this.alterStatus=false;
+            this.$emit('closeRevise', false);
         },
     },
     computed:{
@@ -127,13 +128,23 @@ export default {
             return `票卷金額 ${this.orderData.ord_tiprice} 元 / 優惠金額 ${this.orderData.ord_couprice} 元 / 付款金額 ${this.orderData.ord_payprice} 元`;
         },
         ordStatus(){
-            return this.orderData.ord_status.includes("未");
+            const today = new Date();
+            const currentHour = today.getHours();
+
+            if(currentHour>=17){
+                today.setDate(today.getDate() + 1);
+            }
+
+            today.setHours(0, 0, 0, 0);
+
+            return (this.orderData.ord_status.includes("未") && new Date(this.orderData.ord_tidate) >= today);
         },
         formattedOrderDetailAlter(){
             return `${this.orderData.sta_pos} ${this.orderData.ord_altertime} 更新`;
         },
     },
     created(){
+        console.log(this.alterStatus, this.orderData.ord_status);    
     },
 };
 </script>

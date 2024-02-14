@@ -39,10 +39,10 @@ export default {
       return this.statusData.replace("未","已");
     },
     bindStatus(){
-      console.log('os: bindStatus', this.value ? this.statusData : this.reverseStatus);
-      console.log('newStatus', this.value ? this.statusData : this.reverseStatus);
-      
-      this.$emit('newStatus', this.value ? this.statusData : this.reverseStatus);
+      // 修改後才傳送值
+      if(!this.value){
+        this.$emit('newStatus', this.reverseStatus);
+      }
     },
   },
 };
