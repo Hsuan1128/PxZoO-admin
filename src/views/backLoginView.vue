@@ -34,15 +34,20 @@
           />
         </div>
 
-        <input type="text" placeholder="帳號" class="account" />
+        <input
+          type="text"
+          placeholder="帳號"
+          class="account"
+          v-model="sta_acc"
+        />
       </div>
       <div class="psw">
         <div class="img">
           <img src="@/assets/images/login/icon/psw.svg" alt="psw" class="psw" />
         </div>
-        <input type="password" placeholder="密碼" />
+        <input type="password" placeholder="密碼" v-model="sta_au4a83" />
       </div>
-      <button type="submit" class="defaultBtn pcInnerText" @click="toMainPage">
+      <button type="submit" class="defaultBtn pcInnerText" @click="staffLogin">
         登入
         <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
       </button>
@@ -79,13 +84,67 @@
 </template>
 
 <script>
+import { mapActions } from "pinia";
+import userStore from "@/stores/auth";
+import apiInstance from "@/stores/acc";
 export default {
   data() {
-    return {};
+    return {
+      sta_acc: "",
+      sta_au4a83: "",
+    };
+  },
+  computed: {
+    accPswChick() {
+      return this.sta_acc !== "" && this.sta_au4a83 !== "";
+    },
   },
   methods: {
+    ...mapActions(userStore, [
+      "updateToken",
+      "updateName",
+      "checkLogin",
+      "updateUserData",
+    ]),
     toMainPage() {
       this.$router.push("home");
+    },
+    staffLogin() {
+      const self = this;
+      const bodyFormData = new FormData();
+      bodyFormData.append("sta_acc", this.sta_acc);
+      bodyFormData.append("sta_psw", this.sta_au4a83);
+
+      // 請記得將php埋入跨域
+      apiInstance({
+        method: "post",
+        url: `${import.meta.env.VITE_API_URL}/staffLogin.php`,
+        headers: { "Content-Type": "multipart/form-data" },
+        data: bodyFormData,
+      })
+        .then((res) => {
+          console.log(res);
+          if (res && res.data) {
+            if (res.data.code == 1) {
+              self.updateToken(res.data.session_id);
+              self.updateUserData(res.data.staInfo);
+              alert(res.data.staInfo.sta_pos + " 歡迎登入");
+              self.$router.push({
+                name: "home",
+                params: { position: res.data.staInfo.sta_pos },
+              });
+            } else if (self.sta_acc == "") {
+              alert("請輸入帳號");
+            } else if (self.sta_au4a83 == "") {
+              alert("請輸入密碼");
+            } else {
+              alert("登入失敗");
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

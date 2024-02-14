@@ -23,9 +23,6 @@
             <Switch v-model="row.active" />
           </template>
         </Table>
-        <template>
-          <Page :total="100" />
-        </template>
       </div>
     </div>
     <grass />
