@@ -49,12 +49,14 @@
           <Page :total="100" />
         </template>
       </div>
-      <div class="add">
-        <img src="@/assets/images/formicon/plus.svg" alt="add" class="add" />
-
+      <div class="add" @click="addSwitch = !addSwitch">
+        <img src="@/assets/images/formicon/plus.svg" alt="add" class="add">
         <p class="pcInnerText">新增</p>
       </div>
     </div>
+    
+    <newsadd v-show="addSwitch" :addSwitch="addSwitch" @update-switch="addSwitch = $event" />
+
     <grass />
   </section>
 </template>
@@ -65,9 +67,11 @@ import Switch from "@/components/switchShelves.vue";
 import grass from "@/components/grass.vue";
 import { Table, Page } from "view-ui-plus";
 import axios from 'axios';
+import newsadd from "@/components/newsAdd.vue";
 export default {
   data() {
     return {
+      addSwitch: false,
       columns: [
         {
           title: "編號",
@@ -137,11 +141,30 @@ export default {
         },
       ],
       data: [],
+      rowdata: [],
     };
   },
   methods: {
+    updateaddSwitch(newValue) {
+      this.addSwitch = newValue;
+      this.$emit('change', this.addSwitch);
+    },
     remove(index) {
-      this.data.splice(index, 1);
+      const rowData = this.data[index]; // 獲取要刪除的資料列
+      const news_id = rowData.news_id; // 假設資料中有一個名為 news_id 的欄位作為唯一標識
+
+      // 向後端發送 DELETE 請求
+      axios.delete(`${import.meta.env.VITE_API_URL}/newsDelete.php`, {
+        data: { id: news_id } // 傳遞要刪除的資料列的 ID
+      })
+        .then(response => {
+          // 成功刪除後處理前端資料
+          this.data.splice(index, 1);
+          console.log("資料已成功刪除");
+        })
+        .catch(error => {
+          console.error("刪除資料時發生錯誤: ", error);
+        });
     },
   },
   components: {
@@ -149,6 +172,7 @@ export default {
     Switch,
     grass,
     Table,
+    newsadd,
   },
   created() {
     // axios.get(`${import.meta.env.VITE_API_URL}/ticketsShow.php`)

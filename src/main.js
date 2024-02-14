@@ -29,3 +29,5 @@ vueApp.component('Switch', Switch)
 // vueApp.component('Badge', Badge)
 
 vueApp.mount("#app");
+
+

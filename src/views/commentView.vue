@@ -78,7 +78,7 @@ export default {
         {
           title: "留言內容",
           key: "com_text",
-          width: 450,
+          
           align: "left",
         },
         {
@@ -90,7 +90,7 @@ export default {
         {
           title: "留言時間",
           key: "com_date",
-          width: 180,
+          width: 200,
           align: "left",
         },
         {
@@ -112,6 +112,7 @@ export default {
     remove(index) {
       this.data.splice(index, 1);
     },
+    
   },
   components: {
     sidebar,
