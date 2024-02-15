@@ -138,7 +138,7 @@ export default {
     .then(response => {
       this.data = response.data; // 假設返回的數據是一個數組
       this.total = this.data.length;
-      console.log(this.data);
+      // console.log(this.data);
       this.updateCurrentPageData();
     })
     .catch(error => {
@@ -196,6 +196,7 @@ export default {
     AnimalModification(row){
       this.ReviseSwitch = !this.ReviseSwitch
       this.rowdata = row;
+      
     }
   },
   components: {
