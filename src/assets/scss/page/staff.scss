@@ -26,7 +26,6 @@
         height: 30px;
         gap: 15px;
         .search {
-          cursor: pointer;
           border: transparent;
           background-color: #fff;
         }
@@ -51,6 +50,7 @@
             border: transparent;
             display: flex;
             align-items: center;
+            padding-right: 8px;
           }
         }
       }
