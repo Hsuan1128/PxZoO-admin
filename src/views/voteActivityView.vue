@@ -23,7 +23,7 @@
             <Switch v-model="row.active" />
           </template>
           <template #action="{ row, index }">
-            <Button type="primary" class="trash" size="small" style="margin-right: 5px" @click="show(index)"><img
+            <Button type="primary" class="trash" size="small" style="margin-right: 5px" @click="voteActivityModification(row)"><img
                 src="../assets/images/formicon/revise.svg" alt="" /></Button>
             <Button type="error" class="trash" size="small" @click="remove(index)"><img
                 src="../assets/images/formicon/delete.svg" alt="" /></Button></template>
@@ -38,21 +38,26 @@
       </div>
     </div>
     <voteActivityadd v-show="addSwitch" :addSwitch="addSwitch" @update-switch="addSwitch = $event" />
+    <voteActivityRevise v-show="ReviseSwitch" :rowdata="rowdata" :ReviseSwitch="ReviseSwitch"
+      @update-switch="ReviseSwitch = $event" />
     <grass />
   </section>
 </template>
 
 <script>
+
 import sidebar from "@/components/sidebar.vue";
 import Switch from "@/components/switchShelves.vue";
 import grass from "@/components/grass.vue";
 import { Table, Page } from "view-ui-plus";
 import axios from 'axios'; // 導入axios套件
 import voteActivityadd from "@/components/voteActivityadd.vue";
+import voteActivityRevise from "@/components/voteActivityRevise.vue";
 export default {
   data() {
     return {
       addSwitch: false,
+      reviseSwitch: false,
       columns: [
         {
           title: "編號",
@@ -114,12 +119,17 @@ export default {
 
 
       ],
+      rowdata: []
     };
   },
   methods: {
     updateaddSwitch(newValue) {
       this.addSwitch = newValue;
       this.$emit('change', this.addSwitch);
+    },
+    voteActivityModification(row) {
+      this.ReviseSwitch = !this.ReviseSwitch
+      this.rowdata = row;
     },
     remove(index) {
       const rowData = this.data[index]; // 獲取要刪除的資料列
@@ -144,7 +154,8 @@ export default {
     Switch,
     grass,
     Table,
-    voteActivityadd
+    voteActivityadd,
+    voteActivityRevise
   },
   created() {
     axios.get(`${import.meta.env.VITE_API_URL}/voteActivityshow.php`)
