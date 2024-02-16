@@ -111,7 +111,7 @@ export default {
           align: "left",
         },
         {
-          title: "刪改",
+          title: "修改",
           slot: "action",
           width: 110,
           align: "center",
@@ -155,7 +155,11 @@ export default {
       this.data.splice(index, 1);
     },
     handleChangePage(page) {
+     // 當使用者改變當前頁面時，這個函數被呼叫。
+    // page 參數代表使用者所選擇的新頁碼。
     this.currentPage = page;
+
+    // 重新從數據源（可能是伺服器或其他地方）獲取新頁碼的資料，以便更新顯示在頁面上。
 
     axios.get(`${import.meta.env.VITE_API_URL}/animalShow.php?type=animals`)
     .then(response => {
@@ -172,6 +176,7 @@ export default {
         .then(response => {
           this.data = response.data;
           this.total = this.data.length;
+          this.currentPage = 1
           this.updateCurrentPageData();
         })
         .catch(error => {
@@ -180,8 +185,13 @@ export default {
   },
 
   updateCurrentPageData() {
+     // 這個函數用來更新當前頁面所顯示的資料
+
+      // 計算起始索引 (startIndex) 和結束索引
+      // 這些索引表示當前頁面在整個資料陣列中的範圍。
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
+        // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
       this.currentPageData = this.data.slice(startIndex, endIndex);
     },
     //新增資料
