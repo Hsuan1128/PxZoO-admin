@@ -32,8 +32,7 @@ export default {
       value: true,
     };
   },
-  methods:{
-  },
+  methods:{ },
   computed:{
     reverseStatus(){
       return this.statusData.replace("未","已");

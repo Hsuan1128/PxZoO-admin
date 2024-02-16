@@ -10,12 +10,9 @@ vueApp.use(router);
 
 import { 
     Button, Table, Page, Space, Switch, DatePicker
-    
-    // Input, Select, Option, Upload, InputNumber, Badge,
 } from 'view-ui-plus';
 import "view-ui-plus/dist/styles/viewuiplus.css";
 
-// import ViewUIPlus from "view-ui-plus";
 import App from "./App.vue";
 import router from "./router";
 
@@ -25,8 +22,6 @@ vueApp.component('Page', Page)
 vueApp.component('Space', Space)
 vueApp.component('Switch', Switch)
 vueApp.component('DatePicker', DatePicker)
-// vueApp.component('InputNumber', InputNumber)
-// vueApp.component('Badge', Badge)
 
 vueApp.mount("#app");
 
