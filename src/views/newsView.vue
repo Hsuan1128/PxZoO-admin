@@ -34,7 +34,7 @@
               class="trash"
               size="small"
               style="margin-right: 5px"
-              @click="show(index)"
+              @click="NewsModification(row)"
               ><img src="../assets/images/formicon/revise.svg" alt=""
             /></Button>
             <Button
@@ -55,6 +55,9 @@
       </div>
     </div>
     
+    <newsrevise v-show="ReviseSwitch" :rowdata="rowdata" :ReviseSwitch="ReviseSwitch"
+      @update-switch="ReviseSwitch = $event" />
+
     <newsadd v-show="addSwitch" :addSwitch="addSwitch" @update-switch="addSwitch = $event" />
 
     <grass />
@@ -68,10 +71,12 @@ import grass from "@/components/grass.vue";
 import { Table, Page } from "view-ui-plus";
 import axios from 'axios';
 import newsadd from "@/components/newsAdd.vue";
+import newsrevise from "@/components/newsRevise.vue";
 export default {
   data() {
     return {
       addSwitch: false,
+      ReviseSwitch: false,
       columns: [
         {
           title: "編號",
@@ -149,6 +154,10 @@ export default {
       this.addSwitch = newValue;
       this.$emit('change', this.addSwitch);
     },
+    NewsModification(row) {
+      this.ReviseSwitch = !this.ReviseSwitch
+      this.rowdata = row;
+    },
     remove(index) {
       const rowData = this.data[index]; // 獲取要刪除的資料列
       const news_id = rowData.news_id; // 假設資料中有一個名為 news_id 的欄位作為唯一標識
@@ -173,6 +182,7 @@ export default {
     grass,
     Table,
     newsadd,
+    newsrevise,
   },
   created() {
     // axios.get(`${import.meta.env.VITE_API_URL}/ticketsShow.php`)
