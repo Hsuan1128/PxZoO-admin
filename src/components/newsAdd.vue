@@ -9,8 +9,13 @@
           </div>
 
           <div class="newsadd_content_align">
-              <label for="" class="pcInnerText">消息分類</label>
-              <input type="text" placeholder="請輸入消息分類"  v-model="formData.news_type">
+            <label for="" class="pcInnerText">消息分類</label>
+            <select name="newstype" id="news-select" v-model="formData.news_type">
+              <option value="">請選擇消息分類</option>
+              <option value="最新活動">最新活動</option>
+              <option value="園區動態">園區動態</option>
+              <option value="動物知識">動物知識</option>
+            </select>
           </div>
 
           <div class="newsadd_content_align">

@@ -8,7 +8,7 @@
       </div>
       <div class="staInput">
         <label for="">信箱:</label>
-        <input type="text" v-model="sta_email" />
+        <input type="email" v-model="sta_email" />
       </div>
       <div class="staInput">
         <label for="">帳號:</label>
@@ -46,34 +46,48 @@ export default {
     };
   },
   methods: {
+    isValidEmail(email) {
+      // 电子邮件地址的正则表达式
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return emailRegex.test(email);
+    },
     addStaffInfo() {
-      const bodyFormData = new FormData();
-      bodyFormData.append("sta_pos", this.sta_pos);
-      bodyFormData.append("sta_email", this.sta_email);
-      bodyFormData.append("sta_acc", this.sta_acc);
-      bodyFormData.append("sta_psw", this.sta_psw);
-      apiInstance({
-        method: "post",
-        url: `${import.meta.env.VITE_API_URL}/addStaff.php`,
-        headers: { "Content-Type": "multipart/form-data" },
-        data: bodyFormData,
-      })
-        .then((res) => {
-          console.log(res);
-          if (res && res.data && res.data.msg === "success") {
-            alert("新增成功");
-            this.list = !this.list;
-            location.reload();
-          } else {
-            alert("新增失敗");
-          }
+      if (this.sta_email.trim() === "" || !this.isValidEmail(this.sta_email)) {
+        alert("請輸入信箱或檢查信箱格式");
+      } else if (this.sta_acc == "") {
+        alert("請輸入信箱");
+      } else if (this.sta_psw == "") {
+        alert("請輸入密碼");
+      } else {
+        const bodyFormData = new FormData();
+        bodyFormData.append("sta_pos", this.sta_pos);
+        bodyFormData.append("sta_email", this.sta_email);
+        bodyFormData.append("sta_acc", this.sta_acc);
+        bodyFormData.append("sta_psw", this.sta_psw);
+        apiInstance({
+          method: "post",
+          url: `${import.meta.env.VITE_API_URL}/staffAdd.php`,
+          headers: { "Content-Type": "multipart/form-data" },
+          data: bodyFormData,
         })
-        .catch((error) => {
-          console.log(error);
-        });
+          .then((res) => {
+            console.log(res);
+            if (res && res.data && res.data.msg === "success") {
+              alert("新增成功");
+              this.list = !this.list;
+              this.$emit("closeList");
+              location.reload();
+            } else {
+              alert("新增失敗");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
     listClose() {
-      this.list = false;
+      location.reload();
     },
   },
 };

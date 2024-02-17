@@ -5,50 +5,50 @@
         <div class="Revise_content">
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">題目內容</label>
-                <input type="text" v-model="question_text" :placeholder="rowdata.question_text">
+                <input type="text" v-model="rowdata.question_text" :placeholder="question_text">
             </div>
 
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">選項A</label>
-                <input type="text" v-model="question_option_a"  :placeholder="rowdata.question_option_a">
+                <input type="text" v-model="rowdata.question_option_a" :placeholder="question_option_a">
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">圖片A</label>
-                <input type="file" id="question_img_a"  placeholder="請上傳圖片" @change="handleFileChange('question_img_a', $event)">
+                <input type="file" id="question_img_a"  :placeholder="question_img_a" @change="handleFileChange('question_img_a', $event)">
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">選項B</label>
-                <input type="text" v-model="question_option_b" :placeholder="rowdata.question_option_b">
+                <input type="text" v-model="rowdata.question_option_b" :placeholder="question_option_b">
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">圖片B</label>
-                <input type="file" id="question_img_b" :placeholder="請上傳圖片" @change="handleFileChange('question_img_b', $event)">
+                <input type="file" id="question_img_b" :placeholder="rowdata.question_img_b" @change="handleFileChange('question_img_b', $event)">
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">選項C</label>
-                <input type="text" v-model="question_option_c" :placeholder="rowdata.question_option_c">
+                <input type="text" v-model="rowdata.question_option_c" :placeholder="question_option_c">
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">圖片C</label>
-                <input type="file" id="question_img_c" :placeholder="請上傳圖片" @change="handleFileChange('question_img_c', $event)">
+                <input type="file" id="question_img_c" :placeholder="rowdata.question_option_c" @change="handleFileChange('question_img_c', $event)">
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">選項D</label>
-                <input type="text" v-model="question_option_d" :placeholder="rowdata.question_option_d">
+                <input type="text" v-model="rowdata.question_option_d" :placeholder="question_option_d">
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">圖片D</label>
-                <input type="file" id="question_img_d" :placeholder="請上傳圖片" @change="handleFileChange('question_img_d', $event)">
+                <input type="file" id="question_img_d" :placeholder="rowdata.question_option_d" @change="handleFileChange('question_img_d', $event)">
             </div>
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">正確答案</label>
-                <input type="text" v-model="question_correctanswer" :placeholder="rowdata.question_correctanswer">
+                <input type="text" v-model="rowdata.question_correctanswer" :placeholder="question_correctanswer">
             </div>
 
 
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">解析</label>
-                <textarea class="Revise_textarea" v-model="question_answer_illustrate" :placeholder="rowdata.question_answer_illustrate"></textarea>
+                <textarea class="Revise_textarea" v-model="rowdata.question_answer_illustrate" :placeholder="question_answer_illustrate"></textarea>
             </div>
         </div>
 
@@ -83,6 +83,7 @@ export default {
         rowdata: {
             type: Object,
             required: true,
+           
         }
     },
     data() {
@@ -102,6 +103,7 @@ export default {
             question_img_d: '',
             question_correctanswer: '',
             question_answer_illustrate: '',
+            question_id: this.rowdata.question_id,
         } ,
             uploadImagePlaceholder: '請上傳圖片',
         };
@@ -111,20 +113,24 @@ export default {
             //從這個組件傳送控制修改彈窗的顯示/隱藏參數數值
             this.$emit('update-switch', !this.ReviseSwitch);
         },
-       handleFileChange(field, event) {
+        handleFileChange(field, event) {
     const file = event.target.files[0];
-    
-    // 如果圖片以 base64 格式存儲在資料庫中，可以直接賦值給對應的屬性
-    this[field] = URL.createObjectURL(file);
+    // 將文件資料保存到對應的 rowdata 屬性中
+    // 如果要保存檔案對象，您可以使用下面的代碼
+    // this.rowdata[field] = file;
 
-    // 如果需要其他格式，您可能需要使用 FileReader 來讀取文件內容並進行轉換
+    // 如果您只需要保存檔案名稱，請使用下面的代碼
+    this.rowdata[field] = file.name;
+
+    // 顯示上傳的文件名（或其他信息）
+    console.log(`${field} uploaded: ${file.name}`);
 },
         prepareConfirmData() {
             //把資料傳送到ticketsConfirm的組件
             this.confirmData = {
-                question_text: this.question_text,
-                question_option_a: this.question_option_a,
-                question_img_a: this.question_img_a,
+                question_text: this.rowdata.question_text,
+                question_option_a: this.rowdata.question_option_a,
+                question_img_a: this.rowdata.question_img_a,
                 question_option_b: this.rowdata.question_option_b,
                 question_img_b: this.rowdata.question_img_b,
                 question_option_c: this.rowdata.question_option_c,
@@ -138,17 +144,17 @@ export default {
         },
         questionRevise(){
             //判斷輸入資料的情況做出對應的行為
-            if (this.question_text && 
-                this.question_option_a && 
-                this.question_img_a &&
-                this.question_option_b &&
-                this.question_img_b &&
-                this.question_option_c &&
-                this.question_img_c &&
-                this.question_option_d &&
-                this.question_img_d &&
-                this.question_correctanswer &&
-                this.question_answer_illustrate ) {
+            // if (this.question_text && 
+            //     this.question_option_a && 
+            //     this.question_img_a &&
+            //     this.question_option_b &&
+            //     this.question_img_b &&
+            //     this.question_option_c &&
+            //     this.question_img_c &&
+            //     this.question_option_d &&
+            //     this.question_img_d &&
+            //     this.question_correctanswer &&
+            //     this.question_answer_illustrate ) {
                 if (this.rowdata.question_text != this.question_text || 
                     this.rowdata.question_option_a != this.question_option_a || 
                     this.rowdata.question_img_a != this.question_img_a || 
@@ -166,9 +172,9 @@ export default {
                 } else {
                     this.updateReviseSwitch();
                 }
-            } else {
-                alert("請填寫所有欄位");
-            }
+            // } else {
+            //     alert("請填寫所有欄位");
+            // }
         }
     },
     components: {
