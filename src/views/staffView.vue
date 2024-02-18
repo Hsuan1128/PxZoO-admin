@@ -1,7 +1,9 @@
 <template>
   <sidebar />
-  <!-- <input type="text" name="" id="test" v-model="userPosition" /> -->
-  <staAdd v-if="aa" />
+  <div class="add_list" v-if="addList">
+    <staAdd />
+  </div>
+
   <section class="staffArea">
     <div class="staffForm">
       <div class="titleSearch">
@@ -52,10 +54,17 @@
           src="@/assets/images/formicon/plus.svg"
           alt="add"
           class="add"
-          @click="showSta"
+          @click="openAddLsit"
         />
       </div>
     </div>
+    <!-- <staffRevise
+      v-show="ReviseSwitch"
+      :rowdata="rowdata"
+      :ReviseSwitch="ReviseSwitch"
+      @update-switch="ReviseSwitch = $event"
+    /> -->
+
     <grass />
   </section>
 </template>
@@ -65,11 +74,11 @@ import sidebar from "@/components/sidebar.vue";
 import Switch from "@/components/switch.vue";
 import grass from "@/components/grass.vue";
 import staAdd from "@/components/staffAdd.vue";
-import { Table, Page } from "view-ui-plus";
+import { Table } from "view-ui-plus";
 import axios from "axios";
-import apiInstance from "@/stores/acc";
 import { mapActions } from "pinia";
 import userStore from "@/stores/auth";
+// import staffRevise from "@/components/orders/ordersRevise.vue";
 export default {
   data() {
     return {
@@ -109,13 +118,14 @@ export default {
         },
         {
           title: "刪改",
+          width: 120,
           slot: "action",
           align: "center",
         },
       ],
       data: [],
       show: false,
-      aa: false,
+      addList: false,
       sta_id: "",
     };
   },
@@ -142,31 +152,8 @@ export default {
       "updateUserData",
       "updatePosition",
     ]),
-    staffDelete(dataId) {
-      apiInstance({
-        method: "post",
-        url: `${import.meta.env.VITE_API_URL}/deleteData.php`,
-        headers: { "Content-Type": "multipart/form-data" },
-        data: { sta_id: dataId },
-      })
-        .then((res) => {
-          console.log(res);
-          if (res && res.data) {
-            if (res.data.code == 1) {
-              alert("删除成功");
-              // 在这里可以执行其他操作，如更新界面等
-            } else {
-              alert("删除失败");
-            }
-          }
-        })
-        .catch((error) => {
-          console.error("出现错误:", error);
-        });
-    },
-
-    showSta() {
-      this.aa = !this.aa;
+    openAddLsit() {
+      this.addList = true;
     },
     delSta(row, index) {
       if (confirm("確定要刪除嗎?")) {
@@ -174,7 +161,7 @@ export default {
         formData.append("sta_id", row.sta_id);
 
         axios
-          .post(`${import.meta.env.VITE_API_URL}/deleteData.php`, formData)
+          .post(`${import.meta.env.VITE_API_URL}/staffDelete.php`, formData)
           .then((res) => {
             console.log(res);
             if (!res.data.error) {
@@ -195,6 +182,7 @@ export default {
     grass,
     Table,
     staAdd,
+    // staffRevise,
   },
 };
 </script>
@@ -210,8 +198,9 @@ export default {
 
   z-index: 10000;
 }
-/* 
-position: fixed;
+
+.add_list {
+  position: fixed;
   top: 0;
   right: 0;
   display: flex;
@@ -220,6 +209,7 @@ position: fixed;
   width: 100%;
   height: 100vh;
   backdrop-filter: blur(5px);
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 1000; */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
 </style>

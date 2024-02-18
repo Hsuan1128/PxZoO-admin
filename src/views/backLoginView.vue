@@ -94,10 +94,12 @@ export default {
       sta_au4a83: "",
     };
   },
-  computed: {
-    accPswChick() {
-      return this.sta_acc !== "" && this.sta_au4a83 !== "";
-    },
+  created() {
+    // 判斷有沒有登入過，如果沒有token等同於沒有登入
+    const user = this.checkLogin();
+    if (user) {
+      this.$router.push("/");
+    }
   },
   methods: {
     ...mapActions(userStore, [
@@ -110,39 +112,39 @@ export default {
       this.$router.push("home");
     },
     staffLogin() {
-      const self = this;
-      const bodyFormData = new FormData();
-      bodyFormData.append("sta_acc", this.sta_acc);
-      bodyFormData.append("sta_psw", this.sta_au4a83);
-      apiInstance({
-        method: "post",
-        url: `${import.meta.env.VITE_API_URL}/staffLogin.php`,
-        headers: { "Content-Type": "multipart/form-data" },
-        data: bodyFormData,
-      })
-        .then((res) => {
-          console.log(res);
-          if (res && res.data) {
-            if (res.data.code == 1) {
-              self.updateToken(res.data.session_id);
-              self.updateUserData(res.data.staInfo);
-              alert(res.data.staInfo.sta_pos + " 歡迎登入");
-              self.$router.push({
-                name: "home",
-                params: { position: res.data.staInfo.sta_pos },
-              });
-            } else if (self.sta_acc == "") {
-              alert("請輸入帳號");
-            } else if (self.sta_au4a83 == "") {
-              alert("請輸入密碼");
-            } else {
-              alert("登入失敗");
-            }
-          }
+      if (this.sta_acc == "") {
+        alert("請輸入帳號");
+      } else if (this.sta_au4a83 == "") {
+        alert("請輸入密碼");
+      } else {
+        const bodyFormData = new FormData();
+        bodyFormData.append("sta_acc", this.sta_acc);
+        bodyFormData.append("sta_psw", this.sta_au4a83);
+        apiInstance({
+          method: "post",
+          url: `${import.meta.env.VITE_API_URL}/staffLogin.php`,
+          headers: { "Content-Type": "multipart/form-data" },
+          data: bodyFormData,
         })
-        .catch((error) => {
-          console.log(error);
-        });
+          .then((res) => {
+            console.log(res);
+            if (res && res.data) {
+              if (res.data.code == 1) {
+                this.updateToken(res.data.session_id);
+                this.updateUserData(res.data.staInfo);
+                alert(res.data.staInfo.sta_pos + " 歡迎登入");
+                this.$router.push({
+                  name: "home",
+                });
+              } else {
+                alert("登入失敗");
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
 };
