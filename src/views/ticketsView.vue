@@ -37,9 +37,7 @@
 
 <script>
 import sidebar from "@/components/sidebar.vue";
-import Switch from "@/components/switch.vue";
 import grass from "@/components/grass.vue";
-import {Table} from "view-ui-plus";
 import ticketsRevise from "@/components/ticketsRevise.vue"
 import axios from 'axios';
 
@@ -69,7 +67,7 @@ export default {
         {
           title: "門票修改時間",
           key: "tickets_changetime",
-          width:170,
+          width:180,
         },
         {
           title: "刪改",
@@ -91,9 +89,7 @@ export default {
   },
   components: {
     sidebar,
-    Switch,
     grass,
-    Table,
     ticketsRevise,
   },
   created() {

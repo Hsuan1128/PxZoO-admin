@@ -53,7 +53,7 @@ import axios from 'axios';
                     //關閉修改的彈窗
                     this.$emit('trigger-update-revise-switch')
                     //重新整理頁面讓資料更新成更改後的
-                    window.location.reload();
+                    location.reload();
                 })
                 .catch(error => {
                     console.error('更新錯誤:', error);

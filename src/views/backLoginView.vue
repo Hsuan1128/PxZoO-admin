@@ -47,7 +47,7 @@
         </div>
         <input type="password" placeholder="密碼" v-model="sta_au4a83" />
       </div>
-      <button type="submit" class="defaultBtn pcInnerText" @click="toMainPage">
+      <button type="submit" class="defaultBtn pcInnerText" @click="staffLogin">
         登入
         <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
       </button>

@@ -5,17 +5,17 @@
             <div class="Revise_content">
                 <div class="Revise_content_align">
                     <label for="ticketsName" class="pcInnerText">門票名稱</label>
-                    <input v-model="editedTicketsName" type="text" :placeholder="rowdata.tickets_name">
+                    <input v-model="editedTicketsName" type="text">
                 </div>
     
                 <div class="Revise_content_align">
                     <label for="ticketsPrice" class="pcInnerText">門票價錢</label>
-                    <input v-model="editedTicketsPrice" type="text" :placeholder="rowdata.tickets_price">
+                    <input v-model="editedTicketsPrice" type="text">
                 </div>
     
                 <div class="Revise_content_align">
                     <label for="ticketsRule" class="pcInnerText">門票使用規則</label>
-                    <textarea v-model="editedTicketsRule" class="Revise_textarea" :placeholder="rowdata.tickets_rule" maxlength="10"></textarea>
+                    <textarea v-model="editedTicketsRule" class="Revise_textarea" maxlength="10"></textarea>
                 </div>
             </div>
             
@@ -59,6 +59,13 @@ export default {
             editedTicketsPrice: '',
             editedTicketsRule: ''
         };
+    },created() {
+    // 當組件創建時，使用 props 中的 rowdata 來設置 data 屬性
+        if (this.rowdata) {
+            this.editedTicketsName = this.rowdata.tickets_name;
+            this.editedTicketsPrice = this.rowdata.tickets_price;
+            this.editedTicketsRule = this.rowdata.tickets_rule;
+        }
     },
     methods: {
         updateReviseSwitch() {
