@@ -111,6 +111,7 @@ export default {
                 news_text_2: '',
                 news_text_3: '',
                 news_text_4: '',
+                news_id: this.rowdata.news_id,
             } ,
             uploadImagePlaceholder: '請上傳圖片',
         };
@@ -120,13 +121,18 @@ export default {
             //從這個組件傳送控制修改彈窗的顯示/隱藏參數數值
             this.$emit('update-switch', !this.ReviseSwitch);
         },
-            handleFileChange(field, event) {
+        handleFileChange(field, event) {
             const file = event.target.files[0];
             
-            // 如果圖片以 base64 格式存儲在資料庫中，可以直接賦值給對應的屬性
-            this[field] = URL.createObjectURL(file);
+            // 將文件資料保存到對應的 rowdata 屬性中
+            // 如果要保存檔案對象，您可以使用下面的代碼
+            // this.rowdata[field] = file;
 
-            // 如果需要其他格式，您可能需要使用 FileReader 來讀取文件內容並進行轉換
+            // 如果您只需要保存檔案名稱，請使用下面的代碼
+            this.rowdata[field] = file.name;
+
+            // 顯示上傳的文件名（或其他信息）
+            console.log(`${field} uploaded: ${file.name}`);
         },
         prepareConfirmData() {
             //把資料傳送到newsConfirm的組件
