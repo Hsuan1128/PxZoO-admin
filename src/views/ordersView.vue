@@ -43,7 +43,7 @@
     <ordersRevise 
     :orderData="selectedOrder" 
     :orderDetailData="orderDetail" 
-    @newDetail="updateDetail" 
+    @newDetail="fetchOrderUpdate" 
 
     @closeRevise="reviseToggle"
     v-if="showRevise"
@@ -165,22 +165,20 @@ export default {
       console.log(typeof this.orders);
       this.currentPageData = Object.values(this.orders).slice(startIndex, endIndex); // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
     },
-    fetchOrders(){
-      // 取得訂單資料
-      axios.get(`${import.meta.env.VITE_API_URL}/ordersShow.php`, {
+    async fetchOrders(){
+      try{ // 取得所有訂單資料
+        let response = await axios.get(`${import.meta.env.VITE_API_URL}/ordersShow.php`, {
         params:{
           searchTerm: this.searchTerm
         }
-      })
-      .then(response => {
+      });
         console.log('response.data', typeof response.data);
         this.orders = response.data;
         this.total = this.orders.length;
         this.updateCurrentPageData();
-      })
-      .catch(error => {
+      }catch(error){
         console.error("Error fetching data: ", error);
-      })
+      }
     },
     fetchOrderDetail(val) {
       // 取得訂單明細資料
@@ -204,10 +202,10 @@ export default {
     reviseToggle(bool){
       this.showRevise=bool;
     },
-    updateDetail(staff, status, bool){
+    fetchOrderUpdate(staff, status, bool){
       // 修改訂單明細
       // staff待串接
-      axios.post(`${import.meta.env.VITE_API_URL}/alterOrder.php`, {
+      axios.post(`${import.meta.env.VITE_API_URL}/fetchOrderUpdate.php`, {
         sta_id: staff,
         ord_status: status,
         ord_id: this.selectedOrder.ord_id,
@@ -241,8 +239,9 @@ export default {
       this.fetchOrders();
     }
   },
-  created(){
-    this.fetchOrders();
+  created: async function(){
+    // 等待 this.fetchOrders() 函數執行完成才created
+    await this.fetchOrders();
   },
 };
 </script>
