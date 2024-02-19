@@ -18,15 +18,15 @@
               </label>
             <select name="category" placeholder="請選擇館別名稱" v-model="formData.category_name" id="category">
               <option value="" disabled hidden>請選擇館別名稱</option>
-              <option v-for="category in categories">{{category.category_name}}</option>
+              <option v-for="category in categoriesName">{{category}}</option>
             </select>
           </div>
           <!-- 改下拉 -->
           <div class="questionadd_content_align">
               <label for="" class="pcInnerText">館別位置</label>
-              <select name="location" placeholder="請選擇館別名稱" v-model="formData.location_name" id="location">
+              <select name="location" placeholder="請選擇館別位置" v-model="formData.location_name" id="location">
               <option value="" disabled hidden>請選擇館別位置</option>
-              <option v-for="animal in animalData">{{animal.location_name}}</option>
+              <option v-for="location in selectlocation">{{location.location_name}}</option>
             </select>
           </div>
           <!-- 改日期選擇 -->
@@ -143,21 +143,35 @@ export default {
       },
       //位置資訊
       categories: [],
-      ConfirmSwitch:false 
-       
+      categoriesName: ["草原之聲","極地秘境","叢林奇蹟","鳥園樂章","海洋奇觀"],
+      selectlocation:[],
+      ConfirmSwitch:false,
   };
   },
   created() {
-    axios.get(`${import.meta.env.VITE_API_URL}/animalShow.php?type=categories`)
+    axios.get(`${import.meta.env.VITE_API_URL}/locationShow.php`)
     .then(response => {
       this.categories = response.data; // 假設返回的數據是一個數組
-      // console.log(this.categories)
+      console.log(this.categories)
     })
     .catch(error => {
       console.error("Error fetching data: ", error);
     });
   },
-
+  watch:{
+    // 監聽 formData 屬性的變化
+    formData: {
+      deep: true, // 使用 deep: true 來監聽 formData 對象內部屬性的變化
+      handler(newVal) { // newVal 是變化後的 formData 的值
+        // 檢查 newVal 是否為真（即 formData 是否存在）
+        if (newVal) {
+          //抓取館別名稱顯示動物id是null值的位置
+          this.selectlocation = this.categories.filter(item=>item.category_name === this.formData.category_name)
+          // console.log(this.selectlocation);
+        }
+      }
+    },
+  },
   methods: {
       // 更新开关状态
     updateaddSwitch() {
