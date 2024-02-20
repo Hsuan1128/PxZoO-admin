@@ -28,7 +28,6 @@ import axios from 'axios';
             ConfirmSwitch:false,
             confirmData: {
                 type: Object,
-                default: () => ({})
             },
         },
         data() {
@@ -40,6 +39,7 @@ import axios from 'axios';
             updataConfirmSwitch(){
                 //控制修改確認彈窗的顯示/隱藏
                 this.$emit('update-switch', !this.ConfirmSwitch)
+                this.$emit('trigger-update-revise-switch')
             },transferData(){
                 //引入修改的PHP
                 axios.post(`${import.meta.env.VITE_API_URL}/ticketsRevise.php`, this.confirmData,{
@@ -53,7 +53,7 @@ import axios from 'axios';
                     //關閉修改的彈窗
                     this.$emit('trigger-update-revise-switch')
                     //重新整理頁面讓資料更新成更改後的
-                    window.location.reload();
+                    location.reload();
                 })
                 .catch(error => {
                     console.error('更新錯誤:', error);

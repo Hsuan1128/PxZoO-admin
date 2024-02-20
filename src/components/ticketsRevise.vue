@@ -5,27 +5,27 @@
             <div class="Revise_content">
                 <div class="Revise_content_align">
                     <label for="ticketsName" class="pcInnerText">門票名稱</label>
-                    <input v-model="editedTicketsName" type="text" :placeholder="rowdata.tickets_name">
+                    <input v-model="editedTicketsName" type="text">
                 </div>
     
                 <div class="Revise_content_align">
                     <label for="ticketsPrice" class="pcInnerText">門票價錢</label>
-                    <input v-model="editedTicketsPrice" type="text" :placeholder="rowdata.tickets_price">
+                    <input v-model="editedTicketsPrice" type="text">
                 </div>
     
                 <div class="Revise_content_align">
                     <label for="ticketsRule" class="pcInnerText">門票使用規則</label>
-                    <textarea v-model="editedTicketsRule" class="Revise_textarea" :placeholder="rowdata.tickets_rule" maxlength="10"></textarea>
+                    <textarea v-model="editedTicketsRule" class="Revise_textarea" maxlength="10"></textarea>
                 </div>
             </div>
             
             <div class="Revise_btns">
-                <button class="defaultBtn pcInnerText" @click="ticketsRevise">
+                <button class="defaultBtn pcInnerText" @click="transferData">
                     儲存
                     <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                 </button>
         
-                <button class="defaultBtn pcInnerText" @click="updateReviseSwitch">
+                <button class="defaultBtn pcInnerText" @click="ticketsRevise">
                     返回列表
                     <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                 </button>
@@ -41,6 +41,7 @@
 
 <script>
 import ticketsConfirm from "@/components/ticketsConfirm.vue"
+import axios from "axios";
 
 export default {
     props:{
@@ -57,12 +58,27 @@ export default {
             //建立v-model的參數,才能綁定到input上
             editedTicketsName: '',
             editedTicketsPrice: '',
-            editedTicketsRule: ''
+            editedTicketsRule: '',
+            confirmData:{},
         };
+    },
+    watch: {
+        // 監聽 rowdata 屬性的變化
+        rowdata: {
+            deep: true, // 使用 deep: true 來監聽 rowdata 對象內部屬性的變化
+            handler(newVal) { // newVal 是變化後的 rowdata 的值
+                // 檢查 newVal 是否為真（即 rowdata 是否存在）
+                if (newVal) {
+                    // 將 rowdata 對象中的特定屬性賦值給 data 中的對應屬性
+                    this.editedTicketsName = newVal.tickets_name; // 更新 editedTicketsName
+                    this.editedTicketsPrice = newVal.tickets_price; // 更新 editedTicketsPrice
+                    this.editedTicketsRule = newVal.tickets_rule; // 更新 editedTicketsRule
+                }
+            }
+        },
     },
     methods: {
         updateReviseSwitch() {
-            //從這個組件傳送控制修改彈窗的顯示/隱藏參數數值
             this.$emit('update-switch', !this.ReviseSwitch);
         },
         prepareConfirmData() {
@@ -88,7 +104,31 @@ export default {
             } else {
                 alert("請填寫所有欄位");
             }
-        }
+        },transferData(){
+            //判斷輸入資料的情況做出對應的行為
+            if (this.rowdata.tickets_name != this.editedTicketsName || 
+                this.rowdata.tickets_price != this.editedTicketsPrice || 
+                this.rowdata.tickets_rule != this.editedTicketsRule) {
+                //傳遞更新的資料到ConfirmData物件裡
+                this.prepareConfirmData()
+                //引入修改的PHP
+                axios.post(`${import.meta.env.VITE_API_URL}/ticketsRevise.php`, this.confirmData,{
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(() => {
+                    //關閉修改的彈窗
+                    this.updateReviseSwitch()
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error('更新錯誤:', error);
+                });
+            } else {
+                this.updateReviseSwitch();
+            }
+        },
     },
     components: {
         ticketsConfirm,

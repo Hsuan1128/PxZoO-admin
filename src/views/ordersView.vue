@@ -7,7 +7,7 @@
         <div class="searchArea">
           <button class="search pcInnerText">查詢</button>
           <div class="inputArea">
-            <input type="text" placeholder="請輸入姓名 / 訂單編號" />
+            <input type="text" placeholder="請輸入姓名 / 訂單編號" v-model.trim="searchTerm" />
             <button class="scope">
               <img src="../assets/images/formicon/scope.svg" alt="scope" />
             </button>
@@ -16,7 +16,9 @@
       </div>
       <div class="formArea orders">
 <!-- content -->
-        <Table stripe :columns="columns" :data="currentPageData" ref="table" :default-sort="defaultSort" class="custom-table">
+        <Table stripe :columns="columns" :data="currentPageData" ref="table" 
+        no-data-text="查無訂單資料"
+        :default-sort="defaultSort" class="custom-table">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
@@ -138,6 +140,7 @@ export default {
         key: 'ord_id', // 設置預設排序的欄位
         order: 'asc', // 設置排序方式，'asc' 為升序，'desc' 為降序
       },
+      searchTerm:'', //搜尋
       orders: [], //所有數據
       currentPageData: [], // 當前頁顯示的數據
       orderDetail:[],
@@ -148,7 +151,7 @@ export default {
       showRevise: false,
     };
   },
-  methods: {
+  methods:{
     handleChangePage(page) {
       this.currentPage = page; // page 參數表示用戶切換到的新頁碼（頁面）的數字值
       this.fetchOrders(); 
@@ -158,12 +161,19 @@ export default {
       // 索引當前頁面在整個資料陣列中的範圍
       const startIndex = (this.currentPage - 1) * this.pageSize; // 起始索引
       const endIndex = startIndex + this.pageSize; // 結束索引
-      this.currentPageData = this.orders.slice(startIndex, endIndex); // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
+      console.log(this.orders);
+      console.log(typeof this.orders);
+      this.currentPageData = Object.values(this.orders).slice(startIndex, endIndex); // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
     },
     fetchOrders(){
       // 取得訂單資料
-      axios.get(`${import.meta.env.VITE_API_URL}/ordersShow.php`)
+      axios.get(`${import.meta.env.VITE_API_URL}/ordersShow.php`, {
+        params:{
+          searchTerm: this.searchTerm
+        }
+      })
       .then(response => {
+        console.log('response.data', typeof response.data);
         this.orders = response.data;
         this.total = this.orders.length;
         this.updateCurrentPageData();
@@ -216,6 +226,20 @@ export default {
         console.error("Error fetching data:", error);
       })
     },
+    // searchHandle(){
+    //   axios.get(`${import.meta.env.VITE_API_URL}/ordersSearch.php`, {
+    //     params:{
+    //       searchTerm: this.searchTerm
+    //   }})
+    //   .then(response=>{
+    //     this.orders=response.data;
+    //   })
+    // }
+  },
+  watch:{
+    searchTerm(){
+      this.fetchOrders();
+    }
   },
   created(){
     this.fetchOrders();

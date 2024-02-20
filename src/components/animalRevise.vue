@@ -19,7 +19,8 @@
                     <label for="category_name" class="pcInnerText">館別名稱</label>
                     <select name="category_name" 
                     v-model="editedCategoryName">
-                     <option value="">{{ rowdata.category_name }}</option>
+                     <option value="" disabled hidden>{{ rowdata.category_name }}</option>
+                     <option v-for="category in categoriesName">{{category}}</option>
                     </select> 
                 </div>
 
@@ -28,6 +29,7 @@
                     <select name="location_name" 
                     v-model="editedLocationName">
                      <option value="">{{ rowdata.location_name }}</option>
+                     <option v-for="location in categoriesName">{{location}}</option>
                     </select> 
                 </div>
     
@@ -150,7 +152,7 @@ export default {
             editedAnimalIcon: '',
             editedAnimalSound: '',
             editedAnimal_small_pic: '',
-
+            categoriesName: ["草原之聲","極地秘境","叢林奇蹟","鳥園樂章","海洋奇觀"],
         };
     },
     
