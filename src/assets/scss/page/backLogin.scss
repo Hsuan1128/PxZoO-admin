@@ -71,11 +71,11 @@ main.loginMain {
         background-color: #fff;
         border: transparent;
         font-size: 16px;
+        padding-left: 8px;
         &:focus {
           outline: none;
         }
         &::placeholder {
-          padding: 5px;
           color: $inputTextColor;
         }
       }
@@ -101,11 +101,11 @@ main.loginMain {
         background-color: #fff;
         border: transparent;
         font-size: 16px;
+        padding-left: 8px;
         &:focus {
           outline: none;
         }
         &::placeholder {
-          padding: 5px;
           color: $inputTextColor;
         }
       }

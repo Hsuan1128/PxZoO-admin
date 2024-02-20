@@ -39,7 +39,7 @@
         </button>
       </div>
     </div>
-    <ticketsConfirm
+    <staffConfirm
       v-show="ConfirmSwitch"
       :ConfirmSwitch="ConfirmSwitch"
       @update-switch="ConfirmSwitch = $event"
@@ -66,7 +66,7 @@ export default {
       sta_email: "",
       sta_acc: "",
       sta_psw: "",
-      confirmData: {},
+      confirmData: [],
     };
   },
   methods: {
@@ -77,9 +77,10 @@ export default {
     prepareConfirmData() {
       //把資料傳送到ticketsConfirm的組件
       this.confirmData = {
-        staEmail: this.sta_email,
-        staAcc: this.sta_acc,
-        staPsw: this.sta_psw,
+        sta_email: this.sta_email,
+        sta_acc: this.sta_acc,
+        sta_psw: this.sta_psw,
+        sta_id: this.rowdata.sta_id,
       };
     },
     staffRevise() {
