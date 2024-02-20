@@ -2,7 +2,7 @@
   <div class="confirm_bg">
     <div class="confirm">
       <div class="confirm_content">
-        <p class="pcInnerText">門票資訊有變更，是否儲存</p>
+        <p class="pcInnerText">人員資訊有變更，是否儲存</p>
         <div class="confirm_btns">
           <button class="defaultBtn pcInnerText" @click="transferData">
             儲存

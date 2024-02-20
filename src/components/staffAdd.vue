@@ -4,7 +4,7 @@
     <div class="staInputArea">
       <div class="staInput">
         <label for="">職位:</label>
-        <input type="text" v-model="sta_pos" readonly />
+        <input type="text" v-model="sta_pos" />
       </div>
       <div class="staInput">
         <label for="">信箱:</label>

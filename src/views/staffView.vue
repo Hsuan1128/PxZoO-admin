@@ -8,7 +8,7 @@
     <div class="staffForm">
       <div class="titleSearch">
         <h2 class="pcSmTitle">後台管理</h2>
-        <div class="searchArea">
+        <!-- <div class="searchArea">
           <button class="search pcInnerText">查詢</button>
           <div class="inputArea">
             <input type="text" placeholder="請輸入後台人員資訊" />
@@ -16,7 +16,7 @@
               <img src="../assets/images/formicon/scope.svg" alt="scope" />
             </button>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="formArea">
         <Table
@@ -37,7 +37,7 @@
               type="primary"
               class="trash"
               size="small"
-              @click="show(index)"
+              @click="staffModification(row)"
               ><img src="../assets/images/formicon/revise.svg" alt=""
             /></Button>
             <Button
@@ -58,12 +58,12 @@
         />
       </div>
     </div>
-    <!-- <staffRevise
+    <staffRevise
       v-show="ReviseSwitch"
       :rowdata="rowdata"
       :ReviseSwitch="ReviseSwitch"
       @update-switch="ReviseSwitch = $event"
-    /> -->
+    />
 
     <grass />
   </section>
@@ -78,7 +78,7 @@ import { Table } from "view-ui-plus";
 import axios from "axios";
 import { mapActions } from "pinia";
 import userStore from "@/stores/auth";
-// import staffRevise from "@/components/orders/ordersRevise.vue";
+import staffRevise from "@/components/staffRevise.vue";
 export default {
   data() {
     return {
@@ -124,6 +124,7 @@ export default {
         },
       ],
       data: [],
+      rowdata: [],
       show: false,
       addList: false,
       sta_id: "",
@@ -139,11 +140,7 @@ export default {
         console.error("Error fetching data:", error);
       });
   },
-  computed: {
-    userPosition() {
-      return userStore().position; // 使用 userStore().position
-    },
-  },
+  computed: {},
   methods: {
     ...mapActions(userStore, [
       "updateToken",
@@ -152,6 +149,12 @@ export default {
       "updateUserData",
       "updatePosition",
     ]),
+    staffModification(row) {
+      //控制修改視窗的顯示/隱藏
+      this.ReviseSwitch = !this.ReviseSwitch;
+      //把我們所點擊的資料帶入rowdata的參數裡
+      this.rowdata = row;
+    },
     openAddLsit() {
       this.addList = true;
     },
@@ -166,7 +169,6 @@ export default {
             console.log(res);
             if (!res.data.error) {
               alert(res.data.msg);
-              // 删除成功后，更新数据源中的数据
               this.data.splice(index, 1);
             }
           })
@@ -182,7 +184,7 @@ export default {
     grass,
     Table,
     staAdd,
-    // staffRevise,
+    staffRevise,
   },
 };
 </script>

@@ -67,8 +67,8 @@ export default {
         },
         {
           title: "生日",
-          key: "mem_birthbay",
-          width: 110,
+          key: "mem_birthday",
+          width: 120,
           align: "center",
         },
         {
