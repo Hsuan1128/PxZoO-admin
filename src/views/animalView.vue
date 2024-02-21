@@ -49,7 +49,10 @@
       </div>
     </div>
     <animaladd v-show="addSwitch"  :addSwitch="addSwitch" :animalData="data" @update-switch="addSwitch = $event"/>
-    <animalRevise v-show="ReviseSwitch" :rowdata="rowdata" :ReviseSwitch="ReviseSwitch" @update-switch="ReviseSwitch = $event"/>
+    <animalRevise v-show="ReviseSwitch" :rowdata="rowdata"
+    :rowdataReady = "rowdataReady"
+    :ReviseSwitch="ReviseSwitch" 
+    @update-switch="ReviseSwitch = $event" />
   </section>
 </template>
 
@@ -64,6 +67,7 @@ import animaladd from "@/components/animaladd.vue"
 import animalRevise from "@/components/animalRevise.vue"
 
 export default {
+  
   data() {
     return {
       columns: [
@@ -100,14 +104,14 @@ export default {
         {
           title: "入園日期",
           key: "animal_enterdate",
-          width: 265,
+          width: 160,
           align: "left",
         },
 
         {
           title: "狀態",
           slot: "status",
-          width: 110,
+          width: 90,
           align: "left",
         },
         {
@@ -123,6 +127,7 @@ export default {
       //動物全部資訊
       data: [],
       rowdata:[],
+      rowdataReady: false,
 
       currentPageData: [], // 當前頁顯示的數據
       total: 0, // 總條數
@@ -198,15 +203,16 @@ export default {
     addAnimalItem(){
       this.addSwitch = true
     },
-    updateReviseSwitch(newValue) {
-      this.ReviseSwitch = newValue;
-      this.$emit('change', this.ReviseSwitch);
-    },
+    // updateReviseSwitch(newValue) {
+    //   this.ReviseSwitch = newValue;
+    //   this.$emit('change', this.ReviseSwitch);
+    // },
     //修改資料
     AnimalModification(row){
       this.ReviseSwitch = !this.ReviseSwitch
       this.rowdata = row;
-      
+      this.rowdataReady = true;
+      console.log(this.rowdataReady)
     }
   },
   components: {

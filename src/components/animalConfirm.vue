@@ -28,8 +28,8 @@ import axios from 'axios';
         props:{
             ConfirmSwitch:false,
             confirmData: {
-                type: Object,
-                default: () => ({})
+                type: FormData,
+                default: () => (new FormData())
             },
             
         },
@@ -47,7 +47,7 @@ import axios from 'axios';
                 //引入修改的PHP
                 axios.post(`${import.meta.env.VITE_API_URL}/animalRevise.php`, this.confirmData,{
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'multipart/form-data'
                     }
                 })
                 .then(() => {

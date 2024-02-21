@@ -1,110 +1,112 @@
 <template>
-  <div class="questionadd">
-      <h1 class="pcSmallTitle">新增動物資訊</h1>
-      <div class="questionadd_content">
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">動物種類
-              </label>
-              <input type="text"  placeholder="請輸入動物種類" v-model="formData.animal_species">
-          </div>
+  <div class="animal_add_bg">
+    <div class="animaladd">
+        <h1 class="pcSmallTitle">新增動物資訊</h1>
+        <div class="animaladd_content">
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">動物種類
+                </label>
+                <input type="text"  placeholder="請輸入動物種類" v-model="formData.animal_species">
+            </div>
 
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">動物名稱</label>
-              <input type="text" placeholder="請輸入動物名稱"  v-model="formData.animal_name">
-          </div>
-          <!-- 改下拉 -->
-          <div class="questionadd_content_align">
-            <label for="category" class="pcInnerText">館別名稱
-              </label>
-            <select name="category" placeholder="請選擇館別名稱" v-model="formData.category_name" id="category">
-              <option value="" disabled hidden>請選擇館別名稱</option>
-              <option v-for="category in categoriesName">{{category}}</option>
-            </select>
-          </div>
-          <!-- 改下拉 -->
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">館別位置</label>
-              <select name="location" placeholder="請選擇館別位置" v-model="formData.location_name" id="location">
-              <option value="" disabled hidden>請選擇館別位置</option>
-              <option v-for="location in selectlocation">{{location.location_name}}</option>
-            </select>
-          </div>
-          <!-- 改日期選擇 -->
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">入園日期
-              </label>
-              <input type="date" placeholder="請輸入消息日期"  v-model="formData.animal_enterdate">
-          </div>
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">動物名稱</label>
+                <input type="text" placeholder="請輸入動物名稱"  v-model="formData.animal_name">
+            </div>
+            <!-- 改下拉 -->
+            <div class="animaladd_content_align">
+              <label for="category" class="pcInnerText">館別名稱
+                </label>
+              <select name="category" placeholder="請選擇館別名稱" v-model="formData.category_name" id="category">
+                <option value="" disabled hidden>請選擇館別名稱</option>
+                <option v-for="category in categoriesName">{{category}}</option>
+              </select>
+            </div>
+            <!-- 改下拉 -->
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">館別位置</label>
+                <select name="location" placeholder="請選擇館別位置" v-model="formData.location_name" id="location">
+                <option value="" disabled hidden>請選擇館別位置</option>
+                <option v-for="location in selectlocation">{{location.location_name}}</option>
+              </select>
+            </div>
+            <!-- 改日期選擇 -->
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">入園日期
+                </label>
+                <input type="date" placeholder="請輸入消息日期"  v-model="formData.animal_enterdate">
+            </div>
 
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">平均壽命</label>
-              <textarea class="questionadd_textarea" placeholder="請輸入平均壽命" v-model="formData.animal_lifespan"></textarea>
-          </div>
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">平均壽命</label>
+                <textarea class="animaladd_textarea" placeholder="請輸入平均壽命" v-model="formData.animal_lifespan"></textarea>
+            </div>
 
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">分布地區</label>
-              <textarea class="questionadd_textarea" placeholder="請輸入分布地區" v-model="formData.animal_area"></textarea>
-          </div>
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">分布地區</label>
+                <textarea class="animaladd_textarea" placeholder="請輸入分布地區" v-model="formData.animal_area"></textarea>
+            </div>
 
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">食性</label>
-              <textarea class="questionadd_textarea" placeholder="請輸入食性" v-model="formData.animal_food"></textarea>
-          </div>
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">食性</label>
+                <textarea class="animaladd_textarea" placeholder="請輸入食性" v-model="formData.animal_food"></textarea>
+            </div>
 
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">特徵</label>
-              <textarea class="questionadd_textarea" placeholder="請輸入特徵" v-model="formData.animal_features"></textarea>
-          </div>
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">特徵</label>
+                <textarea class="animaladd_textarea" placeholder="請輸入特徵" v-model="formData.animal_features"></textarea>
+            </div>
 
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">介紹</label>
-              <textarea class="questionadd_textarea" placeholder="請輸入介紹" v-model="formData.animal_description"></textarea>
-          </div>
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">介紹</label>
+                <textarea class="animaladd_textarea" placeholder="請輸入介紹" v-model="formData.animal_description"></textarea>
+            </div>
 
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">圖片A</label>
-              <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('animal_pic_a', $event)">
-          </div>
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">圖片A</label>
+                <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('animal_pic_a', $event)">
+            </div>
 
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">圖片B</label>
-              <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('animal_pic_b', $event)">
-          </div>
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">圖片B</label>
+                <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('animal_pic_b', $event)">
+            </div>
 
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">圖片C</label>
-              <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('animal_pic_c', $event)">
-          </div>
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">圖片C</label>
+                <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('animal_pic_c', $event)">
+            </div>
 
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">Icon</label>
-              <input type="file" placeholder="請上傳圖片，檔案類型：png"  @change="handleFileChange('animal_icon', $event)">
-          </div>
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">Icon</label>
+                <input type="file" placeholder="請上傳圖片，檔案類型：png"  @change="handleFileChange('animal_icon', $event)">
+            </div>
 
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">動物聲音</label>
-              <input type="file" placeholder="請上傳音檔，檔案類型：mp3"  @change="handleFileChange('animal_sound', $event)">
-          </div>
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">動物聲音</label>
+                <input type="file" placeholder="請上傳音檔，檔案類型：mp3"  @change="handleFileChange('animal_sound', $event)">
+            </div>
 
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">列表圖</label>
-              <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('animal_small_pic', $event)">
-          </div>
-      </div>
-      
-      <div class="questionadd_btns">
-          <button class="defaultBtn pcInnerText" @click="saveAnimaldata" >
-              儲存
-              <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
-          </button>
-  
-          <button class="defaultBtn pcInnerText" @click="updateaddSwitch">
-              返回列表
-              <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
-          </button>
-      <animalConfirm v-show="ConfirmSwitch" :ConfirmSwitch="ConfirmSwitch" @update-switch="ConfirmSwitch = $event"/>
-      </div>
-  </div>
+            <div class="animaladd_content_align">
+                <label for="" class="pcInnerText">列表圖</label>
+                <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('animal_small_pic', $event)">
+            </div>
+        </div>
+        
+        <div class="animaladd_btns">
+            <button class="defaultBtn pcInnerText" @click="saveAnimaldata" >
+                儲存
+                <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
+            </button>
+    
+            <button class="defaultBtn pcInnerText" @click="updateaddSwitch">
+                返回列表
+                <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
+            </button>
+        <animalConfirm v-show="ConfirmSwitch" :ConfirmSwitch="ConfirmSwitch" @update-switch="ConfirmSwitch = $event"/>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -226,7 +228,14 @@ export default {
 </script>
 
 <style lang="scss">
-.questionadd{
+.animal_add_bg{
+  width: 100%;
+  height: 100%;
+  background-color: #000000dc;
+  position: absolute;
+  z-index: 21;
+}
+.animaladd{
   overflow: auto;
   width: 73.64vw;
   height: 90vh;
@@ -240,7 +249,7 @@ export default {
       margin-top: 2vw;
       text-align: center;
   }
-  .questionadd_content{
+  .animaladd_content{
       width: 60.82vw;
       margin: 3vw auto 0;
       display: flex;
@@ -248,7 +257,7 @@ export default {
       align-items: center;
       gap: 1.5vw;
    
-      .questionadd_content_align{
+      .animaladd_content_align{
           display: flex;
           width: 100%;
           label{
@@ -263,7 +272,7 @@ export default {
             border: none;
 
           }
-          .questionadd_textarea{
+          .animaladd_textarea{
             width: 85%;
             height: 10vw;
             resize: none;
@@ -273,7 +282,7 @@ export default {
           }
       }
   }
-  .questionadd_btns{
+  .animaladd_btns{
       width: 280px;
       margin: 3vw auto;
       display: flex;

@@ -5,13 +5,13 @@
             <div class="Revise_content">
                 <div class="Revise_content_align">
                     <label for="animal_species" class="pcInnerText">動物種類</label>
-                    <input type="text" :placeholder="rowdata.animal_species" 
+                    <input type="text" maxlength="10"
                     v-model="editedAnimalSpecies">
                 </div>
     
                 <div class="Revise_content_align">
                     <label for="animal_name" class="pcInnerText">動物名稱</label>
-                    <input type="text" :placeholder="rowdata.animal_name"
+                    <input type="text" maxlength="10"
                     v-model="editedAnimalName">
                 </div>
 
@@ -19,8 +19,8 @@
                     <label for="category_name" class="pcInnerText">館別名稱</label>
                     <select name="category_name" 
                     v-model="editedCategoryName">
-                     <option value="" disabled hidden>{{ rowdata.category_name }}</option>
-                     <option v-for="category in categoriesName">{{category}}</option>
+                    <option value="" disabled hidden>{{ rowdata.category_name }}</option>
+                    <option v-for="category in categoriesName">{{category}}</option>
                     </select> 
                 </div>
 
@@ -28,8 +28,8 @@
                     <label for="location_name" class="pcInnerText">館別位置</label>
                     <select name="location_name" 
                     v-model="editedLocationName">
-                     <option value="">{{ rowdata.location_name }}</option>
-                     <option v-for="location in categoriesName">{{location}}</option>
+                    <option value="">{{ rowdata.location_name }}</option>
+                    <option v-for="location in categoriesName">{{location}}</option>
                     </select> 
                 </div>
     
@@ -41,32 +41,38 @@
     
                 <div class="Revise_content_align">
                     <label for="animal_lifespan" class="pcInnerText">平均壽命</label>
-                    <textarea class="Revise_textarea" :placeholder="rowdata.animal_lifespan" v-model="editedAnimalLifespan"></textarea>
+                    <textarea class="Revise_textarea"
+                    maxlength="100" rows="7" v-model="editedAnimalLifespan"></textarea>
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="animal_area" class="pcInnerText">分布地區</label>
-                    <textarea class="Revise_textarea" :placeholder="rowdata.animal_area" v-model="editedAnimalArea"></textarea>
+                    <textarea class="Revise_textarea"
+                    maxlength="100" rows="7"  v-model="editedAnimalArea"></textarea>
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="animal_food" class="pcInnerText">食性</label>
-                    <textarea class="Revise_textarea" :placeholder="rowdata.animal_food" v-model="editedAnimalFood"></textarea>
+                    <textarea class="Revise_textarea"
+                    maxlength="150" rows="9"  v-model="editedAnimalFood"></textarea>
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="animal_features" class="pcInnerText">特徵</label>
-                    <textarea class="Revise_textarea" :placeholder="rowdata.animal_features" v-model="editedAnimalFeatures"></textarea>
+                    <textarea class="Revise_textarea" 
+                    maxlength="150" rows="9" v-model="editedAnimalFeatures"
+                    @input="updateCharacterCount('ani_features')"></textarea>
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="animal_description" class="pcInnerText">介紹</label>
-                    <textarea class="Revise_textarea" :placeholder="rowdata.animal_description" v-model="editedAnimalDescription"></textarea>
+                    <textarea class="Revise_textarea" 
+                    maxlength="150" rows="9" v-model="editedAnimalDescription"></textarea>
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="animal_pic_a" class="pcInnerText">圖片A</label>
-                    <input type="file" id="animal_pic_a" @change="handleFileChange('editedAnimal_pic_a', $event)">
+                    <input type="file" id="animal_pic_a" accept="image/*" @change="handleFileChange('editedAnimal_pic_a', $event)">
                     <!-- <input ref="fileInput_pic_a" type="file" style="display: none" @change="handleFileChange('animal_pic_a', $event)">
                     <button @click="openFileInput('fileInput_pic_a')">選擇檔案</button>
                     <p>{{ editedAnimal_pic_a }}</p> -->
@@ -74,37 +80,37 @@
 
                 <div class="Revise_content_align">
                     <label for="animal_pic_b" class="pcInnerText">圖片B</label>
-                    <input type="file" id="animal_pic_b" @change="handleFileChange('editedAnimal_pic_b', $event)">
+                    <input type="file" id="animal_pic_b" accept="image/*" @change="handleFileChange('editedAnimal_pic_b', $event)">
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="animal_pic_c" class="pcInnerText">圖片C</label>
-                    <input type="file" id="animal_pic_c" @change="handleFileChange('editedAnimal_pic_c', $event)">
+                    <input type="file" id="animal_pic_c" accept="image/*" @change="handleFileChange('editedAnimal_pic_c', $event)">
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="animal_icon" class="pcInnerText">Icon</label>
-                    <input type="file" id="animal_icon"  @change="handleFileChange('editedAnimalIcon', $event)">
+                    <input type="file" id="animal_icon" accept="image/*"  @change="handleFileChange('editedAnimalIcon', $event)">
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="animal_sound" class="pcInnerText">動物聲音</label>
-                    <input type="file" id="animal_sound" @change="handleFileChange('editedAnimalSound', $event)">
+                    <input type="file" id="animal_sound" accept="audio/*" @change="handleFileChange('editedAnimalSound', $event)">
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="animal_small_pic" class="pcInnerText">列表圖</label>
-                    <input type="file" id="animal_small_pic" @change="handleFileChange('editedAnimal_small_pic', $event)">
+                    <input type="file" id="animal_small_pic" accept="image/*" @change="handleFileChange('editedAnimal_small_pic', $event)">
                 </div>
             </div>
             
             <div class="Revise_btns">
-                <button class="defaultBtn pcInnerText" @click="animalRevise">
+                <button class="defaultBtn pcInnerText" @click="transferData">
                     儲存
                     <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                 </button>
         
-                <button class="defaultBtn pcInnerText" @click="updateReviseSwitch">
+                <button class="defaultBtn pcInnerText" @click="animalRevise">
                     返回列表
                     <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                 </button>
@@ -120,6 +126,7 @@
 <script>
 import animalConfirm from "@/components/animalConfirm.vue"
 import {DatePicker} from "view-ui-plus";
+import axios from "axios";
 
 export default {
     props:{
@@ -127,6 +134,9 @@ export default {
         rowdata: {
             type: Object,
             required: true,
+        },
+        rowdataReady: {
+            type: Boolean
         }
     },
     data() {
@@ -153,17 +163,41 @@ export default {
             editedAnimalSound: '',
             editedAnimal_small_pic: '',
             categoriesName: ["草原之聲","極地秘境","叢林奇蹟","鳥園樂章","海洋奇觀"],
+
         };
     },
-    
+    watch: {   
+        rowdata: {
+            deep: true,
+            handler(newVal) { // newVal 是變化後的 rowdata 的值
+                // 檢查 newVal 是否為真（即 rowdata 是否存在）
+                if (newVal) {
+                    // 將 rowdata 對象中的特定屬性賦值給 data 中的對應屬性
+                    this.editedAnimalSpecies = newVal.animal_species
+                    this.editedAnimalName = newVal.animal_name
+
+                    this.editedAnimalEnterdate = newVal.animal_enterdate;
+                    
+                    this.editedAnimalLifespan = newVal.animal_lifespan
+                    this.editedAnimalArea = newVal.animal_area
+                    this.editedAnimalFood = newVal.animal_food
+                    this.editedAnimalFeatures = newVal.animal_features
+                    this.editedAnimalDescription = newVal.animal_description
+                    this.editedAnimal_pic_a = newVal.animal_pic_a
+                    this.editedAnimal_pic_b = newVal.animal_pic_b
+                    this.editedAnimal_pic_c = newVal.animal_pic_c
+                    this.editedAnimalIcon = newVal.animal_icon
+                    this.editedAnimalSound = newVal.animal_sound
+                    this.editedAnimal_small_pic = newVal.animal_small_pic
+                }
+            }
+        },
+    },
     methods: {
         updateReviseSwitch() {
             this.$emit('update-switch', !this.ReviseSwitch);
         },
-        // updateConfirmSwitch(newValue) {
-        //     this.ConfirmSwitch = newValue;
-        //     this.$emit('change', this.ConfirmSwitch);
-        // },
+
         prepareConfirmData() {
             //把資料傳送到Confirm的組件
             this.confirmData = {
@@ -201,6 +235,37 @@ export default {
             ) {
                 if (this.rowdata.animal_name != this.editedAnimalName || 
                     this.rowdata.animal_species != this.editedAnimalSpecies || 
+                    // this.rowdata.category_name != this.editedCategoryName ||
+                    // this.rowdata.location_name != this.editedLocationName ||
+                    // this.rowdata.animal_enterdate != this.editedAnimalEnterdate ||
+                    this.rowdata.animal_lifespan != this.editedAnimalLifespan ||
+                    this.rowdata.animal_area != this.editedAnimalArea ||
+                    this.rowdata.animal_food != this.editedAnimalFood ||
+                    this.rowdata.animal_features != this.editedAnimalFeatures ||
+                    this.rowdata.animal_description != this.editedAnimalDescription 
+                    // this.rowdata.pic_a != this.editedAnimal_pic_a ||
+                    // this.rowdata.pic_b != this.editedAnimal_pic_b ||
+                    // this.rowdata.pic_c != this.editedAnimal_pic_c ||
+                    // this.rowdata.animal_icon != this.editedAnimalIcon ||
+                    // this.rowdata.animal_sound != this.editedAnimalSound ||
+                    // this.rowdata.animal_small_pic != this.editedAnimal_small_pic
+                    ) {
+
+                    this.ConfirmSwitch = !this.ConfirmSwitch;
+                    this.prepareConfirmData();
+                } else {
+                    console.log(this.editedCategoryName)
+                        console.log(this.editedLocationName)
+                    this.updateReviseSwitch();
+                }
+            } else {
+                alert("請填寫所有欄位");
+            }
+        },
+        transferData(){
+            //判斷輸入資料的情況做出對應的行為
+            if (this.rowdata.animal_name != this.editedAnimalName || 
+                    this.rowdata.animal_species != this.editedAnimalSpecies || 
                     this.rowdata.category_name != this.editedCategoryName ||
                     this.rowdata.location_name != this.editedLocationName ||
                     this.rowdata.animal_enterdate != this.editedAnimalEnterdate ||
@@ -214,17 +279,28 @@ export default {
                     this.rowdata.pic_c != this.editedAnimal_pic_c ||
                     this.rowdata.animal_icon != this.editedAnimalIcon ||
                     this.rowdata.animal_sound != this.editedAnimalSound ||
-                    this.rowdata.animal_small_pic != this.editedAnimal_small_pic
-                    ) {
-                    this.ConfirmSwitch = !this.ConfirmSwitch;
-                    this.prepareConfirmData();
-                } else {
-                    this.updateReviseSwitch();
-                }
+                    this.rowdata.animal_small_pic != this.editedAnimal_small_pic) {
+                //傳遞更新的資料到ConfirmData物件裡
+                this.prepareConfirmData()
+                //引入修改的PHP
+                axios.post(`${import.meta.env.VITE_API_URL}/animalRevise.php`, this.confirmData,{
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(() => {
+                    //關閉修改的彈窗
+                    this.updateReviseSwitch()
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error('更新錯誤:', error);
+                });
             } else {
-                alert("請填寫所有欄位");
+                this.updateReviseSwitch();
             }
         },
+
         handleFileChange(field, event) {
             
             const file = event.target.files[0];
@@ -260,11 +336,6 @@ export default {
             this.$refs[refName].click();
         },
 
-    },
-    watch: {
-    'rowdata.animal_enterdate': function(newVal) {
-      this.editedAnimalEnterdate = newVal;
-    }
     },
     components: {
         animalConfirm,
