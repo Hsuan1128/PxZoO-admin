@@ -15,7 +15,7 @@
           
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">年月</label>
-                <input type="text" v-model="rowdata.vote_activity_date" :placeholder="vote_activity_date">
+                <input type="month" v-model="rowdata.vote_activity_date" :placeholder="vote_activity_date">
             </div>
             
             <div class="Revise_content_align">

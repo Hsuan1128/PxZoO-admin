@@ -4,7 +4,7 @@
     <div class="staffForm">
       <div class="titleSearch">
         <h2 class="pcSmTitle">投票管理|投票紀錄</h2>
-        <div class="searchArea">
+        <!-- <div class="searchArea">
           <button class="search pcInnerText">查詢</button>
           <div class="inputArea">
             <input type="text" placeholder="請輸入投票紀錄資訊" />
@@ -12,7 +12,7 @@
               <img src="../assets/images/formicon/scope.svg" alt="scope" />
             </button>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="formArea">
         <Table
@@ -49,11 +49,11 @@
           <Page :total="100" />
         </template>
       </div>
-      <div class="add">
+      <!-- <div class="add">
         <img src="@/assets/images/formicon/plus.svg" alt="add" class="add" />
 
         <p class="pcInnerText">新增</p>
-      </div>
+      </div> -->
     </div>
     <grass />
   </section>

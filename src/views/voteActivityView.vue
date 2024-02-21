@@ -62,50 +62,50 @@ export default {
         {
           title: "編號",
           key: "vote_activity_id",
-          width: 70,
+          width: 200,
           align: "left",
         },
+        // {
+        //   title: "活動名稱",
+        //   key: "vote_activity_name",
+        //   color: "blue",
+        //   width: 120,
+        //   align: "left",
+        // },
+        // {
+        //   title: "內容",
+        //   key: "vote_activity_content",
+        //   width: 250,
+        //   align: "left",
+        // },
         {
-          title: "活動名稱",
-          key: "vote_activity_name",
-          color: "blue",
-          width: 120,
-          align: "left",
-        },
-        {
-          title: "內容",
-          key: "vote_activity_content",
-          width: 250,
-          align: "left",
-        },
-        {
-          title: "年月",
+          title: "活動月份",
           key: "vote_activity_date",
-          width: 110,
+          width: 350,
           align: "left",
         },
-        {
-          title: "第一名動物",
-          key: "animal_id_1",
-          width: 110,
-          align: "left",
-        },
-        {
-          title: "第二名動物",
-          key: "animal_id_2",
-          width: 110,
-          align: "left",
-        },
-        {
-          title: "第三名動物",
-          key: "animal_id_3",
-          width: 110,
-          align: "left",
-        },
+        // {
+        //   title: "第一名動物",
+        //   key: "animal_id_1",
+        //   width: 110,
+        //   align: "left",
+        // },
+        // {
+        //   title: "第二名動物",
+        //   key: "animal_id_2",
+        //   width: 110,
+        //   align: "left",
+        // },
+        // {
+        //   title: "第三名動物",
+        //   key: "animal_id_3",
+        //   width: 110,
+        //   align: "left",
+        // },
         {
           title: "狀態",
           slot: "status",
-          width: 110,
+          width: 200,
           align: "left",
         },
         {
@@ -136,7 +136,7 @@ export default {
       const vote_activity_id = rowData.vote_activity_id; // 假設資料中有一個名為 vote_activity_id 的欄位作為唯一標識
 
       // 向後端發送 DELETE 請求
-      axios.delete(`${import.meta.env.VITE_API_URL}/voteActivitydelete.php`, {
+      axios.delete(`${import.meta.env.VITE_API_URL}/voteActivityDelete.php`, {
         data: { id: vote_activity_id } // 傳遞要刪除的資料列的 ID
       })
         .then(response => {
@@ -158,7 +158,7 @@ export default {
     voteActivityRevise
   },
   created() {
-    axios.get(`${import.meta.env.VITE_API_URL}/voteActivityshow.php`)
+    axios.get(`${import.meta.env.VITE_API_URL}/voteActivityShow.php`)
       .then(response => {
         this.data = response.data; // 假設返回的數據是一個數組
       })
