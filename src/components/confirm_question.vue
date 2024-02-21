@@ -27,8 +27,8 @@ import axios from 'axios';
         props:{
             ConfirmSwitch:false,
             confirmData: {
-                type: Object,
-                default: () => ({})
+                type: FormData,
+                default: () => (new FormData())
             },
         },
         data() {
@@ -40,14 +40,20 @@ import axios from 'axios';
             updataConfirmSwitch(){
                 //控制修改確認彈窗的顯示/隱藏
                 this.$emit('update-switch', !this.ConfirmSwitch)
-            },transferData(){
+            },
+            transferData(){
+                console.log(this.confirmData)
                 //引入修改的PHP
                 axios.post(`${import.meta.env.VITE_API_URL}/questionRevise.php`, this.confirmData,{
                     headers: {
-                        'Content-Type': 'application/json'
-                    }
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    
                 })
-                .then(() => {
+                
+                .then((res) => {
+                    console.log(res)
+                    console.log('修改已送出');
                     //關閉修改確認的彈窗
                     this.updataConfirmSwitch()
                     //關閉修改的彈窗

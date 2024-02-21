@@ -79,7 +79,7 @@ export default {
       for (let key in this.formData) {
         formData.append(key, this.formData[key]);
       }
-      axios.post('http://localhost/pxzoo/voteActivityadd.php', formData, {
+      axios.post(`${import.meta.env.VITE_API_URL}/voteActivityadd.php`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // 指定文件上傳格式
         },

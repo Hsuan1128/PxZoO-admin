@@ -94,7 +94,8 @@ export default {
       // 更新开关状态
     updateaddSwitch() {
       this.$emit('update-switch', !this.addSwitch);
-    },handleFileChange(field, event) {
+    },
+    handleFileChange(field, event) {
       // 當文件選擇時觸發，將文件對象存儲到 formData 中
       this.formData[field] = event.target.files[0];
     },
@@ -105,7 +106,9 @@ export default {
       for (let key in this.formData) {
         formData.append(key, this.formData[key]);
       }
-      axios.post('http://localhost/pxzoo/questionadd.php', formData, {
+      axios.post(`${import.meta.env.VITE_API_URL}/questionAdd.php`, formData, 
+      
+      {
         headers: {
           'Content-Type': 'multipart/form-data', // 指定文件上傳格式
         },

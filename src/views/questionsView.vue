@@ -7,7 +7,7 @@
         <div class="searchArea">
           <button class="search pcInnerText">查詢</button>
           <div class="inputArea">
-            <input type="text" placeholder="請輸入學堂資訊" />
+            <input type="text" placeholder="請輸入學堂資訊" v-model.trim="searchTerm"/>
             <button class="scope">
               <img src="../assets/images/formicon/scope.svg" alt="scope" />
             </button>
@@ -15,12 +15,16 @@
         </div>
       </div>
       <div class="formArea">
-        <Table stripe :columns="columns" :data="data" ref="table" class="custom-table">
+        <Table stripe 
+        :columns="columns" 
+        :data="currentPageData" 
+        ref="table" 
+        class="custom-table">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
           <template #status="{ row }">
-            <Switch v-model="row.active" />
+            <Switch v-model="row.active" @on-change="updateStatus(row)" />
           </template>
           <template #action="{ row, index }">
             <Button type="primary" class="trash" size="small" style="margin-right: 5px"
@@ -29,9 +33,11 @@
             <Button type="error" class="trash" size="small" @click="remove(index)"><img
                 src="../assets/images/formicon/delete.svg" alt="" /></Button></template>
         </Table>
-        <template>
-          <Page :total="100" />
-        </template>
+      
+          <div class="pages">
+        <Page class="pcInnerText"  prev-text="|<" next-text=">|" :current="currentPage" :total="total" size="small"  @on-change="handleChangePage" />
+      </div>
+    
       </div>
       <div class="add" @click="addSwitch = !addSwitch">
         <img src="@/assets/images/formicon/plus.svg" alt="add" class="add">
@@ -52,18 +58,23 @@
 <script>
 import axios from 'axios';
 import sidebar from "@/components/sidebar.vue";
-import Switch from "@/components/switchShelves.vue";
-import grass from "@/components/grass.vue";
-import { Table, Page } from "view-ui-plus";
+import { Table, Page, Switch } from "view-ui-plus"; // 假設 iview 的開關元件位於這個位置
 import questionadd from "@/components/questionadd.vue";
 import questionrevise from "@/components/questionrevise.vue";
-
+import grass from "@/components/grass.vue";
 export default {
-
+  components: {
+    sidebar,
+    Switch,
+    grass,
+    Table,
+    questionadd,
+    questionrevise,
+  },
   data() {
     return {
       addSwitch: false,
-      reviseSwitch: false,
+      ReviseSwitch: false,
       columns: [
         {
           title: "No.",
@@ -151,12 +162,79 @@ export default {
           align: "center",
         },
       ],
-      data: [],
-      rowdata: []
 
+      //搜尋
+      searchTerm:'',
+      data: [],
+      rowdata: [],
+      currentPageData: [], // 當前頁顯示的數據
+      total: 0, // 總條數
+      pageSize: 10, // 每頁顯示條數
+      currentPage: 1, // 當前頁碼
+      
     };
   },
   methods: {
+//     //狀態更新
+//     updateStatus(row) {
+//   // 监听Switch组件的变化事件，并发送请求到后端
+//   const newStatus = row.active ? 1 : 0; 
+//   axios.post(`${import.meta.env.VITE_API_URL}/questionStatus.php`, {
+//     question_id: row.question_id,
+//     active: newStatus,
+//   })
+//   .then(response => {
+//     // 成功更新状态后的处理
+//     console.log('状态更新成功');
+//     // 重新從後端加載數據並更新到前端
+//     this.loadData();
+//   })
+//   .catch(error => {
+//     // 更新状态失败时的处理
+//     console.error('更新状态时出错：', error);
+//   });
+// },
+
+
+    handleChangePage(page) {
+     // 當使用者改變當前頁面時，這個函數被呼叫。
+    // page 參數代表使用者所選擇的新頁碼。
+    this.currentPage = page;
+
+    // 重新從數據源（可能是伺服器或其他地方）獲取新頁碼的資料，以便更新顯示在頁面上。
+
+    axios.get(`${import.meta.env.VITE_API_URL}/questionShow.php `)
+    .then(response => {
+      this.data = response.data; // 假設返回的數據是一個數組
+      this.total = this.data.length;
+      this.updateCurrentPageData();
+    })
+    .catch(error => {
+      console.error("Error fetching data: ", error);
+    });
+  },
+  filterHandle(){
+      axios.get(`${import.meta.env.VITE_API_URL}/questionsearch.php?`, { params: { searchTerm: this.searchTerm } })
+        .then(response => {
+          this.data = response.data;
+          this.total = this.data.length;
+          this.currentPage = 1
+          this.updateCurrentPageData();
+        })
+        .catch(error => {
+          console.error('搜尋出錯:', error);
+        });
+  },
+  updateCurrentPageData() {
+     // 這個函數用來更新當前頁面所顯示的資料
+
+      // 計算起始索引 (startIndex) 和結束索引
+      // 這些索引表示當前頁面在整個資料陣列中的範圍。
+      const startIndex = (this.currentPage - 1) * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+        // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
+      this.currentPageData = this.data.slice(startIndex, endIndex);
+    },
     updateaddSwitch(newValue) {
       this.addSwitch = newValue;
       this.$emit('change', this.addSwitch);
@@ -170,7 +248,7 @@ export default {
       const question_id = rowData.question_id; // 假設資料中有一個名為 question_id 的欄位作為唯一標識
 
       // 向後端發送 DELETE 請求
-      axios.delete(`${import.meta.env.VITE_API_URL}/questiondelete.php`, {
+      axios.delete(`${import.meta.env.VITE_API_URL}/questionDelete.php`, {
         data: { id: question_id } // 傳遞要刪除的資料列的 ID
       })
         .then(response => {
@@ -183,23 +261,26 @@ export default {
         });
     },
   },
-  components: {
-    sidebar,
-    Switch,
-    grass,
-    Table,
-    questionadd,
-    questionrevise,
-  },
+  
   created() {
-    axios.get(`${import.meta.env.VITE_API_URL}/questionShow.php`)
-      .then(response => {
-        this.data = response.data; // 假設返回的數據是一個數組
-      })
-      .catch(error => {
-        console.error("Error fetching data: ", error);
-      });
-  }
+//  // 初始化數據
+//  axios.get(`${import.meta.env.VITE_API_URL}/questionShow.php`)
+//     .then(response => {
+//       this.data = response.data;
+//       this.total = this.data.length;
+//       this.updateCurrentPageData();
+      
+//     })
+//     .catch(error => {
+//       console.error("Error fetching data: ", error);
+//     });
+},
+  watch:{
+    searchTerm(newTerm, oldTerm){
+      this.filterHandle()
+    }
+  },
+  
 };
 </script>
 
