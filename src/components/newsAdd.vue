@@ -1,5 +1,6 @@
 <template>
-  <div class="newsadd">
+  <div class="newsadd_bg">
+    <div class="newsadd">
       <h1>新增消息</h1>
       <div class="newsadd_content">
           <div class="newsadd_content_align">
@@ -59,12 +60,13 @@
               儲存
               <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
           </button>
-  
+
           <button class="defaultBtn pcInnerText" @click="updateaddSwitch">
               返回列表
               <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
           </button>
       </div>
+    </div>
   </div>
 </template>
 
@@ -93,7 +95,9 @@ export default {
       // 更新开关状态
     updateaddSwitch() {
       this.$emit('update-switch', !this.addSwitch);
-    },handleFileChange(field, event) {
+      window.location.reload();
+    }
+    ,handleFileChange(field, event) {
       // 當文件選擇時觸發，將文件對象存儲到 formData 中
       this.formData[field] = event.target.files[0];
     },
@@ -104,7 +108,7 @@ export default {
       for (let key in this.formData) {
         formData.append(key, this.formData[key]);
       }
-      axios.post('http://localhost/pxzoo/newsAdd.php', formData, {
+      axios.post(`${import.meta.env.VITE_API_URL}/newsAdd.php`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // 指定文件上傳格式
         },
@@ -126,51 +130,67 @@ export default {
 </script>
 
 <style lang="scss">
+.newsadd_bg{
+  width: 100%;
+  height: 100%;
+  background-color: #000000dc;
+  position: absolute;
+  z-index: 21;
+}
 .newsadd{
   overflow: auto;
   width: 73.64vw;
-  height: 90vh;
+  height: 45vw;
   background-color: #f5efeb;
   position: absolute;
   top: 50%;
-  left: 55%;
+  left: 50%;
   transform: translate(-50%,-50%);
   z-index: 10;
   h1{
-      margin-top: 3vw;
-      text-align: center;
+    margin-top: 2vw;
+    text-align: center;
+    color: #11A729;
+  }
+  .pcInnerText{
+    color: #3F3F3F;
   }
   .newsadd_content{
-      width: 60.82vw;
-      margin: 3vw auto 0;
+    width: 60.82vw;
+    margin: 3vw auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5vw;
+  
+    .newsadd_content_align{
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2vw;
-   
-      .newsadd_content_align{
-        display: flex;
-        width: 100%;
-        label{
-            margin-right: 20px;
-            display: block;
-            width: 15%;
-        }
-        input{
-            width: 85%;
-            height: 2vw;
-        }
-        .newsadd_textarea{
-            width: 85%;
-            height: 10vw;
-        }
+      width: 100%;
+      label{
+        margin-right: 20px;
+        display: block;
+        width: 15%;
       }
+      input{
+        width: 85%;
+        height: 2vw;
+        padding-inline: 8px;
+        border: none;
+      }
+      .newsadd_textarea{
+        width: 85%;
+        height: 10vw;
+        resize: none;
+        padding-inline: 8px;
+        border: none;
+      }
+    }
   }
   .newsadd_btns{
-      width: 280px;
-      margin: 3vw auto;
-      display: flex;
-      justify-content: space-between;
+    width: 280px;
+    margin: 3vw auto;
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>
