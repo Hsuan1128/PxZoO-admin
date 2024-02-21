@@ -15,40 +15,29 @@
         </div>
       </div>
       <div class="formArea orders">
-<!-- content -->
-        <Table stripe :columns="columns" :data="currentPageData" ref="table" 
-        no-data-text="查無訂單資料"
-        :default-sort="defaultSort" class="custom-table">
+        <!-- content -->
+        <Table stripe :columns="columns" :data="currentPageData" ref="table" no-data-text="查無訂單資料"
+          :default-sort="defaultSort" class="custom-table">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
 
           <template #action="{ row, index }">
-            <Button 
-              type="primary"
-              class="trash"
-              size="small"
-              style="margin-right: 5px"
-              @click="openRevise(row)" >
-              <img src="../assets/images/formicon/revise.svg" alt=""/>
+            <Button type="primary" class="trash" size="small" style="margin-right: 5px" @click="openRevise(row)">
+              <img src="../assets/images/formicon/revise.svg" alt="" />
             </Button>
           </template>
         </Table>
       </div>
       <div class="pages">
-        <Page class="pcInnerText"  prev-text="|<" next-text=">|" :current="currentPage" :total="total" size="small" @on-change="handleChangePage" />
+        <Page class="pcInnerText" prev-text="|<" next-text=">|" :current="currentPage" :total="total" size="small"
+          @on-change="handleChangePage" />
       </div>
     </div>
 
-    <ordersRevise 
-    :orderData="selectedOrder" 
-    :orderDetailData="orderDetail" 
-    @newDetail="fetchOrderUpdate" 
+    <ordersRevise :orderData="selectedOrder" :orderDetailData="orderDetail" @newDetail="fetchOrderUpdate"
+      @closeRevise="reviseToggle" v-if="showRevise" />
 
-    @closeRevise="reviseToggle"
-    v-if="showRevise"
-    />
-      
     <grass />
   </section>
 </template>
@@ -140,10 +129,10 @@ export default {
         key: 'ord_id', // 設置預設排序的欄位
         order: 'asc', // 設置排序方式，'asc' 為升序，'desc' 為降序
       },
-      searchTerm:'', //搜尋
+      searchTerm: '', //搜尋
       orders: [], //所有數據
       currentPageData: [], // 當前頁顯示的數據
-      orderDetail:[],
+      orderDetail: [],
       total: 0, // 總條數
       pageSize: 10, // 每頁顯示條數
       currentPage: 1, // 當前頁碼
@@ -151,10 +140,10 @@ export default {
       showRevise: false,
     };
   },
-  methods:{
+  methods: {
     handleChangePage(page) {
       this.currentPage = page; // page 參數表示用戶切換到的新頁碼（頁面）的數字值
-      this.fetchOrders(); 
+      this.fetchOrders();
     },
     updateCurrentPageData() {
       // 更新當前頁面所顯示的資料 (this.currentPageData)
@@ -165,18 +154,18 @@ export default {
       console.log(typeof this.orders);
       this.currentPageData = Object.values(this.orders).slice(startIndex, endIndex); // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
     },
-    async fetchOrders(){
-      try{ // 取得所有訂單資料
+    async fetchOrders() {
+      try { // 取得所有訂單資料
         let response = await axios.get(`${import.meta.env.VITE_API_URL}/ordersShow.php`, {
-        params:{
-          searchTerm: this.searchTerm
-        }
-      });
+          params: {
+            searchTerm: this.searchTerm
+          }
+        });
         console.log('response.data', typeof response.data);
         this.orders = response.data;
         this.total = this.orders.length;
         this.updateCurrentPageData();
-      }catch(error){
+      } catch (error) {
         console.error("Error fetching data: ", error);
       }
     },
@@ -187,22 +176,14 @@ export default {
           ord_id: val,
         }
       })
-      .then(response => {
-        this.orderDetail = response.data;
-      })
-      .catch(error => {
-        console.error("Error fetching data: ", error);
-      })
+        .then(response => {
+          this.orderDetail = response.data;
+        })
+        .catch(error => {
+          console.error("Error fetching data: ", error);
+        })
     },
-    openRevise(row) {
-      this.selectedOrder = row;
-      this.showRevise = true;
-      this.fetchOrderDetail(row.ord_id);
-    },
-    reviseToggle(bool){
-      this.showRevise=bool;
-    },
-    fetchOrderUpdate(staff, status, bool){
+    fetchOrderUpdate(staff, status, bool) {
       // 修改訂單明細
       // staff待串接
       axios.post(`${import.meta.env.VITE_API_URL}/fetchOrderUpdate.php`, {
@@ -214,15 +195,23 @@ export default {
           'Content-Type': 'application/json',
         },
       })
-      .then( response => {
-        this.fetchOrders();
+        .then(response => {
+          this.fetchOrders();
 
-        this.reviseToggle(bool);
-        return response.data;
-      })
-      .catch(error=>{
-        console.error("Error fetching data:", error);
-      })
+          this.reviseToggle(bool);
+          return response.data;
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+        })
+    },
+    openRevise(row) {
+      this.selectedOrder = row;
+      this.showRevise = true;
+      this.fetchOrderDetail(row.ord_id);
+    },
+    reviseToggle(bool) {
+      this.showRevise = bool;
     },
     // searchHandle(){
     //   axios.get(`${import.meta.env.VITE_API_URL}/ordersSearch.php`, {
@@ -234,12 +223,12 @@ export default {
     //   })
     // }
   },
-  watch:{
-    searchTerm(){
+  watch: {
+    searchTerm() {
       this.fetchOrders();
     }
   },
-  created: async function(){
+  created: async function () {
     // 等待 this.fetchOrders() 函數執行完成才created
     await this.fetchOrders();
   },
@@ -249,19 +238,23 @@ export default {
 .trash {
   border: transparent;
   background-color: transparent;
-  &:hover{
+
+  &:hover {
     cursor: pointer;
   }
 }
-.orders{
-  .ivu-table-cell{
+
+.orders {
+  .ivu-table-cell {
     padding-right: 8px;
     padding-left: 8px;
   }
-  tr :first-child .ivu-table-cell{
+
+  tr :first-child .ivu-table-cell {
     padding-left: 18px;
   }
-  .ivu-table-header .ivu-table-column-right .ivu-table-cell{
+
+  .ivu-table-header .ivu-table-column-right .ivu-table-cell {
     padding-right: 18px;
   }
 }
