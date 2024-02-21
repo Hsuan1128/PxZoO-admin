@@ -152,7 +152,7 @@ export default {
     axios.get(`${import.meta.env.VITE_API_URL}/locationShow.php`)
     .then(response => {
       this.categories = response.data; // 假設返回的數據是一個數組
-      console.log(this.categories)
+      // console.log(this.categories)
     })
     .catch(error => {
       console.error("Error fetching data: ", error);
