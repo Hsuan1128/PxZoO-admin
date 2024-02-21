@@ -43,12 +43,14 @@
 </template>
   
 <script>
+import { getStaId } from '@/stores/getStaId.js';
 import axios from 'axios';
 import sidebar from "@/components/sidebar.vue";
 import grass from "@/components/grass.vue";
 import ordersRevise from "@/components/orders/ordersRevise.vue"
 
 export default {
+  mixins: [getStaId],
   components: {
     sidebar,
     grass,
@@ -150,8 +152,8 @@ export default {
       // 索引當前頁面在整個資料陣列中的範圍
       const startIndex = (this.currentPage - 1) * this.pageSize; // 起始索引
       const endIndex = startIndex + this.pageSize; // 結束索引
-      console.log(this.orders);
-      console.log(typeof this.orders);
+      // console.log(this.orders);
+      // console.log(typeof this.orders);
       this.currentPageData = Object.values(this.orders).slice(startIndex, endIndex); // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
     },
     async fetchOrders() {
@@ -161,8 +163,23 @@ export default {
             searchTerm: this.searchTerm
           }
         });
-        console.log('response.data', typeof response.data);
+        // console.log('response.data', typeof response.data);
+        // console.log('response.data',  response.data);
+        
         this.orders = response.data;
+        for(var key in this.orders){
+          let order = this.orders[key];
+          if(order.cou_name===null){
+            order.cou_name='不使用優惠券';
+          }
+        }
+        // console.log(this.orders[0].cou_name);
+        // console.log(typeof this.orders[0].cou_name);
+        // console.log(this.orders[3].cou_name);
+        // console.log(typeof this.orders[3].cou_name);
+          // console.log(typeof this.orders.cou_name);    
+          // console.log(this.orders.cou_name); 
+
         this.total = this.orders.length;
         this.updateCurrentPageData();
       } catch (error) {
@@ -185,9 +202,9 @@ export default {
     },
     fetchOrderUpdate(staff, status, bool) {
       // 修改訂單明細
-      // staff待串接
-      axios.post(`${import.meta.env.VITE_API_URL}/fetchOrderUpdate.php`, {
-        sta_id: staff,
+      axios.post(`${import.meta.env.VITE_API_URL}/orderUpdate.php`, {
+        // sta_id: this.sta_id, //等localstorage補上再試用
+        sta_id: 1,
         ord_status: status,
         ord_id: this.selectedOrder.ord_id,
       }, {
@@ -197,7 +214,6 @@ export default {
       })
         .then(response => {
           this.fetchOrders();
-
           this.reviseToggle(bool);
           return response.data;
         })
@@ -231,6 +247,9 @@ export default {
   created: async function () {
     // 等待 this.fetchOrders() 函數執行完成才created
     await this.fetchOrders();
+  },
+  created(){
+    this.fetchOrders();
   },
 };
 </script>

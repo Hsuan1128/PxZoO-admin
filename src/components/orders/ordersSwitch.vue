@@ -6,7 +6,6 @@
         true-color="#13ce66"
         false-color="#ff9900"
         v-model="value"
-        @change="bindStatus"
       >
         <template #open>
           <span v-text="statusData"></span>
@@ -30,20 +29,27 @@ export default {
   data() {
     return {
       value: true,
+      reverseStatus: this.statusData.replace("未","已"),
     };
   },
-  methods:{ },
-  computed:{
-    reverseStatus(){
-      return this.statusData.replace("未","已");
-    },
-    bindStatus(){
-      // 修改後才傳送值
-      if(!this.value){
+  methods:{
+    bindStatus(value){
+      if(value){
+        console.log("if");
+        this.$emit('newStatus', false);
+      }else{
+        console.log("else");
         this.$emit('newStatus', this.reverseStatus);
       }
     },
   },
+  watch:{
+    value(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        this.bindStatus(newValue);
+      }
+    }
+  }
 };
 </script>
 <style lang="scss">
