@@ -313,6 +313,7 @@ export default {
             if (newVal) {
                 //抓取館別名稱顯示對應的館別位置
                 this.locationShow()
+                this.editedLocationName = ""
             }
             }
         },
@@ -322,6 +323,8 @@ export default {
                 if(this.editedLocationName === this.rowdata.location_name){
                     this.editedCategoryName = this.rowdata.category_name
                 }
+                console.log(this.editedCategoryName);
+                console.log(this.editedLocationName);
             }
         }
         
