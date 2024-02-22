@@ -88,15 +88,26 @@ export default {
     },
     data() {
         return {
+            hasChanges: false,
+            // news_title: this.rowdata.news_title,
+            // news_type: this.rowdata.news_type,
+            // news_typepic:  this.rowdata.news_typepic,
+            // news_date:  this.rowdata.news_date,
+            // news_pic:  this.rowdata.news_pic,
+            // news_text_1:  this.rowdata.news_text_1,
+            // news_text_2:  this.rowdata.news_text_2,
+            // news_text_3:  this.rowdata.news_text_3,
+            // news_text_4:  this.rowdata.news_text_4,
+
             news_title: '',
             news_type: '',
-            news_typepic: '',
-            news_date: '',
-            news_pic: '',
-            news_text_1: '',
-            news_text_2: '',
-            news_text_3: '',
-            news_text_4: '',
+            news_typepic:  '',
+            news_date:  '',
+            news_pic:  '',
+            news_text_1:  '',
+            news_text_2:  '',
+            news_text_3:  '',
+            news_text_4:  '',
 
             ConfirmSwitch: false,
 
@@ -171,24 +182,39 @@ export default {
             }
         },
 
+        updateHasChanges() {
+            this.hasChanges = (
+                this.rowdata.news_title !== this.news_title ||
+                this.rowdata.news_type !== this.news_type ||
+                this.rowdata.news_typepic !== this.news_typepic ||
+                this.rowdata.news_date !== this.news_date ||
+                this.rowdata.news_pic !== this.news_pic ||
+                this.rowdata.news_text_1 !== this.news_text_1 ||
+                this.rowdata.news_text_2 !== this.news_text_2 ||
+                this.rowdata.news_text_3 !== this.news_text_3 ||
+                this.rowdata.news_text_4 !== this.news_text_4
+            );
+        },
+
         newsRevise() {
-            //判斷輸入資料的情況做出對應的行為
-            if (this.rowdata.news_title != this.news_title ||
-                this.rowdata.news_type != this.news_type ||
-                this.rowdata.news_typepic != this.news_typepic ||
-                this.rowdata.news_date != this.news_date ||
-                this.rowdata.news_pic != this.news_pic ||
-                this.rowdata.news_text_1 != this.news_text_1 ||
-                this.rowdata.news_text_2 != this.news_text_2 ||
-                this.rowdata.news_text_3 != this.news_text_3 ||
-                this.rowdata.news_text_4 != this.news_text_4
-            ) {
-                this.ConfirmSwitch = !this.ConfirmSwitch;
-                // this.prepareConfirmData()
-            } else {
-                // this.updateReviseSwitch();
-            }
-        }
+    // 更新 hasChanges 属性
+    this.updateHasChanges();
+
+    if (this.hasChanges) {
+        // 如果有修改，显示确认弹窗
+        this.ConfirmSwitch = true;
+        console.log('Has changes:', this.hasChanges); // 添加这行日志输出
+        this.prepareConfirmData();
+    } else {
+        // 如果没有修改，直接关闭当前表单
+        this.updateReviseSwitch();
+        this.$emit('trigger-update-revise-switch');
+    }
+},
+
+
+
+
     },
     components: {
         newsConfirm,
