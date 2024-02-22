@@ -114,9 +114,14 @@ export default {
         },
       })
         .then(response => {
+          const confirmed = window.confirm("確定要新增資料嗎?");
+          if (!response.data.error && confirmed) {
           console.log(response.data);
           // 提交成功後的處理
           this.updateaddSwitch(); // 觸發關閉表單的方法
+          window.location.reload(); // 重新整理頁面
+          }
+          
         })
         .catch(error => {
           console.error('Error:', error);
