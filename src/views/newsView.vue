@@ -177,6 +177,10 @@ export default {
     remove(index) {
       const rowData = this.data[index]; // 獲取要刪除的資料列
       const news_id = rowData.news_id; // 假設資料中有一個名為 news_id 的欄位作為唯一標識
+      const confirmed = window.confirm("確定要刪除此商品嗎?");
+      if (!confirmed) {
+        return; //不執行刪除
+      }
 
       // 向後端發送 DELETE 請求
       axios.delete(`${import.meta.env.VITE_API_URL}/newsDelete.php`, {
@@ -184,11 +188,9 @@ export default {
       })
         .then(response => {
           // 成功刪除後處理前端資料
-          this.data.splice(index, 1);
-          console.log("資料已成功刪除");
-          const confirmed = window.confirm("確定要刪除此商品嗎?");
-          if (!response.data.error && confirmed) {
-              this.prodclass.splice(index, 1)
+          if (!response.data.error) {
+            this.data.splice(index, 1);
+            console.log("資料已成功刪除");
           }
         })
         .catch(error => {

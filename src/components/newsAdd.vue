@@ -114,9 +114,11 @@ export default {
         },
       })
         .then(response => {
+          console.log('新增資料成功');
           console.log(response.data);
           // 提交成功後的處理
           this.updateaddSwitch(); // 觸發關閉表單的方法
+          window.location.reload();
         })
         .catch(error => {
           console.error('Error:', error);

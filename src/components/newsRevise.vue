@@ -184,9 +184,9 @@ export default {
                 this.rowdata.news_text_4 != this.news_text_4
             ) {
                 this.ConfirmSwitch = !this.ConfirmSwitch;
-                this.prepareConfirmData()
+                // this.prepareConfirmData()
             } else {
-                this.updateReviseSwitch();
+                // this.updateReviseSwitch();
             }
         }
     },
