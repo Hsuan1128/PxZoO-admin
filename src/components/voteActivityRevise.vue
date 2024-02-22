@@ -10,7 +10,7 @@
 
             <div class="Revise_content_align">
                 <label for="" class="pcInnerText">內容</label>
-                <input type="text" v-model="rowdata.vote_activity_content" :placeholder="vote_activity_content">
+                <textarea type="text" v-model="rowdata.vote_activity_content" :placeholder="vote_activity_content"  class="Revise_textarea" ></textarea>
             </div>
           
             <div class="Revise_content_align">

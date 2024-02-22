@@ -7,7 +7,7 @@
         <div class="searchArea">
           <button class="search pcInnerText">查詢</button>
           <div class="inputArea">
-            <input type="text" placeholder="請輸入投票活動資訊" />
+            <input type="text" placeholder="請輸入投票活動資訊" v-model.trim="searchTerm" />
             <button class="scope">
               <img src="../assets/images/formicon/scope.svg" alt="scope" />
             </button>
@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       addSwitch: false,
-      reviseSwitch: false,
+      ReviseSwitch: false,
       columns: [
         {
           title: "編號",
@@ -115,14 +115,45 @@ export default {
           align: "center",
         },
       ],
-      data: [
-
-
-      ],
-      rowdata: []
+      data: [],
+      rowdata: [],
+      searchTerm:'',//搜尋
+      total: 0, // 總條數
+      pageSize: 10, // 每頁顯示條數
+      currentPage: 1, // 當前頁碼
     };
   },
   methods: {
+    handleChangePage(page) {
+     // 當使用者改變當前頁面時，這個函數被呼叫。
+    // page 參數代表使用者所選擇的新頁碼。
+    this.currentPage = page;
+
+    // 重新從數據源（可能是伺服器或其他地方）獲取新頁碼的資料，以便更新顯示在頁面上。
+
+    axios.get(`${import.meta.env.VITE_API_URL}/voteActivityShow.php `)
+    .then(response => {
+      this.data = response.data; // 假設返回的數據是一個數組
+      this.total = this.data.length;
+      this.updatedata();
+    })
+    .catch(error => {
+      console.error("Error fetching data: ", error);
+    });
+  },
+  filterHandle(){
+      axios.get(`${import.meta.env.VITE_API_URL}/voteActivitySearch.php?`, { params: { searchTerm: this.searchTerm } })
+        .then(response => {
+          this.data = response.data;
+          this.total = this.data.length;
+          this.currentPage = 1
+          this.updatedata();
+        })
+        .catch(error => {
+          console.error('搜尋出錯:', error);
+        });
+  },
+
     updateaddSwitch(newValue) {
       this.addSwitch = newValue;
       this.$emit('change', this.addSwitch);
@@ -165,7 +196,12 @@ export default {
       .catch(error => {
         console.error("Error fetching data: ", error);
       });
-  }
+  },
+  watch:{
+    searchTerm(newTerm, oldTerm){
+      this.filterHandle()
+    }
+  },
 };
 </script>
 <style>

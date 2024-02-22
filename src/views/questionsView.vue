@@ -17,14 +17,14 @@
       <div class="formArea">
         <Table stripe 
         :columns="columns" 
-        :data="currentPageData" 
+        :data="data" 
         ref="table" 
         class="custom-table">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
           <template #status="{ row }">
-            <Switch v-model="row.active" @on-change="updateStatus(row)" />
+            <Switch v-model="row.question_status" @change="updateStatus(row)" />
           </template>
           <template #action="{ row, index }">
             <Button type="primary" class="trash" size="small" style="margin-right: 5px"
@@ -56,9 +56,10 @@
 </template>
 
 <script>
+import Switch from "@/components/switchShelves.vue";
 import axios from 'axios';
 import sidebar from "@/components/sidebar.vue";
-import { Table, Page, Switch } from "view-ui-plus"; // 假設 iview 的開關元件位於這個位置
+import { Table, Page } from "view-ui-plus"; // 假設 iview 的開關元件位於這個位置
 import questionadd from "@/components/questionadd.vue";
 import questionrevise from "@/components/questionrevise.vue";
 import grass from "@/components/grass.vue";
@@ -77,7 +78,7 @@ export default {
       ReviseSwitch: false,
       columns: [
         {
-          title: "No.",
+          title: "編號",
           key: "question_id",
           width: 70,
           align: "left",
@@ -163,11 +164,10 @@ export default {
         },
       ],
 
-      //搜尋
-      searchTerm:'',
+      
+      searchTerm:'',//搜尋
       data: [],
       rowdata: [],
-      currentPageData: [], // 當前頁顯示的數據
       total: 0, // 總條數
       pageSize: 10, // 每頁顯示條數
       currentPage: 1, // 當前頁碼
@@ -175,26 +175,26 @@ export default {
     };
   },
   methods: {
-//     //狀態更新
-//     updateStatus(row) {
-//   // 监听Switch组件的变化事件，并发送请求到后端
-//   const newStatus = row.active ? 1 : 0; 
-//   axios.post(`${import.meta.env.VITE_API_URL}/questionStatus.php`, {
-//     question_id: row.question_id,
-//     active: newStatus,
-//   })
-//   .then(response => {
-//     // 成功更新状态后的处理
-//     console.log('状态更新成功');
-//     // 重新從後端加載數據並更新到前端
-//     this.loadData();
-//   })
-//   .catch(error => {
-//     // 更新状态失败时的处理
-//     console.error('更新状态时出错：', error);
-//   });
-// },
+  
+    updateStatus(row) {
+    // 獲取開關狀態
+    const newStatus = row.question_status === 0 ? 1 : 0;
 
+    // 向後端發送請求，更新資料庫中對應資料的上下架狀態
+    axios.post(`${import.meta.env.VITE_API_URL}/questionStatus.php`, {
+      question_id: row.question_id,
+      question_status: newStatus
+    })
+    .then(response => {
+      // 處理回應，例如顯示成功訊息或重新加載資料等操作
+      console.log("狀態更新成功");
+      this.updatedata();
+    })
+    .catch(error => {
+      // 處理錯誤
+      console.error('更新狀態失敗:', error);
+    });
+  },
 
     handleChangePage(page) {
      // 當使用者改變當前頁面時，這個函數被呼叫。
@@ -207,7 +207,7 @@ export default {
     .then(response => {
       this.data = response.data; // 假設返回的數據是一個數組
       this.total = this.data.length;
-      this.updateCurrentPageData();
+      this.updatedata();
     })
     .catch(error => {
       console.error("Error fetching data: ", error);
@@ -219,13 +219,13 @@ export default {
           this.data = response.data;
           this.total = this.data.length;
           this.currentPage = 1
-          this.updateCurrentPageData();
+          this.updatedata();
         })
         .catch(error => {
           console.error('搜尋出錯:', error);
         });
   },
-  updateCurrentPageData() {
+  updatedata() {
      // 這個函數用來更新當前頁面所顯示的資料
 
       // 計算起始索引 (startIndex) 和結束索引
@@ -233,7 +233,7 @@ export default {
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
         // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
-      this.currentPageData = this.data.slice(startIndex, endIndex);
+      this.data = this.data.slice(startIndex, endIndex);
     },
     updateaddSwitch(newValue) {
       this.addSwitch = newValue;
@@ -252,9 +252,11 @@ export default {
         data: { id: question_id } // 傳遞要刪除的資料列的 ID
       })
         .then(response => {
-          // 成功刪除後處理前端資料
+          const confirmed = window.confirm("確定要刪除此資料嗎?");
+                    if (!response.data.error && confirmed) {
           this.data.splice(index, 1);
-          console.log("資料已成功刪除");
+          
+          console.log("資料已成功刪除");}
         })
         .catch(error => {
           console.error("刪除資料時發生錯誤: ", error);
@@ -263,17 +265,17 @@ export default {
   },
   
   created() {
-//  // 初始化數據
-//  axios.get(`${import.meta.env.VITE_API_URL}/questionShow.php`)
-//     .then(response => {
-//       this.data = response.data;
-//       this.total = this.data.length;
-//       this.updateCurrentPageData();
+ // 初始化數據
+ axios.get(`${import.meta.env.VITE_API_URL}/questionShow.php`)
+    .then(response => {
+      this.data = response.data;
+      this.total = this.data.length;
+      this.updatedata();
       
-//     })
-//     .catch(error => {
-//       console.error("Error fetching data: ", error);
-//     });
+    })
+    .catch(error => {
+      console.error("Error fetching data: ", error);
+    });
 },
   watch:{
     searchTerm(newTerm, oldTerm){
