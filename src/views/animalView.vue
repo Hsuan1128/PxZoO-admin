@@ -25,7 +25,8 @@
             <strong> {{ row.name }}</strong>
           </template>
           <template #status="{ row }">
-            <Switch v-model="row.active" />
+            <Switch v-model="row.animal_status" @click="switchChange(row)"
+            />
           </template>
           <template #action="{ row, index }">
             <Button
@@ -50,7 +51,6 @@
     </div>
     <animaladd v-show="addSwitch"  :addSwitch="addSwitch" :animalData="data" @update-switch="addSwitch = $event"/>
     <animalRevise v-show="ReviseSwitch" :rowdata="rowdata"
-    :rowdataReady = "rowdataReady"
     :ReviseSwitch="ReviseSwitch" 
     @update-switch="ReviseSwitch = $event" />
   </section>
@@ -104,7 +104,7 @@ export default {
         {
           title: "入園日期",
           key: "animal_enterdate",
-          width: 160,
+          // width: 160,
           align: "left",
         },
 
@@ -127,12 +127,18 @@ export default {
       //動物全部資訊
       data: [],
       rowdata:[],
-      rowdataReady: false,
 
       currentPageData: [], // 當前頁顯示的數據
       total: 0, // 總條數
       pageSize: 10, // 每頁顯示條數
       currentPage: 1, // 當前頁碼
+
+      switchdata:{
+        animal_id:'',
+        animal_status:''
+      },
+      
+      statusData:[],
       //顯示新增頁面
       addSwitch : false,
       ReviseSwitch:false,
@@ -199,22 +205,50 @@ export default {
         // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
       this.currentPageData = this.data.slice(startIndex, endIndex);
     },
-    //新增資料
-    addAnimalItem(){
-      this.addSwitch = true
-    },
-    // updateReviseSwitch(newValue) {
-    //   this.ReviseSwitch = newValue;
-    //   this.$emit('change', this.ReviseSwitch);
-    // },
-    //修改資料
-    AnimalModification(row){
-      this.ReviseSwitch = !this.ReviseSwitch
-      this.rowdata = row;
-      this.rowdataReady = true;
-      console.log(this.rowdataReady)
+    //switch
+  switchChange(row){
+    if(row.animal_status == 1){
+      row.animal_status = 0
+    }else{
+      row.animal_status = 1
     }
+    this.updateStatusData(row)
   },
+  updateStatusData(row){
+    this.switchdata ={
+      animal_id: row.animal_id,
+      animal_status: row.animal_status
+    }
+    axios.post(`${import.meta.env.VITE_API_URL}/animalReviseSwitch.php`, this.switchdata, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(response => {
+        console.log(response.data);
+        console.log(this.switchdata);
+        // 提交成功後的處理
+      })
+      .catch(error => {
+        console.error('搜尋出錯:', error);
+      });
+  },
+
+  //新增資料
+  addAnimalItem(){
+    this.addSwitch = true
+  },
+  // updateReviseSwitch(newValue) {
+  //   this.ReviseSwitch = newValue;
+  //   this.$emit('change', this.ReviseSwitch);
+  // },
+  //修改資料
+  AnimalModification(row){
+    this.ReviseSwitch = !this.ReviseSwitch
+    this.rowdata = row;
+    console.log(this.rowdata)
+  }
+},
   components: {
     sidebar,
     Switch,

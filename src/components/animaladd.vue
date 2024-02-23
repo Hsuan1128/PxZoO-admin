@@ -6,12 +6,12 @@
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">動物種類
                 </label>
-                <input type="text"  placeholder="請輸入動物種類" v-model="formData.animal_species">
+                <input type="text"  placeholder="請輸入動物種類" maxlength="10" v-model="formData.animal_species">
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">動物名稱</label>
-                <input type="text" placeholder="請輸入動物名稱"  v-model="formData.animal_name">
+                <input type="text" placeholder="請輸入動物名稱" maxlength="10"  v-model="formData.animal_name">
             </div>
             <!-- 改下拉 -->
             <div class="animaladd_content_align">
@@ -39,57 +39,68 @@
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">平均壽命</label>
-                <textarea class="animaladd_textarea" placeholder="請輸入平均壽命" v-model="formData.animal_lifespan"></textarea>
+                <textarea class="animaladd_textarea" placeholder="請輸入平均壽命"
+                maxlength="100" rows="7" v-model="formData.animal_lifespan"></textarea>
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">分布地區</label>
-                <textarea class="animaladd_textarea" placeholder="請輸入分布地區" v-model="formData.animal_area"></textarea>
+                <textarea class="animaladd_textarea" placeholder="請輸入分布地區" 
+                maxlength="100" rows="7" v-model="formData.animal_area"></textarea>
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">食性</label>
-                <textarea class="animaladd_textarea" placeholder="請輸入食性" v-model="formData.animal_food"></textarea>
+                <textarea class="animaladd_textarea" placeholder="請輸入食性" 
+                maxlength="150" rows="9" v-model="formData.animal_food"></textarea>
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">特徵</label>
-                <textarea class="animaladd_textarea" placeholder="請輸入特徵" v-model="formData.animal_features"></textarea>
+                <textarea class="animaladd_textarea" placeholder="請輸入特徵" 
+                maxlength="150" rows="9" v-model="formData.animal_features"></textarea>
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">介紹</label>
-                <textarea class="animaladd_textarea" placeholder="請輸入介紹" v-model="formData.animal_description"></textarea>
+                <textarea class="animaladd_textarea" placeholder="請輸入介紹" 
+                maxlength="150" rows="9" v-model="formData.animal_description"></textarea>
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">圖片A</label>
-                <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('animal_pic_a', $event)">
+                <input type="file" placeholder="請上傳圖片" name="animal_pic_a"
+                accept="image/*" @change="handleFileChange('animal_pic_a', $event)">
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">圖片B</label>
-                <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('animal_pic_b', $event)">
+                <input type="file" placeholder="請上傳圖片" name="animal_pic_b" 
+                accept="image/*" @change="handleFileChange('animal_pic_b', $event)">
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">圖片C</label>
-                <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('animal_pic_c', $event)">
+                <input type="file" placeholder="請上傳圖片" name="animal_pic_c"  
+                accept="image/*" @change="handleFileChange('animal_pic_c', $event)">
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">Icon</label>
-                <input type="file" placeholder="請上傳圖片，檔案類型：png"  @change="handleFileChange('animal_icon', $event)">
+                <input type="file" name="animal_icon" placeholder="請上傳圖片，檔案類型：png"  accept="image/png" @change="handleFileChange('animal_icon', $event)">
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">動物聲音</label>
-                <input type="file" placeholder="請上傳音檔，檔案類型：mp3"  @change="handleFileChange('animal_sound', $event)">
+                <input type="file" name="animal_sound" placeholder="請上傳音檔，檔案類型：mp3" 
+                accept="audio/*" @change="handleFileChange('animal_sound', $event)">
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">列表圖</label>
-                <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('animal_small_pic', $event)">
+                <input type="file" placeholder="請上傳圖片" name="animal_small_pic" 
+                accept="image/*"
+                @change="handleFileChange('animal_small_pic', $event)">
             </div>
         </div>
         
@@ -189,6 +200,7 @@ export default {
     handleFileChange(field, event) {
       // 當文件選擇時觸發，將文件對象存儲到 formData 中
       this.formData[field] = event.target.files[0];
+      console.log(this.formData[field])
     },
     // handleDateChange(date) {
     // // 將選擇的日期值設置到 formData.animal_enterdate 中
@@ -196,13 +208,15 @@ export default {
     // console.log('Formatted Date:', this.formData.animal_enterdate);
 
     // },
-    // 提交表单数据
+    // 提交表单数
     saveAnimaldata() {
       // 使用 FormData 來處理文件上傳
       let formData = new FormData();
       for (let key in this.formData) {
         formData.append(key, this.formData[key]);
+        
       }
+      console.log(this.formData)
       axios.post(`${import.meta.env.VITE_API_URL}/animaladd.php`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // 指定文件上傳格式
@@ -212,7 +226,9 @@ export default {
           console.log(response.data);
           console.log(this.formData)
           // 提交成功後的處理
-          this.updateaddSwitch(); // 觸發關閉表單的方法
+          this.updateaddSwitch();
+           // 觸發關閉表單的方法
+          //  location.reload();
         })
         .catch(error => {
           console.error('Error:', error);

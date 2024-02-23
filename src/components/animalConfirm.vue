@@ -47,7 +47,8 @@ import axios from 'axios';
                 //引入修改的PHP
                 axios.post(`${import.meta.env.VITE_API_URL}/animalRevise.php`, this.confirmData,{
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data',
+                        'Content-Type': 'application/json'
                     }
                 })
                 .then(() => {
