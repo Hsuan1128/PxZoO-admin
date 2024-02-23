@@ -6,6 +6,8 @@
         true-color="#13ce66"
         false-color="#ff9900"
         v-model="value"
+        :value="value"
+        @on-change="handleChange"
       >
         <template #open>
           <span>上架</span>
@@ -27,5 +29,11 @@ export default {
       value: true,
     };
   },
+    methods:{
+      handleChange(value){
+        console.log("here");
+        this.$emit('value',value);
+      }
+    }
 };
 </script>

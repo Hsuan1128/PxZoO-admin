@@ -58,7 +58,7 @@
 
 <script>
 import sidebar from "@/components/sidebar.vue";
-import Switch from "@/components/switch.vue";
+import Switch from "@/components/switchShelves.vue";
 import grass from "@/components/grass.vue";
 import { Table, Page, } from "view-ui-plus";
 import axios from 'axios'; // 導入axios套件
