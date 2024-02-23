@@ -5,13 +5,13 @@
             <div class="Revise_content">
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">消息標題</label>
-                    <input type="text" v-model="rowdata.news_title" :placeholder="news_title">
+                    <input type="text"  class="revise_text" v-model="rowdata.news_title" :placeholder="rowdata.news_title">
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">消息分類</label>
-                    <select name="newstype" id="news-select" v-model="news_type">
-                        <option value="">{{ rowdata.news_type }}</option>
+                    <select name="newstype" id="news-select" v-model="rowdata.news_type" :placeholder="rowdata.news_type">
+                        <!-- <option value="">{{ rowdata.news_type }}</option> -->
                         <option value="最新活動">最新活動</option>
                         <option value="園區動態">園區動態</option>
                         <option value="動物知識">動物知識</option>
@@ -19,39 +19,64 @@
                 </div>
 
                 <div class="Revise_content_align">
-                    <label for="" class="pcInnerText">分類圖片</label>
-                    <input type="file" id="news_typepic" placeholder="請上傳圖片"
-                        @change="handleFileChange('news_typepic', $event)">
+                    <label class="pcInnerText">
+                        分類圖片  
+                    </label>
+                    <label class="pcInnerText revise_imgtext ">
+                    <span v-if="typefileName">{{ typefileName }}</span>
+                    <span v-else>{{rowdata.news_typepic}}</span>   
+                    <div class="iconBtn pcInnerText">
+                        <p class="iconText">
+                        <img src="@/assets/images/login/icon/image.svg" alt="" class="buttonIcon"/>
+                        選擇檔案
+                        </p>
+                        <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
+                    </div>
+                    <input type="file" id="typepic" name="typepic" accept="image/png, image/jpeg" @change="handleFileChange('news_typepic', $event, 'news_typepic')"/>
+                    </label>
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">消息日期</label>
-                    <input type="date" v-model="rowdata.news_date" :placeholder="news_date">
+                    <input type="date" class="revise_text"  v-model="rowdata.news_date" :placeholder="rowdata.news_date">
                 </div>
 
-                <div class="Revise_content_align">
-                    <label for="" class="pcInnerText">消息圖片</label>
-                    <input type="file" id="news_pic" :placeholder="news_pic" @change="handleFileChange('news_pic', $event)">
+                <div class="Revise_content_align revise_img">
+                    <label class="pcInnerText">
+                    消息圖片 
+                    </label>
+                    <label class="pcInnerText revise_imgtext ">
+                    <span v-if="fileName">{{ fileName }}</span>
+                    <span v-else>{{rowdata.news_pic}}</span>   
+                    <div class="iconBtn pcInnerText">
+                        <p class="iconText">
+                        <img src="@/assets/images/login/icon/image.svg" alt="" class="buttonIcon"/>
+                        選擇檔案
+                        </p>
+                        <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
+                    </div>
+                    <input type="file" id="news_pic" name="news_pic" accept="image/png, image/jpeg" @change="handleFileChange('news_pic', $event, 'news_pic')"/>
+                    </label>
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">描述1</label>
-                    <textarea class="Revise_textarea" v-model="rowdata.news_text_1" :placeholder="news_text_1"></textarea>
+                    <textarea class="Revise_textarea" v-model="rowdata.news_text_1" :placeholder="rowdata.news_text_1"></textarea>
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">描述2</label>
-                    <textarea class="Revise_textarea" v-model="rowdata.news_text_2" :placeholder="news_text_2"></textarea>
+                    <textarea class="Revise_textarea" v-model="rowdata.news_text_2" :placeholder="rowdata.news_text_2"></textarea>
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">描述3</label>
-                    <textarea class="Revise_textarea" v-model="rowdata.news_text_3" :placeholder="news_text_3"></textarea>
+                    <textarea class="Revise_textarea" v-model="rowdata.news_text_3" :placeholder="rowdata.news_text_3"></textarea>
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">描述4</label>
-                    <textarea class="Revise_textarea" v-model="rowdata.news_text_4" :placeholder="news_text_4"></textarea>
+                    <textarea class="Revise_textarea" v-model="rowdata.news_text_4" :placeholder="rowdata.news_text_4"></textarea>
                 </div>
             </div>
 
@@ -80,59 +105,82 @@ import axios from 'axios';
 
 export default {
     props: {
-        ReviseSwitch: false,
+        ReviseSwitch: {
+            type: Boolean,
+            default: false
+        },
         rowdata: {
             type: Object,
             required: true,
+            default: () => ({})
         }
     },
     data() {
         return {
+            // news_title: '',
+            // news_type: '',
+            // news_typepic:  '',
+            // news_date:  '',
+            // news_pic:  '',
+            // news_text_1:  '',
+            // news_text_2:  '',
+            // news_text_3:  '',
+            // news_text_4:  '',
+
             hasChanges: false,
-            // news_title: this.rowdata.news_title,
-            // news_type: this.rowdata.news_type,
-            // news_typepic:  this.rowdata.news_typepic,
-            // news_date:  this.rowdata.news_date,
-            // news_pic:  this.rowdata.news_pic,
-            // news_text_1:  this.rowdata.news_text_1,
-            // news_text_2:  this.rowdata.news_text_2,
-            // news_text_3:  this.rowdata.news_text_3,
-            // news_text_4:  this.rowdata.news_text_4,
-
-            news_title: '',
-            news_type: '',
-            news_typepic:  '',
-            news_date:  '',
-            news_pic:  '',
-            news_text_1:  '',
-            news_text_2:  '',
-            news_text_3:  '',
-            news_text_4:  '',
-
+            news_title: this.rowdata.news_title,
+            news_type: this.rowdata.news_type,
+            news_typepic:  this.rowdata.news_typepic,
+            news_date:  this.rowdata.news_date,
+            news_pic:  this.rowdata.news_pic,
+            news_text_1:  this.rowdata.news_text_1,
+            news_text_2:  this.rowdata.news_text_2,
+            news_text_3:  this.rowdata.news_text_3,
+            news_text_4:  this.rowdata.news_text_4,
             ConfirmSwitch: false,
-
             confirmData: new FormData(),
             uploadImagePlaceholder: '請上傳圖片',
-        };
-    },
+            typefileName: '',
+            fileName: '',
+            };
+            
+        },
     methods: {
         updateReviseSwitch() {
             //從這個組件傳送控制修改彈窗的顯示/隱藏參數數值
             this.$emit('update-switch', !this.ReviseSwitch);
         },
 
-        handleFileChange(field, event) {
+        // handleFileChange(field, event) {
+        //     const file = event.target.files[0];
+
+        //     // 將文件資料保存到對應的 rowdata 屬性中
+        //     // 如果要保存檔案對象，您可以使用下面的代碼
+        //     // this.rowdata[field] = file;
+
+        //     // 如果您只需要保存檔案名稱，請使用下面的代碼
+        //     this.rowdata[field] = file
+        //     console.log(file)
+        //     // 顯示上傳的文件名（或其他信息）
+        //     console.log(`${field} uploaded: ${file.name}`);
+        // },
+
+        // 處理檔案更改（消息圖片）
+        handleFileChange(field, event, fileType) {
             const file = event.target.files[0];
-
-            // 將文件資料保存到對應的 rowdata 屬性中
-            // 如果要保存檔案對象，您可以使用下面的代碼
-            // this.rowdata[field] = file;
-
-            // 如果您只需要保存檔案名稱，請使用下面的代碼
             this.rowdata[field] = file
             console.log(file)
-            // 顯示上傳的文件名（或其他信息）
-            console.log(`${field} uploaded: ${file.name}`);
+            // // 當選擇文件時，將文件對象存儲到 formData 中的指定字段
+            // this.formData[field] = event.target.files[0];
+            
+            // 根據文件類型更新相應的文件名
+            if (fileType === 'news_typepic') {
+                this.typefileName = this.rowdata[field].name;
+                console.log(this.typefileName);
+            } else if (fileType === 'news_pic') {
+                this.fileName = this.rowdata[field].name;
+                console.log(this.fileName);
+            }
         },
 
         prepareConfirmData() {
@@ -146,42 +194,95 @@ export default {
             console.log(this.confirmData)
         },
         
-        transferData(){
-            //判斷輸入資料的情況做出對應的行為
-            if (this.rowdata.news_title != this.news_title ||
-                this.rowdata.news_type != this.news_type ||
-                this.rowdata.news_typepic != this.news_typepic ||
-                this.rowdata.news_date != this.news_date ||
-                this.rowdata.news_pic != this.news_pic ||
-                this.rowdata.news_text_1 != this.news_text_1 ||
-                this.rowdata.news_text_2 != this.news_text_2 ||
-                this.rowdata.news_text_3 != this.news_text_3 ||
-                this.rowdata.news_text_4 != this.news_text_4
-            ) {
-                //傳遞更新的資料到ConfirmData物件裡
-                this.prepareConfirmData()
-                //引入修改的PHP
-                axios.post(`${import.meta.env.VITE_API_URL}/newsRevises.php`, this.confirmData,{
+        // transferData(){
+        //     //判斷輸入資料的情況做出對應的行為
+        //     if (this.rowdata.news_title != this.news_title ||
+        //         this.rowdata.news_type != this.news_type ||
+        //         this.rowdata.news_typepic != this.news_typepic ||
+        //         this.rowdata.news_date != this.news_date ||
+        //         this.rowdata.news_pic != this.news_pic ||
+        //         this.rowdata.news_text_1 != this.news_text_1 ||
+        //         this.rowdata.news_text_2 != this.news_text_2 ||
+        //         this.rowdata.news_text_3 != this.news_text_3 ||
+        //         this.rowdata.news_text_4 != this.news_text_4
+        //     ) {
+        //         //傳遞更新的資料到ConfirmData物件裡
+        //         this.prepareConfirmData()
+        //         //引入修改的PHP
+        //         axios.post(`${import.meta.env.VITE_API_URL}/newsRevises.php`, this.confirmData,{
+        //             headers: {
+        //                 'Content-Type': 'multipart/form-data'
+        //             },
+        //         })
+        //         .then((res) => {
+        //             console.log(res)
+        //             console.log('修改已送出');
+        //             //關閉修改的彈窗
+        //             this.$emit('trigger-update-revise-switch')
+        //             //重新整理頁面讓資料更新成更改後的
+        //             window.location.reload();
+        //         })
+        //         .catch(error => {
+        //             console.error('更新錯誤:', error);
+        //         });
+        //     } else {
+        //         this.updateReviseSwitch();
+        //     }
+        // },
+
+        // updateHasChanges() {
+        //     this.hasChanges = (
+        //         this.rowdata.news_title !== this.news_title ||
+        //         this.rowdata.news_type !== this.news_type ||
+        //         this.rowdata.news_typepic !== this.news_typepic ||
+        //         this.rowdata.news_date !== this.news_date ||
+        //         this.rowdata.news_pic !== this.news_pic ||
+        //         this.rowdata.news_text_1 !== this.news_text_1 ||
+        //         this.rowdata.news_text_2 !== this.news_text_2 ||
+        //         this.rowdata.news_text_3 !== this.news_text_3 ||
+        //         this.rowdata.news_text_4 !== this.news_text_4
+        //     );
+        // },
+
+        // newsRevise() {
+        //     // 更新 hasChanges 属性
+        //     this.updateHasChanges();
+
+        //     if (this.hasChanges) {
+        //         // 如果有修改，显示确认弹窗
+        //         this.ConfirmSwitch = true;
+        //         console.log('Has changes:', this.hasChanges); // 添加这行日志输出
+        //         this.prepareConfirmData();
+        //     } else {
+        //         // 如果没有修改，直接关闭当前表单
+        //         this.updateReviseSwitch();
+        //         this.$emit('trigger-update-revise-switch');
+        //     }
+        // },
+
+        transferData() {
+            this.updateHasChanges();
+            if (this.hasChanges) {
+                this.prepareConfirmData();
+                axios.post(`${import.meta.env.VITE_API_URL}/newsRevises.php`, this.confirmData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
                 })
                 .then((res) => {
-                    console.log(res)
+                    console.log(res);
                     console.log('修改已送出');
-                    //關閉修改的彈窗
-                    this.$emit('trigger-update-revise-switch')
-                    //重新整理頁面讓資料更新成更改後的
+                    this.$emit('trigger-update-revise-switch');
                     window.location.reload();
                 })
                 .catch(error => {
                     console.error('更新錯誤:', error);
                 });
             } else {
+                // 如果没有修改，直接关闭修改表单
                 this.updateReviseSwitch();
             }
         },
-
         updateHasChanges() {
             this.hasChanges = (
                 this.rowdata.news_title !== this.news_title ||
@@ -197,22 +298,16 @@ export default {
         },
 
         newsRevise() {
-    // 更新 hasChanges 属性
-    this.updateHasChanges();
-
-    if (this.hasChanges) {
-        // 如果有修改，显示确认弹窗
-        this.ConfirmSwitch = true;
-        console.log('Has changes:', this.hasChanges); // 添加这行日志输出
-        this.prepareConfirmData();
-    } else {
-        // 如果没有修改，直接关闭当前表单
-        this.updateReviseSwitch();
-        this.$emit('trigger-update-revise-switch');
-    }
-},
-
-
+            this.updateHasChanges();
+            if (this.hasChanges) {
+                this.ConfirmSwitch = true;
+                console.log('Has changes:', this.hasChanges);
+                this.prepareConfirmData();
+            } else {
+                this.updateReviseSwitch();
+                this.$emit('trigger-update-revise-switch');
+            }
+        }
 
 
     },
@@ -262,7 +357,7 @@ export default {
                 width: 100%;
 
                 label {
-                    margin-right: 20px;
+                    // margin-right: 20px;
                     display: block;
                     width: 15%;
                 }
@@ -274,12 +369,67 @@ export default {
                     border: none;
                 }
 
+                input[type="file"] {
+                    display: none;
+                }
+
+                .revise_text{
+                    padding: 0.5vw 0.5vw;
+                    background-color: #fff;
+                    border: 2px #3F3F3F solid;
+                    width: 100%;
+                    height: 2.5vw;
+                    outline: none;
+                    vertical-align: top;
+                    border-radius: 0;
+                    appearance: none;
+                    -moz-appearance: none;
+                    -webkit-appearance: none;
+                    &::placeholder{
+                    color: #CCC;
+                    }
+                }
+
+                .revise_imgtext{
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                    .iconBtn{
+                    width: 140px;
+                    }
+                } 
+
                 .Revise_textarea {
-                    width: 85%;
+                    padding: 0.5vw 0.5vw;
+                    background-color: #fff;
+                    border: 2px #3F3F3F solid;
+                    width: 100%;
                     height: 10vw;
+                    outline: none;
+                    vertical-align: top;
+                    border-radius: 0;
+                    appearance: none;
+                    -moz-appearance: none;
+                    -webkit-appearance: none;
                     resize: none;
-                    padding-inline: 8px;
-                    border: none;
+                    &::placeholder{
+                        color: #CCC;
+                    }
+                }
+
+                select{
+                    padding: 0.5vw 0.5vw;
+                    background-color: #fff;
+                    border: 2px #3F3F3F solid;
+                    width: 100%;
+                    height: 2.5vw;
+                    outline: none;
+                    vertical-align: top;
+                    border-radius: 0;
+                    resize: none;
+                    &::placeholder{
+                    color: #CCC;
+                    }
                 }
             }
         }
