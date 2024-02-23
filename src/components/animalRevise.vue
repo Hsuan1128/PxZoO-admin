@@ -325,7 +325,7 @@ export default {
                     //關閉修改的彈窗
                     this.updateReviseSwitch()
                     console.log(this.confirmData)
-                    location.reload();
+                    // location.reload();
                 })
                 .catch(error => {
                     console.error('更新錯誤:', error);
@@ -336,11 +336,10 @@ export default {
         },
 
         handleFileChange(field, event) {
+            console.log(field, event)
             
             const file = event.target.files[0];
             // 將文件資料保存到對應的 rowdata 屬性中
-           
-
             // 如果您只需要保存檔案名稱，請使用下面的代碼
             this.rowdata[field] = file;
             // 將相應的 fileChanged 設置為 true，表示圖片已更改
