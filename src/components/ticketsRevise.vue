@@ -120,7 +120,6 @@ export default {
                 .then(() => {
                     //關閉修改的彈窗
                     this.updateReviseSwitch()
-                    location.reload();
                 })
                 .catch(error => {
                     console.error('更新錯誤:', error);
