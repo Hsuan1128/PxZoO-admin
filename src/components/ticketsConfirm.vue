@@ -5,7 +5,7 @@
                 <p class="pcInnerText">門票資訊尚未儲存，是否返回編輯</p>
                 <div class="confirm_btns">
                     <button class="defaultBtn pcInnerText" @click="BackToConfirm">
-                        返回編輯
+                        繼續編輯
                         <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                     </button>
                     <button class="defaultBtn pcInnerText" @click="BackToList">
