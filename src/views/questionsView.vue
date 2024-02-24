@@ -23,8 +23,12 @@
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
+          <!-- <template #status="{ row }">
+            <Switch v-model="row.question_status" @on-change="updateStatus(row)" />
+          </template> -->
           <template #status="{ row }">
-            <Switch v-model="row.question_status" @change="updateStatus(row)" />
+            <Switch @value="handleSwitchCange" v-model="row.question_status"/>
+           
           </template>
           <template #action="{ row, index }">
             <Button type="primary" class="trash" size="small" style="margin-right: 5px"
@@ -59,7 +63,7 @@
 import Switch from "@/components/switchShelves.vue";
 import axios from 'axios';
 import sidebar from "@/components/sidebar.vue";
-import { Table, Page } from "view-ui-plus"; // 假設 iview 的開關元件位於這個位置
+import { Table, Page} from "view-ui-plus"; // 假設 iview 的開關元件位於這個位置
 import questionadd from "@/components/questionadd.vue";
 import questionrevise from "@/components/questionrevise.vue";
 import grass from "@/components/grass.vue";
@@ -171,30 +175,33 @@ export default {
       total: 0, // 總條數
       pageSize: 10, // 每頁顯示條數
       currentPage: 1, // 當前頁碼
-      
     };
   },
   methods: {
-  
-    updateStatus(row) {
-    // 獲取開關狀態
-    const newStatus = row.question_status === 0 ? 1 : 0;
+    // handleSwitchCange(value){
+    //   console.log(value);
+    // },
+    handleSwitchCange(row) {
+  // 獲取開關狀態
+  console.log(row);
+  const newStatus = row.question_status === 0 ? 1 : 0;
 
-    // 向後端發送請求，更新資料庫中對應資料的上下架狀態
-    axios.post(`${import.meta.env.VITE_API_URL}/questionStatus.php`, {
-      question_id: row.question_id,
-      question_status: newStatus
-    })
-    .then(response => {
-      // 處理回應，例如顯示成功訊息或重新加載資料等操作
-      console.log("狀態更新成功");
-      this.updatedata();
-    })
-    .catch(error => {
-      // 處理錯誤
-      console.error('更新狀態失敗:', error);
-    });
-  },
+  // 向後端發送請求，更新資料庫中對應資料的上下架狀態
+  axios.post(`${import.meta.env.VITE_API_URL}/questionStatus.php`, {
+    question_id: row.question_id,
+    question_status: newStatus
+  })
+  .then(response => {
+    // 處理回應，例如顯示成功訊息或重新加載資料等操作
+    console.log("狀態更新成功");
+    this.loadData();
+  })
+  .catch(error => {
+    // 處理錯誤
+    console.error('更新狀態失敗:', error);
+  });
+},
+
 
     handleChangePage(page) {
      // 當使用者改變當前頁面時，這個函數被呼叫。
@@ -248,16 +255,18 @@ export default {
       const question_id = rowData.question_id; // 假設資料中有一個名為 question_id 的欄位作為唯一標識
 
       // 向後端發送 DELETE 請求
-      axios.delete(`${import.meta.env.VITE_API_URL}/questionDelete.php`, {
+      const confirmed = window.confirm("確定要刪除此資料嗎?");
+  if (!confirmed) {
+    return; // 如果用戶取消了操作，則不執行刪除操作
+  }axios.delete(`${import.meta.env.VITE_API_URL}/questionDelete.php`, {
         data: { id: question_id } // 傳遞要刪除的資料列的 ID
       })
-        .then(response => {
-          const confirmed = window.confirm("確定要刪除此資料嗎?");
-                    if (!response.data.error && confirmed) {
-          this.data.splice(index, 1);
-          
-          console.log("資料已成功刪除");}
-        })
+      .then(response => {
+    if (!response.data.error) {
+      this.data.splice(index, 1);
+      console.log("資料已成功刪除");
+    }
+  })
         .catch(error => {
           console.error("刪除資料時發生錯誤: ", error);
         });
@@ -268,8 +277,9 @@ export default {
  // 初始化數據
  axios.get(`${import.meta.env.VITE_API_URL}/questionShow.php`)
     .then(response => {
-      this.data = response.data;
+    this.data = response.data; // 假設返回的數據是一個數組
       this.total = this.data.length;
+      console.log(this.data);
       this.updatedata();
       
     })

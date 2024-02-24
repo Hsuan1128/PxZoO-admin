@@ -283,33 +283,25 @@ export default {
                 this.updateReviseSwitch();
             }
         },
-        updateHasChanges() {
-            this.hasChanges = (
-                this.rowdata.news_title !== this.news_title ||
-                this.rowdata.news_type !== this.news_type ||
-                this.rowdata.news_typepic !== this.news_typepic ||
-                this.rowdata.news_date !== this.news_date ||
-                this.rowdata.news_pic !== this.news_pic ||
-                this.rowdata.news_text_1 !== this.news_text_1 ||
-                this.rowdata.news_text_2 !== this.news_text_2 ||
-                this.rowdata.news_text_3 !== this.news_text_3 ||
-                this.rowdata.news_text_4 !== this.news_text_4
-            );
-        },
 
         newsRevise() {
-            this.updateHasChanges();
-            if (this.hasChanges) {
-                this.ConfirmSwitch = true;
-                console.log('Has changes:', this.hasChanges);
-                this.prepareConfirmData();
+            //判斷輸入資料的情況做出對應的行為
+            if (this.rowdata.news_title != this.news_title ||
+                this.rowdata.news_type != this.news_type ||
+                this.rowdata.news_typepic != this.news_typepic ||
+                this.rowdata.news_date != this.news_date ||
+                this.rowdata.news_pic != this.news_pic ||
+                this.rowdata.news_text_1 != this.news_text_1 ||
+                this.rowdata.news_text_2 != this.news_text_2 ||
+                this.rowdata.news_text_3 != this.news_text_3 ||
+                this.rowdata.news_text_4 != this.news_text_4
+            ) {
+                this.ConfirmSwitch = !this.ConfirmSwitch;
+                this.prepareConfirmData()
             } else {
                 this.updateReviseSwitch();
-                this.$emit('trigger-update-revise-switch');
             }
         }
-
-
     },
     components: {
         newsConfirm,

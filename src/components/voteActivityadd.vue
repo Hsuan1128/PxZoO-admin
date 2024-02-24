@@ -1,4 +1,5 @@
 <template>
+   <div class="voteActivityadd_bg">
   <div class="voteActivityadd">
       <h1>新增投票活動</h1>
       <div class="voteActivityadd_content">
@@ -41,7 +42,7 @@
               <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
           </button>
       </div>
-  </div>
+  </div></div>
 </template>
 
 <script>
@@ -101,19 +102,30 @@ export default {
 </script>
 
 <style lang="scss">
+.voteActivityadd_bg{
+  width: 100%;
+  height: 100%;
+  background-color: #000000dc;
+  position: absolute;
+  z-index: 21;
+}
 .voteActivityadd{
   overflow: auto;
   width: 73.64vw;
-  height: 90vh;
+  height: 45vw;
   background-color: #f5efeb;
   position: absolute;
   top: 50%;
-  left: 55%;
+  left: 50%;
   transform: translate(-50%,-50%);
   z-index: 10;
   h1{
       margin-top: 3vw;
       text-align: center;
+      color: #11A729;
+  }
+  .pcInnerText{
+    color: #3F3F3F;
   }
   .voteActivityadd_content{
       width: 60.82vw;
@@ -121,7 +133,7 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2vw;
+      gap: 1.5vw;
    
       .voteActivityadd_content_align{
           display: flex;
@@ -134,10 +146,15 @@ export default {
           input{
               width: 85%;
               height: 2vw;
+              padding-inline: 8px;
+        border: none;
           }
           .voteActivityadd_textarea{
               width: 85%;
               height: 10vw;
+              resize: none;
+        padding-inline: 8px;
+        border: none;
           }
       }
   }
