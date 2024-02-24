@@ -6,44 +6,114 @@
           <div class="questionadd_content_align">
               <label for="" class="pcInnerText">題目內容
               </label>
-              <input type="text" placeholder="請輸入敘述文字" v-model="formData.question_text">
+              <input type="text" class="questionadd_text" placeholder="請輸入題目內容" v-model="formData.question_text">
           </div>
 
           <div class="questionadd_content_align">
               <label for="" class="pcInnerText">選項A</label>
-              <input type="text" placeholder="請輸入敘述文字"  v-model="formData.question_option_a">
+              <input type="text"  class="questionadd_text"  placeholder="請輸入選項"  v-model="formData.question_option_a">
           </div>
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">圖片A</label>
-              <input type="file" placeholder="請上傳圖片" @change="handleFileChange('question_img_a', $event)">
+
+
+          <div class="questionadd_content_align questionadd_img">
+              <label class="pcInnerText">圖片A</label>
+
+              <label class="pcInnerText questionadd_imgtext ">
+              <span v-if="fileName">{{ fileName }}</span>
+              <span v-else>請選擇檔案</span>   
+              <div class="iconBtn pcInnerText">
+                <p class="iconText">
+                  <img src="@/assets/images/login/icon/image.svg" alt="" class="buttonIcon"/>
+                  選擇檔案
+                </p>
+                <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
+              </div>
+              <input type="file" id="question_pic" name="question_pic"  placeholder="請上傳圖片" @change="handleFileChange('question_img_a', $event)">
+              </label>
           </div>
-          <div class="questionadd_content_align">
+
+
+
+
+
+          <div class="questionadd_content_align ">
               <label for="" class="pcInnerText">選項B</label>
-              <input type="text" placeholder="請輸入敘述文字" v-model="formData.question_option_b">
+              <input  class="questionadd_text"  type="text" placeholder="請輸入選項" v-model="formData.question_option_b">
           </div>
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">圖片B</label>
-              <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('question_img_b', $event)">
+
+
+          <div class="questionadd_content_align questionadd_img">
+              <label class="pcInnerText">圖片B</label>
+
+              <label class="pcInnerText questionadd_imgtext ">
+              <span v-if="fileName">{{ fileName }}</span>
+              <span v-else>請選擇檔案</span>   
+              <div class="iconBtn pcInnerText">
+                <p class="iconText">
+                  <img src="@/assets/images/login/icon/image.svg" alt="" class="buttonIcon"/>
+                  選擇檔案
+                </p>
+                <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
+              </div>
+              <input type="file" id="question_pic" name="question_pic"  placeholder="請上傳圖片" @change="handleFileChange('question_img_b', $event)">
+              </label>
           </div>
+
+
+
           <div class="questionadd_content_align">
               <label for="" class="pcInnerText">選項C</label>
-              <input type="text" placeholder="請輸入敘述文字" v-model="formData.question_option_c">
+              <input  class="questionadd_text"  type="text" placeholder="請輸入選項" v-model="formData.question_option_c">
           </div>
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">圖片C</label>
-              <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('question_img_c', $event)">
+
+
+
+          <div class="questionadd_content_align questionadd_img">
+              <label class="pcInnerText">圖片C</label>
+
+              <label class="pcInnerText questionadd_imgtext ">
+              <span v-if="fileName">{{ fileName }}</span>
+              <span v-else>請選擇檔案</span>   
+              <div class="iconBtn pcInnerText">
+                <p class="iconText">
+                  <img src="@/assets/images/login/icon/image.svg" alt="" class="buttonIcon"/>
+                  選擇檔案
+                </p>
+                <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
+              </div>
+              <input type="file" id="question_pic" name="question_pic"  placeholder="請上傳圖片" @change="handleFileChange('question_img_c', $event)">
+              </label>
           </div>
+
+
+
           <div class="questionadd_content_align">
               <label for="" class="pcInnerText">選項D</label>
-              <input type="text" placeholder="請輸入敘述文字" v-model="formData.question_option_d">
+              <input  class="questionadd_text"  type="text" placeholder="請輸入選項" v-model="formData.question_option_d">
           </div>
-          <div class="questionadd_content_align">
-              <label for="" class="pcInnerText">圖片D</label>
-              <input type="file" placeholder="請上傳圖片"  @change="handleFileChange('question_img_d', $event)">
+
+
+          <div class="questionadd_content_align questionadd_img">
+              <label class="pcInnerText">圖片D</label>
+
+              <label class="pcInnerText questionadd_imgtext ">
+              <span v-if="fileName">{{ fileName }}</span>
+              <span v-else>請選擇檔案</span>   
+              <div class="iconBtn pcInnerText">
+                <p class="iconText">
+                  <img src="@/assets/images/login/icon/image.svg" alt="" class="buttonIcon"/>
+                  選擇檔案
+                </p>
+                <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
+              </div>
+              <input  class="questionadd_text"  type="file" id="question_pic" name="question_pic"  placeholder="請上傳圖片" @change="handleFileChange('question_img_d', $event)">
+              </label>
           </div>
+
+
           <div class="questionadd_content_align">
               <label for="" class="pcInnerText">正確答案</label>
-              <input type="text" placeholder="請輸入敘述文字" v-model="formData.question_correctanswer">
+              <input  class="questionadd_text"  type="text" placeholder="請輸入答案" v-model="formData.question_correctanswer">
           </div>
           
 
@@ -149,7 +219,7 @@ export default {
   background-color: #f5efeb;
   position: absolute;
   top: 50%;
-  left: 55%;
+  left: 50%;
   transform: translate(-50%,-50%);
   z-index: 10;
   h1{
@@ -172,7 +242,7 @@ export default {
           display: flex;
           width: 100%;
           label{
-              margin-right: 20px;
+              // margin-right: 20px;
               display: block;
               width: 15%;
           }
@@ -182,13 +252,66 @@ export default {
               padding-inline: 8px;
         border: none;
           }
+          input[type="file"] {
+        display: none;
+      }
+      .questionadd_text{
+        padding: 0.5vw 0.5vw;
+        background-color: #fff;
+        border: 2px #3F3F3F solid;
+        width: 100%;
+        height: 2.5vw;
+        outline: none;
+        vertical-align: top;
+        border-radius: 0;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        &::placeholder{
+          color: #CCC;
+        }      
+      }
+
+      .questionadd_imgtext{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        .iconBtn{
+          width: 140px;
+        }
+      }   
           .questionadd_textarea{
-              width: 85%;
-              height: 10vw;
-              resize: none;
-        padding-inline: 8px;
-        border: none;
+            padding: 0.5vw 0.5vw;
+        background-color: #fff;
+        border: 2px #3F3F3F solid;
+        width: 100%;
+        height: 10vw;
+        outline: none;
+        vertical-align: top;
+        border-radius: 0;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        resize: none;
+        &::placeholder{
+          color: #CCC;
+        }
           }
+
+          select{
+        padding: 0.5vw 0.5vw;
+        background-color: #fff;
+        border: 2px #3F3F3F solid;
+        width: 100%;
+        height: 2.5vw;
+        outline: none;
+        vertical-align: top;
+        border-radius: 0;
+        resize: none;
+        &::placeholder{
+          color: #CCC;
+        }
+      }
       }
   }
   .questionadd_btns{
