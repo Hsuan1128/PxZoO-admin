@@ -93,12 +93,12 @@
             </div>
 
             <div class="Revise_btns">
-                <button class="defaultBtn pcInnerText" @click="questionRevise">
+                <button class="defaultBtn pcInnerText" @click="transferData">
                     儲存
                     <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                 </button>
 
-                <button class="defaultBtn pcInnerText" @click="updateReviseSwitch">
+                <button class="defaultBtn pcInnerText" @click="questionRevise">
                     返回列表
                     <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                 </button>
@@ -109,9 +109,9 @@
             :confirm-data="confirmData" @trigger-update-revise-switch="updateReviseSwitch" />
     </div>
 </template>
-  
+ 
 <script>
-
+import axios from 'axios';
 import Confirm_question from "@/components/confirm_question.vue";
 
 export default {
@@ -191,7 +191,31 @@ export default {
             this.confirmData = formData
             console.log(this.confirmData)
         },
-        questionRevise() {
+        questionRevise(){
+            console.log("Question Revise method called");
+    console.log("ConfirmSwitch value:", this.ConfirmSwitch);
+            if (this.rowdata.question_text != this.question_text ||
+                this.rowdata.question_option_a != this.question_option_a ||
+                this.rowdata.question_img_a != this.question_img_a ||
+                this.rowdata.question_option_b != this.question_option_b ||
+                this.rowdata.question_img_b != this.question_img_b ||
+                this.rowdata.question_option_c != this.question_option_c ||
+                this.rowdata.question_img_c != this.question_img_c ||
+                this.rowdata.question_option_d != this.question_option_d ||
+                this.rowdata.question_img_d != this.question_img_d ||
+                this.rowdata.question_correctanswer != this.question_correctanswer ||
+                this.rowdata.question_answer_illustrate != this.question_answer_illustrate
+            ) {
+                this.ConfirmSwitch = !this.ConfirmSwitch;
+           
+                this.prepareConfirmData()
+            
+            } else {
+                this.updateReviseSwitch();
+                    // window.location.reload();
+            }
+        },
+        transferData() {
             //判斷輸入資料的情況做出對應的行為
             // if (this.question_text && 
             //     this.question_option_a && 
@@ -216,8 +240,25 @@ export default {
                 this.rowdata.question_correctanswer != this.question_correctanswer ||
                 this.rowdata.question_answer_illustrate != this.question_answer_illustrate
             ) {
-                this.ConfirmSwitch = !this.ConfirmSwitch;
+                // this.ConfirmSwitch = !this.ConfirmSwitch;
                 this.prepareConfirmData()
+
+             axios.post(`${import.meta.env.VITE_API_URL}/questionRevise.php`, this.confirmData,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                })
+                .then((res) => {
+                    console.log(res)
+                    console.log('修改已送出');
+                    //關閉修改的彈窗
+                    this.$emit('trigger-update-revise-switch')
+                    //重新整理頁面讓資料更新成更改後的
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('更新錯誤:', error);
+                });
             } else {
                 this.updateReviseSwitch();
             }
@@ -229,6 +270,7 @@ export default {
     components: {
         Confirm_question,
     },
+    
 };
 </script>
   
@@ -253,9 +295,11 @@ export default {
 
         h1 {
             margin-top: 2vw;
-            text-align: center;
+            color: #11A729;
         }
-
+        .pcInnerText{
+            color: #3F3F3F;
+        }
         .Revise_content {
             width: 60.82vw;
             margin: 3vw auto 0;
@@ -300,7 +344,7 @@ export default {
 
         .Revise_btns {
             width: 280px;
-            margin: 14.5vw auto 0;
+            margin: 3vw auto ;
             display: flex;
             justify-content: space-between;
         }

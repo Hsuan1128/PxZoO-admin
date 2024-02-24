@@ -158,7 +158,11 @@ export default {
       h1{
           margin-top: 2vw;
           text-align: center;
-      }
+          color: #11A729;
+        }
+        .pcInnerText{
+            color: #3F3F3F;
+        }
       .Revise_content{
           width: 60.82vw;
           margin: 3vw auto 0;
@@ -191,7 +195,7 @@ export default {
       }
       .Revise_btns{
           width: 280px;
-          margin: 14.5vw auto 0;
+          margin: 3vw auto;
           display: flex;
           justify-content: space-between;
       }

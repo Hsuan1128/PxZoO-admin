@@ -1,4 +1,5 @@
 <template>
+  <div class="question_bg">
   <div class="questionadd">
       <h1>新增題庫</h1>
       <div class="questionadd_content">
@@ -63,7 +64,7 @@
               <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
           </button>
       </div>
-  </div>
+  </div></div>
 </template>
 
 <script>
@@ -114,13 +115,12 @@ export default {
         },
       })
         .then(response => {
-          const confirmed = window.confirm("確定要新增資料嗎?");
-          if (!response.data.error && confirmed) {
+         
           console.log(response.data);
           // 提交成功後的處理
           this.updateaddSwitch(); // 觸發關閉表單的方法
           window.location.reload(); // 重新整理頁面
-          }
+        
           
         })
         .catch(error => {
@@ -135,10 +135,17 @@ export default {
 </script>
 
 <style lang="scss">
+.question_bg{
+  width: 100%;
+  height: 100%;
+  background-color: #000000dc;
+  position: absolute;
+  z-index: 21;
+}
 .questionadd{
   overflow: auto;
   width: 73.64vw;
-  height: 90vh;
+  height: 45vw;
   background-color: #f5efeb;
   position: absolute;
   top: 50%;
@@ -146,8 +153,12 @@ export default {
   transform: translate(-50%,-50%);
   z-index: 10;
   h1{
-      margin-top: 3vw;
+      margin-top: 2vw;
       text-align: center;
+      color: #11A729;
+  }
+  .pcInnerText{
+    color: #3F3F3F;
   }
   .questionadd_content{
       width: 60.82vw;
@@ -155,7 +166,7 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2vw;
+      gap:1.5vw;
    
       .questionadd_content_align{
           display: flex;
@@ -168,10 +179,15 @@ export default {
           input{
               width: 85%;
               height: 2vw;
+              padding-inline: 8px;
+        border: none;
           }
           .questionadd_textarea{
               width: 85%;
               height: 10vw;
+              resize: none;
+        padding-inline: 8px;
+        border: none;
           }
       }
   }
