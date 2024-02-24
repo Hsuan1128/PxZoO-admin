@@ -230,7 +230,7 @@ switchChange(status, row) {
     });
   },
   filterHandle(){
-      axios.get(`${import.meta.env.VITE_API_URL}/questionsearch.php?`, { params: { searchTerm: this.searchTerm } })
+      axios.get(`${import.meta.env.VITE_API_URL}/questionSearch.php?`, { params: { searchTerm: this.searchTerm } })
         .then(response => {
           this.data = response.data;
           this.total = this.data.length;
