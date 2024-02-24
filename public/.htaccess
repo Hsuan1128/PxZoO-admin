@@ -1,5 +1,7 @@
 <IfModule mod_rewrite.c>
-  RewriteEngine On RewriteBase /chd104/g4/admin RewriteCond %{REQUEST_FILENAME}
-  !-f RewriteCond %{REQUEST_FILENAME} !-d RewriteRule ^(.*)$
-  /chd104/g4/admin/index.html [L]
+  RewriteEngine On
+  RewriteBase /chd104/g4/admin
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ /chd104/g4/admin/index.html [L]
 </IfModule>

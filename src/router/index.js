@@ -123,9 +123,10 @@ router.afterEach(() => {
 });
 
 // 產生每一頁頁籤的title
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to, from, next) => {
   if (to.meta && to.meta.title) {
     document.title = to.meta.title;
   }
+  next()
 });
 export default router;

@@ -70,7 +70,7 @@ export default {
           width:180,
         },
         {
-          title: "刪改",
+          title: "修改",
           slot: "action",
           align: "right",
         },

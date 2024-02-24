@@ -15,7 +15,7 @@
     
                 <div class="Revise_content_align">
                     <label for="ticketsRule" class="pcInnerText">門票使用規則</label>
-                    <textarea v-model="editedTicketsRule" class="Revise_textarea" maxlength="10"></textarea>
+                    <textarea style="width: 85%" v-model="editedTicketsRule" class="Revise_textarea" maxlength="10"></textarea>
                 </div>
             </div>
             
