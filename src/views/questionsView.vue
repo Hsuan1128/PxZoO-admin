@@ -20,15 +20,17 @@
         :data="data" 
         ref="table" 
         class="custom-table">
-          <template #name="{ row }">
+        <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
-          <!-- <template #status="{ row }">
-            <Switch v-model="row.question_status" @on-change="updateStatus(row)" />
-          </template> -->
           <template #status="{ row }">
-            <Switch @value="handleSwitchCange" v-model="row.question_status"/>
-           
+            <Switch  size="large" v-model="row.question_status" :true-value="1" :false-value="0"  true-color="#13ce66"
+        false-color="#ff9900" @on-change="switchChange($event, row)"> <template #open>
+          <span>上架</span>
+        </template>
+        <template #close>
+          <span>下架</span>
+        </template></Switch>
           </template>
           <template #action="{ row, index }">
             <Button type="primary" class="trash" size="small" style="margin-right: 5px"
@@ -60,10 +62,10 @@
 </template>
 
 <script>
-import Switch from "@/components/switchShelves.vue";
+// import Switch from "@/components/switchShelves.vue";
 import axios from 'axios';
 import sidebar from "@/components/sidebar.vue";
-import { Table, Page} from "view-ui-plus"; // 假設 iview 的開關元件位於這個位置
+import { Table, Page, Switch } from "view-ui-plus"; // 假設 iview 的開關元件位於這個位置
 import questionadd from "@/components/questionadd.vue";
 import questionrevise from "@/components/questionrevise.vue";
 import grass from "@/components/grass.vue";
@@ -175,32 +177,39 @@ export default {
       total: 0, // 總條數
       pageSize: 10, // 每頁顯示條數
       currentPage: 1, // 當前頁碼
+      switchdata: {
+       question_id: '',
+       question_status: ''
+      },
     };
   },
   methods: {
-    // handleSwitchCange(value){
-    //   console.log(value);
-    // },
-    handleSwitchCange(row) {
-  // 獲取開關狀態
-  console.log(row);
-  const newStatus = row.question_status === 0 ? 1 : 0;
+//switch
+switchChange(status, row) {
+   
+      console.log(status)
+      this.updateStatusData(row)
+    },
+    updateStatusData(row) {
+      this.switchdata = {
+       question_id: row.question_id,
+       question_status: row.question_status
+      }
+      axios.post(`${import.meta.env.VITE_API_URL}/questionReviseSwitch.php`, this.switchdata, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(response => {
+          console.log(response.data);
+          console.log(this.switchdata);
+          // 提交成功後的處理
+        })
+        .catch(error => {
+          console.error('搜尋出錯:', error);
+        });
+    },
 
-  // 向後端發送請求，更新資料庫中對應資料的上下架狀態
-  axios.post(`${import.meta.env.VITE_API_URL}/questionStatus.php`, {
-    question_id: row.question_id,
-    question_status: newStatus
-  })
-  .then(response => {
-    // 處理回應，例如顯示成功訊息或重新加載資料等操作
-    console.log("狀態更新成功");
-    this.loadData();
-  })
-  .catch(error => {
-    // 處理錯誤
-    console.error('更新狀態失敗:', error);
-  });
-},
 
 
     handleChangePage(page) {
