@@ -165,7 +165,6 @@ export default {
         //     console.log(`${field} uploaded: ${file.name}`);
         // },
 
-        // 處理檔案更改（消息圖片）
         handleFileChange(field, event, fileType) {
             const file = event.target.files[0];
             this.rowdata[field] = file
@@ -193,76 +192,17 @@ export default {
             this.confirmData = formData
             console.log(this.confirmData)
         },
-        
-        // transferData(){
-        //     //判斷輸入資料的情況做出對應的行為
-        //     if (this.rowdata.news_title != this.news_title ||
-        //         this.rowdata.news_type != this.news_type ||
-        //         this.rowdata.news_typepic != this.news_typepic ||
-        //         this.rowdata.news_date != this.news_date ||
-        //         this.rowdata.news_pic != this.news_pic ||
-        //         this.rowdata.news_text_1 != this.news_text_1 ||
-        //         this.rowdata.news_text_2 != this.news_text_2 ||
-        //         this.rowdata.news_text_3 != this.news_text_3 ||
-        //         this.rowdata.news_text_4 != this.news_text_4
-        //     ) {
-        //         //傳遞更新的資料到ConfirmData物件裡
-        //         this.prepareConfirmData()
-        //         //引入修改的PHP
-        //         axios.post(`${import.meta.env.VITE_API_URL}/newsRevises.php`, this.confirmData,{
-        //             headers: {
-        //                 'Content-Type': 'multipart/form-data'
-        //             },
-        //         })
-        //         .then((res) => {
-        //             console.log(res)
-        //             console.log('修改已送出');
-        //             //關閉修改的彈窗
-        //             this.$emit('trigger-update-revise-switch')
-        //             //重新整理頁面讓資料更新成更改後的
-        //             window.location.reload();
-        //         })
-        //         .catch(error => {
-        //             console.error('更新錯誤:', error);
-        //         });
-        //     } else {
-        //         this.updateReviseSwitch();
-        //     }
-        // },
-
-        // updateHasChanges() {
-        //     this.hasChanges = (
-        //         this.rowdata.news_title !== this.news_title ||
-        //         this.rowdata.news_type !== this.news_type ||
-        //         this.rowdata.news_typepic !== this.news_typepic ||
-        //         this.rowdata.news_date !== this.news_date ||
-        //         this.rowdata.news_pic !== this.news_pic ||
-        //         this.rowdata.news_text_1 !== this.news_text_1 ||
-        //         this.rowdata.news_text_2 !== this.news_text_2 ||
-        //         this.rowdata.news_text_3 !== this.news_text_3 ||
-        //         this.rowdata.news_text_4 !== this.news_text_4
-        //     );
-        // },
-
-        // newsRevise() {
-        //     // 更新 hasChanges 属性
-        //     this.updateHasChanges();
-
-        //     if (this.hasChanges) {
-        //         // 如果有修改，显示确认弹窗
-        //         this.ConfirmSwitch = true;
-        //         console.log('Has changes:', this.hasChanges); // 添加这行日志输出
-        //         this.prepareConfirmData();
-        //     } else {
-        //         // 如果没有修改，直接关闭当前表单
-        //         this.updateReviseSwitch();
-        //         this.$emit('trigger-update-revise-switch');
-        //     }
-        // },
 
         transferData() {
-            this.updateHasChanges();
-            if (this.hasChanges) {
+            if (this.rowdata.news_title !== this.news_title ||
+                this.rowdata.news_type !== this.news_type ||
+                this.rowdata.news_typepic !== this.news_typepic ||
+                this.rowdata.news_date !== this.news_date ||
+                this.rowdata.news_pic !== this.news_pic ||
+                this.rowdata.news_text_1 !== this.news_text_1 ||
+                this.rowdata.news_text_2 !== this.news_text_2 ||
+                this.rowdata.news_text_3 !== this.news_text_3 ||
+                this.rowdata.news_text_4 !== this.news_text_4) {
                 this.prepareConfirmData();
                 axios.post(`${import.meta.env.VITE_API_URL}/newsRevises.php`, this.confirmData, {
                     headers: {
@@ -283,9 +223,9 @@ export default {
                 this.updateReviseSwitch();
             }
         },
-        updateHasChanges() {
-            this.hasChanges = (
-                this.rowdata.news_title !== this.news_title ||
+
+        newsRevise() {
+            if (this.rowdata.news_title !== this.news_title ||
                 this.rowdata.news_type !== this.news_type ||
                 this.rowdata.news_typepic !== this.news_typepic ||
                 this.rowdata.news_date !== this.news_date ||
@@ -293,13 +233,7 @@ export default {
                 this.rowdata.news_text_1 !== this.news_text_1 ||
                 this.rowdata.news_text_2 !== this.news_text_2 ||
                 this.rowdata.news_text_3 !== this.news_text_3 ||
-                this.rowdata.news_text_4 !== this.news_text_4
-            );
-        },
-
-        newsRevise() {
-            this.updateHasChanges();
-            if (this.hasChanges) {
+                this.rowdata.news_text_4 !== this.news_text_4) {
                 this.ConfirmSwitch = true;
                 console.log('Has changes:', this.hasChanges);
                 this.prepareConfirmData();

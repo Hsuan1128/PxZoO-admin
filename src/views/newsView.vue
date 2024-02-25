@@ -26,7 +26,15 @@
             <strong> {{ row.name }}</strong>
           </template>
           <template #status="{ row }">
-            <Switch v-model="row.active" />
+            <Switch  size="large" v-model="row.news_status" :true-value="1" :false-value="0"  true-color="#13ce66"
+            false-color="#ff9900" @on-change="switchChange($event, row)"> 
+              <template #open>
+                <span>上架</span>
+              </template>
+              <template #close>
+                <span>下架</span>
+              </template>
+            </Switch>
           </template>
           <template #action="{ row, index }">
             <Button
@@ -71,7 +79,8 @@
 
 <script>
 import sidebar from "@/components/sidebar.vue";
-import Switch from "@/components/switchShelves.vue";
+import { Switch } from "view-ui-plus";
+// import Switch from "@/components/switchShelves.vue";
 import grass from "@/components/grass.vue";
 import { Table, Page } from "view-ui-plus";
 import axios from 'axios';
@@ -145,35 +154,51 @@ export default {
           title: "刪改",
           slot: "action",
           width: 130,
-          align: "center",
+          align: "left",
         },
       ],
-      //搜尋
-      searchTerm:'',
+      
       //全部資訊
       data: [],
       rowdata:[],
 
-      // data: [], // 當前頁顯示的數據
+      //新增
+      addSwitch : false,
+
+      //修改
+      ReviseSwitch:false,
+      
+      //查詢
+      searchTerm:'',
+
+      //分頁
       total: 0, // 總條數
       pageSize: 10, // 每頁顯示條數
       currentPage: 1, // 當前頁碼
-      
-      //顯示頁面
-      addSwitch : false,
-      ReviseSwitch:false,
+
+      //switch
+      switchdata: {
+        news_id: '',
+        news_status: ''
+      },
+      statusData: [],
     };
   },
 
   methods: {
+    //新增
     updateaddSwitch(newValue) {
       this.addSwitch = newValue;
       this.$emit('change', this.addSwitch);
     },
+
+    //修改
     NewsModification(row) {
       this.ReviseSwitch = !this.ReviseSwitch
       this.rowdata = row;
     },
+
+    //刪除
     remove(index) {
       const rowData = this.data[index]; // 獲取要刪除的資料列
       const news_id = rowData.news_id; // 假設資料中有一個名為 news_id 的欄位作為唯一標識
@@ -198,6 +223,21 @@ export default {
         });
     },
 
+    //查詢
+    filterHandle(){
+      axios.get(`${import.meta.env.VITE_API_URL}/newsSearch.php?type=news`, { params: { searchTerm: this.searchTerm } })
+      .then(response => {
+        this.data = response.data;
+        this.total = this.data.length;
+        this.currentPage = 1
+        this.updatedata();
+      })
+      .catch(error => {
+        console.error('搜尋出錯:', error);
+      });
+    },
+
+    //分頁
     handleChangePage(page) {
      // 當使用者改變當前頁面時，這個函數被呼叫。
       // page 參數代表使用者所選擇的新頁碼。
@@ -215,20 +255,6 @@ export default {
         console.error("Error fetching data: ", error);
       });
     },
-
-    filterHandle(){
-      axios.get(`${import.meta.env.VITE_API_URL}/newsSearch.php?type=news`, { params: { searchTerm: this.searchTerm } })
-      .then(response => {
-        this.data = response.data;
-        this.total = this.data.length;
-        this.currentPage = 1
-        this.updatedata();
-      })
-      .catch(error => {
-        console.error('搜尋出錯:', error);
-      });
-    },
-
     updatedata() {
      // 這個函數用來更新當前頁面所顯示的資料
 
@@ -238,6 +264,36 @@ export default {
       const endIndex = startIndex + this.pageSize;
         // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
       this.data = this.data.slice(startIndex, endIndex);
+    },
+
+    //switch
+    switchChange(status, row) {
+      // if(row.news_status == 1){
+      //   row.news_status = 0
+      // }else{
+      //   row.news_status = 1
+      // }
+      console.log(status)
+      this.updateStatusData(row)
+    },
+    updateStatusData(row) {
+      this.switchdata = {
+        news_id: row.news_id,
+        news_status: row.news_status
+      }
+      axios.post(`${import.meta.env.VITE_API_URL}/newsReviseSwitch.php`, this.switchdata, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(response => {
+          console.log(response.data);
+          console.log(this.switchdata);
+          // 提交成功後的處理
+        })
+        .catch(error => {
+          console.error('搜尋出錯:', error);
+        });
     },
   },
 
@@ -264,11 +320,13 @@ export default {
     });
   },
 
+  //查詢
   watch:{
     searchTerm(newTerm, oldTerm){
       this.filterHandle()
     }
   },
+  
 };
 </script>
 <style>
