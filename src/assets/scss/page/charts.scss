@@ -41,12 +41,16 @@
 }
 .chartsHead, .chartsBody{
     section{
-        padding: 15px;
+        padding: 8px;
     }
 }
 .chartsHead, .chartsBody section{
     display: flex;
     justify-content: space-between;
+    // gap: 20px;
+    >*{
+        // width: 100px;
+    }
 }
 .chartsHead{
     p{
@@ -56,15 +60,11 @@
     section{
         cursor: pointer;
         width: 100%;
+        // border-bottom: 1px solid #e8eaec;
         background-color: $inputColor;
-        border: 1px solid #e8eaec;
-    }
-    section.click{
-        background-color: $bgColorWhite;
-        border-bottom: none;
     }
     section+section{
-        // border-left: 1px solid #e8eaec;
+        border-left: 1px solid #e8eaec;
     }
 }
 .staffArea .charts .chartsBody{
@@ -72,17 +72,10 @@
 }
 .chartsBody{
     border: 1px solid #e8eaec;
-    border-top: none;
 
-    section{ gap: 3%; }
-    h2{ padding: 8px; }
     table{
-        width: 47%;
+        width: 50%;
         height: max-content;
-        span{
-            @include pcInnerText;
-            font-weight: 700;
-        }
     }
     table *{
         text-align: right;
@@ -90,47 +83,63 @@
         width: max-content;
     }
     caption{
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
-    tr{
-        height: 40px;
-        padding: 8px;
-        border-bottom: 1px solid #e8eaec;
-    }
-    thead tr, tbody tr:nth-of-type(2n){
-        background-color: #f8f8f9;
-    }
-    thead th{
-        font-weight: 400;
-        @include pcMarkText;
-    }
+    tr{ height: 50px; }
+    thead th{ font-weight: 400; }
+    thead span{ @include pcInnerText; }
     th:first-of-type{
-        padding-inline: 8px;
         text-align: left;
-        width: 87px;
+        padding-left: 20px;
+        width: 100px;
         font-weight: 400;
     }
-    td{ padding-right: 8px; }
+    td{ padding-right: 20px; }
     tbody *{
         vertical-align: bottom;
     }
     thead th:not(:first-of-type), td{
-        padding-right: 8px;
+        padding-right: 20px;
     }
     td, thead th:not(:first-of-type)thead span{
         @include pcMarkText;
     }
 
-    .option0{ color: $primaryColorGreen;}
-    .option1{ color: $secColorblue; }
-    .option2{ color: $primaryColorYellow; }
-    .option3{ color: $secColorOrange; }
-    .option4{ color: $inputHintColor; }
-    .option5{ color: $mainTextColor; }
-    canvas{
-        min-width: 40%;
-        width: 600px;
+    main{ // 之後換成圖
         height: 300px;
-        color: #3f3f3f;
+        width: 50%;
+        outline: 1px solid seagreen;
+    }
+    .option1{
+        color: $secColorblue;
+        width: 140px;
+    }
+    .option2{
+        color: $primaryColorGreen;
+        width: 140px;
+    }
+
+}
+
+// DatePicker
+.datePicker{
+    @include pcMarkText;
+    span{ @include pcMarkText; }
+    input{ width: 208px; }
+    .datePicker1 .ivu-input{
+        color: $secColorblue;
+    }
+    .datePicker2 .ivu-input{
+        color: $primaryColorGreen;
+    }
+    .ivu-space, .ivu-input{
+        cursor: pointer;
+    }
+    .ivu-picker-panel-sidebar{
+        width: 103px;
+        margin-left: -100px;
+    }
+    .ivu-picker-panel-icon-btn{
+        margin-top: 8px;
     }
 }
