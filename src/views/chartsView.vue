@@ -1,99 +1,50 @@
 <template>
   <sidebar />
   <section class="staffArea">
-    <div class="staffForm charts">
+    <div class="staffForm charts" v-if="loaded">
       <div class="titleSearch">
         <h2>銷售管理 | 銷售統計</h2>
-        <div class="datePicker">
-          <Space size="large" wrap>
-            <DatePicker type="daterange"
-            :start-date="new Date()"
-            :options="dateOP1"  
-            :editable="false" 
-            format="yyyy/MM/dd" 
-            placement="bottom-end" 
-            placeholder="請選擇基準日期"
-            style="width: 205px" 
-            v-model="date1" 
-            @on-clear="clearDate(1)"
-            class="datePicker1" />
-
-            <DatePicker type="daterange"
-            :start-date="new Date()"
-            :options="dateOP2"  
-            :editable="false" 
-            format="yyyy/MM/dd" 
-            placement="bottom-end" 
-            placeholder="請選擇比較日期"
-            style="width: 205px" 
-            v-model="date2" 
-            @on-clear="clearDate(2)"
-            class="datePicker2" />
-          </Space>（雙擊日期即可選擇單日）
-        </div>
       </div>
       <div class="formArea chartsHead">
-          <section class="people" @click="toggle('people')">
+          <section :class="{click: peopleOpen}" @click="toggle('people')">
             <div>
               入園人數
-              <span>{{ open1 ? "▼" : "▲" }}</span>
+              <span>{{ peopleOpen ? "▼" : "▲" }}</span>
             </div>
-            <p><span> {{this.datePickers[1].totalPeople}} </span>人</p>
+            <p><span> {{ this.people[2][2] }} </span> 人</p>
           </section>
           
-          <section class="tiqty" @click="toggle('tiqty')">
+          <section :class="{click: tiqtyOpen}" @click="toggle('tiqty')">
             <div>
               票種統計
-              <span>{{ open2 ? "▼" : "▲" }}</span>
+              <span>{{ tiqtyOpen ? "▼" : "▲" }}</span>
             </div>
-            <p><span> 300 </span>張</p>
+            <p><span> {{ this.ticket[5][2] }} </span> 張</p>
           </section>
 
-          <section class="money" @click="toggle('money')">
+          <section :class="{click: moneyOpen}" @click="toggle('money')">
             <div>
               銷售金額
-              <span>{{ open3 ? "▼" : "▲" }}</span>
+              <span>{{ moneyOpen ? "▼" : "▲" }}</span>
             </div>
-            <p><span> 5670 </span>元</p>
+            <p><span> {{ this.money[2][2] }} </span> 元</p>
           </section>
       </div>
       <div class="formArea chartsBody">
 
-        <section class="people" v-show="peopleOpen">
-          <table>
-            <caption>入園人數</caption>
-            <thead>
-              <tr>
-                <th>統計日期</th>
-                <th class="option1">
-                  {{this.datePickers[1].startDateData}}
-                  <span v-show="dateArr1">
-                     - {{this.datePickers[1].endDateData}}
-                  </span>
-                </th>
-                <th class="option2" v-show="comparison">
-                  {{this.datePickers[2].startDateData}}
-                  <span v-show="dateArr2">
-                     - {{this.datePickers[2].endDateData}}
-                  </span>
-                </th>
-              </tr>
-            </thead>
-          <tbody>
-            <tr>
-              <th>實體票券</th>
-              <td><span> {{this.datePickers[1].totalDigitalTicket}} </span>人</td>
-              <td v-show="comparison"><span> {{this.datePickers[2].totalDigitalTicket}} </span>人</td>
-            </tr>
-            <tr>
-              <th>數位票券</th>
-              <td><span> {{this.datePickers[1].totalEntityTicket}} </span>人</td>
-              <td v-show="comparison"><span> {{this.datePickers[2].totalEntityTicket}} </span>人</td>
-            </tr>
+        <section class="people" v-if="peopleOpen">
+          <chartTable :labels="labels" :data="people" :frame="peopleFrame" />
+          <peopleChart :labels="labels" :data="people" :frame="peopleFrame"/>
+        </section>
 
-          </tbody>
-          </table>
-          <main>我是圖表</main>
+        <section class="tiqty" v-if="tiqtyOpen">
+          <chartTable :labels="labels" :data="ticket" :frame="ticketFrame" />
+          <ticketChart :labels="labels" :data="ticket" :frame="ticketFrame"/>
+        </section>
+
+        <section class="money" v-if="moneyOpen">
+          <chartTable :labels="labels" :data="money" :frame="moneyFrame" />
+          <moneyChart :labels="labels" :data="money" :frame="moneyFrame"/>
         </section>
 
       </div>
@@ -107,247 +58,101 @@
 import axios from 'axios';
 import sidebar from "@/components/sidebar.vue";
 import grass from "@/components/grass.vue";
-// import { stringifyQuery } from "vue-router";
+import chartTable from "@/components/charts/chartTable.vue";
+import peopleChart from "@/components/charts/peopleChart.vue";
+import ticketChart from "@/components/charts/ticketChart.vue";
+import moneyChart from "@/components/charts/moneyChart.vue";
 
 export default {
   components: {
-    sidebar,
-    grass,
+    sidebar, grass, chartTable, peopleChart, ticketChart, moneyChart, 
   },
   data() {
     return {
-      dateOP1: {
-        shortcuts: Array.from({ length: 12 }, (_, i) => {
-          const start = new Date();
-          start.setMonth(i, 1); // 設定為該月的第一天
-          const end = new Date();
-          end.setMonth(i + 1, 0); // 設定為該月的最後一天
-          return {
-            text: `今年 ${i + 1}月`,
-            value: () => [start, end],
-          };
-        }),
-      },
-      dateOP2: {
-        shortcuts: [
-          {
-            text: '今日',
-            value () {
-              return [new Date(), new Date()];
-            },
-          },
-          {
-            text: '昨日',
-            value () {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-                return [date, date];
-            },
-          },
-          {
-            text: '明日',
-            value () {
-              const date = new Date();
-              date.setTime(date.getTime() + 3600 * 1000 * 24);
-                return [date, date];
-            },
-          },
-          {
-            text: '過去 7 天',
-            value () {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              return [start, end];
-            }
-          },
-          {
-            text: '過去 30 天',
-            value () {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              return [start, end];
-            }
-          },
-          {
-            text: '過去 90 天',
-            value () {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              return [start, end];
-            }
-          }
-        ]
-      },
-      datePickers: {
-        1: {
-          startDate: new Date(),
-          endDate: new Date(),
-          startDateData: null,
-          endDateData: null,
-          people1: {},
-          tiqty1: {},
-          money1: {},
-          totalDigitalTicket: 0,
-          totalEntityTicket: 0,
-          totalPeople: 0,
-
-        },
-        2: {
-          startDate: new Date(),
-          endDate: new Date(),
-          startDateData: null,
-          endDateData: null,
-          people2: {},
-          tiqty2: {},
-          money2: {},
-          totalDigitalTicket: 0,
-          totalEntityTicket: 0,
-        },
-      },
-      comparison: false,
       peopleOpen: true,
-      open1: true,
-      open2: false,
-      open3: false,
+      tiqtyOpen: false,
+      moneyOpen: false,
+      loaded: false,
+      people: {},
+      ticket: {},
+      money: {},
+      labels: ["上上月", "上月", "本月"],
+      peopleFrame: ["數位票券", "實體票券", "人數總計"],
+      ticketFrame: ["成人票", "學生票", "團體票", "兒童票", "愛心票", "票數總計"],
+      moneyFrame: ["票券金額", "優惠金額", "收入總計"],
     }
   },
   methods: {
-    fetchChartData(num) {
-      // 取得訂單明細資料
-      axios.get(`${import.meta.env.VITE_API_URL}/chartsQtyShow.php`, {
-        params: {
-          startDate: this.datePickers[num].startDate.toLocaleDateString('en-CA'),
-          endDate: this.datePickers[num].endDate.toLocaleDateString('en-CA'),
-        }
-      })
-      .then(response => {
-        // console.log('response',response);
-        
-        this.datePickers[num][`people${num}`] = response.data.result1;
-        // console.log(typeof response.data.result1);
-        console.log('人', this.datePickers[1]['people1']);
-        // console.log('人0', this.datePickers[1]['people1'][0]);
-        // console.log('typeof',typeof this.datePickers[1]['people1']);
-        this.datePickers[num][`tiqty${num}`] = response.data.result2;
-        this.datePickers[num][`money${num}`] = response.data.result3;
-        this.getChartData(num);
-        // console.log('chartData', this.datePickers[num].chartData);
-        // this.tiqtyData = response.result2;
-        // console.log(this.chartData);
-        // console.log(this.tiqtyData);
-      })
-      .catch(error => {
-        console.error("Error fetching data: ", error);
-      })
-    },
-    toggle(chart){
-      this[`open${chart}`] = true; //模板字面量
-      let chartArr = [1,2,3];
-      chartArr.forEach(num => {
-        if(num !== chart){
-          this[`open${chart}`] = false;
-        }
-      })
-    },
-    initDateData(){
-      const initDate = new Date();
-      return initDate.toLocaleDateString('zh-TW', { 
-        year: 'numeric', 
-        month: '2-digit', 
-        day: '2-digit', 
-      });
-    },
-    clearDate(num){
-      this.datePickers[num].startDate=new Date();
-      this.datePickers[num].endDate=new Date();
-      
-      this.datePickers[num].startDateData=this.initDateData();
-      this.datePickers[num].endDateData=this.initDateData();
+    async fetchPeopleData() {
+      try{ // 取得入園人數資料
+        let response = await axios.get(`${import.meta.env.VITE_API_URL}/chartPeople.php`);
 
-      this.datePickers[num].totalDigitalTicket=0;
-      this.datePickers[num].totalEntityTicket=0;
-      this.datePickers[num].totalPeople=0;
+        this.people=this.formatFetchData(response.data);
+        // 回傳資料順序: digitalTicket、entityTicket、peopleTotal 
 
-    },
-    getDateComputed(num, value){
-      // console.log(value);
-      // console.log('datepickers', this.datePickers);
+        console.log('people', this.people);
 
-      if (value.length === 2 && value[0] instanceof Date && value[1] instanceof Date){
-        this.datePickers[num].startDate=value[0];
-        this.datePickers[num].endDate=value[1];
-
-        this.datePickers[num].startDateData=value[0].toLocaleDateString('zh-TW', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        });
-        this.datePickers[num].endDateData= value[1].toLocaleDateString('zh-TW', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        });
+      }catch(error){
+        console.error('this', error);
       }
     },
-    dateChange(){
-      if(this.datePickers[2].startDateData !== this.datePickers[1].startDateData){
-        this.comparison = true;
-      }else{ this.comparison = false; }
-    },
-    getChartData(num){
-      console.log("get");
-      
-      // this.clearDate(num);
+    async fetchTicketData() {
+      try{ // 取得票種銷售資料
+        let response = await axios.get(`${import.meta.env.VITE_API_URL}/chartTicket.php`);
 
-      this.datePickers[num][`people${num}`].forEach(item => {
-        this.datePickers[num].totalDigitalTicket += parseInt(item.digitalTicket, 10);
-        this.datePickers[num].totalEntityTicket += parseInt(item.entityTicket, 10);
-        
-      // console.log( this.datePickers[num].totalDigitalTicket, this.datePickers[num].totalEntityTicket);
+        this.ticket=this.formatFetchData(response.data);
+        // 回傳資料順序: 成人票、學生票、團體票、兒童票、愛心票、總計
+
+      }catch(error){
+        console.error(error);
+      }
+    },
+    async fetchMoneyData() {
+      try{ // 取得金額統計資料
+        let response = await axios.get(`${import.meta.env.VITE_API_URL}/chartMoney.php`);
+
+        this.money=this.formatFetchData(response.data);
+        // 回傳資料順序: tiprice、couprice、payprice
+
+        this.loaded=true;
+
+      }catch(error){
+        console.error(error);
+      }
+    },
+    formatFetchData(fetchData){
+      let sortData=[];
+
+      let formatData = fetchData.map(array => {
+        // 移除每個陣列的第一個元素(日期)
+        array.shift();
+        // 將剩餘的元素映射為數字
+        return array.map(Number);
       });
-      this.datePickers[num].totalPeople = this.datePickers[num].totalDigitalTicket + this.datePickers[num].totalEntityTicket;
-    }
-  },
-  computed:{
-    dateArr1(){
-      return this.datePickers[1].startDateData !== this.datePickers[1].endDateData;
+
+      // 按照圖表需求重新排列資料
+      for(let i=0; i<formatData[0].length; i++){
+        sortData[i] = formatData.map(array=>array[i]);
+      }
+
+      return sortData;
+
     },
-    dateArr2(){
-      return this.datePickers[2].startDateData !== this.datePickers[2].endDateData;
-    },
-    date1: {
-      get() {},
-      set(value) {
-        this.getDateComputed(1, value);
-        this.dateChange();
-        this.fetchChartData(1);
-      },
-    },
-    date2: {
-      get() {},
-      set(value) {
-        this.getDateComputed(2, value);
-        this.dateChange();
-        this.fetchChartData(2);
-      },
+    toggle(chart){
+      this[`${chart}Open`] = true; //模板字面量
+      let chartArr = ['people','tiqty','money'];
+      chartArr.forEach(name => {
+        if(name !== chart){
+          this[`${name}Open`] = false;
+        }
+      })
     },
   },
   created(){
-    // datePicker init
-    for (let i = 1; i <=  Object.keys(this.datePickers).length; i++) {
-      // 連接資料庫
-      this.fetchChartData(i);
-
-      // console.log('init', this.datePickers[i].startDate);
-      // console.log('init', this.datePickers[i].startDate.toLocaleDateString('en-CA'));
-
-      this.datePickers[i].startDateData = this.initDateData();
-      this.datePickers[i].endDateData = this.initDateData();
-    }
-
+    this.fetchPeopleData();
+    this.fetchTicketData();
+    this.fetchMoneyData();
   },
+  mounted(){},
 };
 </script>
