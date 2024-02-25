@@ -23,12 +23,9 @@
 
 <script>
 export default {
-  props: {
-  },
+  props: {},
   data() {
-    return {
-
-    };
+    return {};
   },
   methods: {
     confirmSave() {
@@ -38,7 +35,6 @@ export default {
       this.$emit('newAlterStatus');
     },
   },
-  components: {
-  },
+  components: {},
 };
 </script>

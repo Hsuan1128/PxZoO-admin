@@ -22,8 +22,8 @@
 export default {
   props:{
     statusData: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
   },
   data() {

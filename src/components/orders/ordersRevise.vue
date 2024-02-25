@@ -2,49 +2,49 @@
   <div class="Revise_bg od" @click.self="closeRevise">
     <div class="Revise">
       <h1>訂單明細</h1>
-      <div class="Revise_content">
+      <div class="Revise_content pcInnerText">
         <div class="Revise_content_align">
-          <label for="" class="pcInnerText">姓名稱謂</label>
-          <input type="text" :placeholder="orderData.mem_name + '　' + orderData.mem_title" readonly>
+          <label for="">姓名稱謂</label>
+          <input type="text" class="revise_text" :value="orderData.mem_name + '　' + orderData.mem_title" readonly>
         </div>
         <div class="Revise_content_align">
-          <label for="" class="pcInnerText">訂單編號</label>
-          <input type="text" :placeholder="orderData.ord_id" readonly>
+          <label for="">訂單編號</label>
+          <input type="text" class="revise_text" :value="orderData.ord_id" readonly>
         </div>
         <div class="Revise_content_align">
-          <label for="" class="pcInnerText">票券日期</label>
-          <input type="text" :placeholder="orderData.ord_tidate" readonly>
+          <label for="">票券日期</label>
+          <input type="text" class="revise_text" :value="orderData.ord_tidate" readonly>
         </div>
         <div class="Revise_content_align">
-          <label for="" class="pcInnerText">票種數量</label>
-          <input type="text" :placeholder="formattedOrderDetailQty" readonly>
+          <label for="">票種數量</label>
+          <input type="text" class="revise_text" :value="formattedOrderDetailQty" readonly>
         </div>
         <div class="Revise_content_align">
-          <label for="" class="pcInnerText">優惠折抵</label>
-          <input type="text" :placeholder="orderData.cou_name" readonly>
+          <label for="">優惠折抵</label>
+          <input type="text" class="revise_text" :value="orderData.cou_name" readonly>
         </div>
         <div class="Revise_content_align">
-          <label for="" class="pcInnerText">付款方式</label>
-          <input type="text" :placeholder="orderData.ord_payway" readonly>
+          <label for="">付款方式</label>
+          <input type="text" class="revise_text" :value="orderData.ord_payway" readonly>
         </div>
         <div class="Revise_content_align">
-          <label for="" class="pcInnerText">票券型態</label>
-          <input type="text" :placeholder="orderData.ord_ticktype" readonly>
+          <label for="">票券型態</label>
+          <input type="text" class="revise_text" :value="orderData.ord_ticktype" readonly>
         </div>
         <div class="Revise_content_align">
-          <label for="" class="pcInnerText">訂單金額</label>
-          <input type="text" :placeholder="formattedOrderDetailPrice" readonly>
+          <label for="">訂單金額</label>
+          <input type="text" class="revise_text" :value="formattedOrderDetailPrice" readonly>
         </div>
         <div class="Revise_content_align">
-          <label for="" class="pcInnerText">處理狀態</label>
-          <div class="alter">
-            <ordersSwitch v-if="ordStatus" :statusData="orderData.ord_status" @newStatus="updateStatus" />
-            <input v-else type="text" :placeholder="orderData.ord_status" readonly>
+          <label for="">票券狀態</label>
+          <div class="switch" v-if="ordStatus">
+            <ordersSwitch :statusData="orderData.ord_status" @newStatus="updateStatus" />
           </div>
+          <input v-else type="text" class="revise_text" :value="orderData.ord_status" readonly>
         </div>
         <div class="Revise_content_align" v-show="this.orderData.ord_altertime !== null">
-          <label for="" class="pcInnerText">更新情形</label>
-          <input type="text" :placeholder="formattedOrderDetailAlter" readonly>
+          <label for="">更新情形</label>
+          <input type="text" class="revise_text" :value="formattedOrderDetailAlter" readonly>
         </div>
       </div>
 
@@ -96,13 +96,9 @@ export default {
       this.alterStatus = status;
     },
     orderSave() {
-      // console.log(this.alterStatus);
       this.$emit('newDetail', 1, this.alterStatus, false);
     },
     closeRevise() {
-      // console.log('tests',this.alterStatus);
-      // console.log('tests',this.orderData.ord_altertime);
-
       if (this.alterStatus !== false && this.orderData.ord_altertime === null) {
         this.openConfirm = true;
       } else {
@@ -119,7 +115,7 @@ export default {
       return this.orderDetailData.map((item) => `${item.tickets_name} ${item.ord_detail_qty} 張`).join(" / ") + `，總計 ${this.orderData.allqty} 張`;
     },
     formattedOrderDetailPrice() {
-      return `票卷金額 ${this.orderData.ord_tiprice} 元 / 優惠金額 ${this.orderData.ord_couprice} 元 / 付款金額 ${this.orderData.ord_payprice} 元`;
+      return `票卷金額 ${this.orderData.ord_tiprice} 元 - 優惠金額 ${this.orderData.ord_couprice} 元 = 付款金額 ${this.orderData.ord_payprice} 元`;
     },
     ordStatus() {
       const today = new Date();
@@ -137,9 +133,7 @@ export default {
       return `${this.orderData.sta_pos} ${this.orderData.ord_altertime} 更新`;
     },
   },
-  created() {
-    // console.log(this.alterStatus, this.orderData.ord_status);    
-  },
+  created(){},
 };
 </script>
 
@@ -154,19 +148,8 @@ export default {
       gap: 40px;
     }
   }
-
-  .alter {
-    width: 85%;
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .Revise .Revise_content .Revise_content_align .alter {
-    input {
-      width: 100%;
-    }
+  .switch{
+    width: 100%;
   }
 }
 </style>

@@ -52,6 +52,7 @@
       h1{
           margin-top: 2vw;
           text-align: center;
+          color: #11A729;
       }
       .Revise_content{
           width: 60.82vw;
@@ -64,7 +65,7 @@
               display: flex;
               width: 100%;
               label{
-                  margin-right: 20px;
+                //   margin-right: 20px;
                   display: block;
                   width: 15%;
               }
@@ -72,20 +73,53 @@
                   width: 85%;
                   height: 2vw;
                   padding-inline: 8px;
-                  border: 2px #3F3F3F solid;
+                  border: none;
+                //   border: 2px #3F3F3F solid;
               }
+              input[type="file"] {
+                display: none;
+                }
+                .revise_text{
+                    padding: 0.5vw 0.5vw;
+                    background-color: #fff;
+                    border: 2px #3F3F3F solid;
+                    width: 100%;
+                    height: 2.5vw;
+                    outline: none;
+                    vertical-align: top;
+                    border-radius: 0;
+                    appearance: none;
+                    -moz-appearance: none;
+                    -webkit-appearance: none;
+                    &::placeholder{
+                    color: #CCC;
+                    }
+                }
               .Revise_textarea{
-                  width: 85%;
+                padding: 0.5vw 0.5vw;
+                background-color: #fff;
+                border: 2px #3F3F3F solid;
+                width: 100%;
+                vertical-align: top;
+                border-radius: 0;
+                appearance: none;
+                -moz-appearance: none;
+                -webkit-appearance: none;
+                //   width: 85%;
                   height: 10vw;
                   resize: none;
-                  padding-inline: 8px;
-                  border: 2px #3F3F3F solid;
+                //   padding-inline: 8px;
+                //   border: 2px #3F3F3F solid;
+                    &::placeholder{
+                        color: #CCC;
+                    }
               }
           }
       }
       .Revise_btns{
           width: 280px;
-          margin: 14.5vw auto 0;
+          margin: 3vw auto;
+        //   margin: 14.5vw auto 0;
           display: flex;
           justify-content: space-between;
       }

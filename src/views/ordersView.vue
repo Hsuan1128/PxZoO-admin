@@ -15,9 +15,7 @@
         </div>
       </div>
       <div class="formArea orders">
-        <!-- content -->
-        <Table stripe :columns="columns" :data="currentPageData" ref="table" no-data-text="查無訂單資料"
-          :default-sort="defaultSort" class="custom-table">
+        <Table stripe :columns="columns" :data="currentPageData" ref="table" no-data-text="查無訂單資料" :default-sort="defaultSort" class="custom-table" :border="false">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
@@ -29,14 +27,13 @@
           </template>
         </Table>
       </div>
+
       <div class="pages">
-        <Page class="pcInnerText" prev-text="|<" next-text=">|" :current="currentPage" :total="total" size="small"
-          @on-change="handleChangePage" />
+        <Page class="pcInnerText" prev-text="|<" next-text=">|" :current="currentPage" :total="total" size="small" @on-change="handleChangePage" />
       </div>
     </div>
 
-    <ordersRevise :orderData="selectedOrder" :orderDetailData="orderDetail" @newDetail="fetchOrderUpdate"
-      @closeRevise="reviseToggle" v-if="showRevise" />
+    <ordersRevise :orderData="selectedOrder" :orderDetailData="orderDetail" @newDetail="fetchOrderUpdate" @closeRevise="reviseToggle" v-if="showRevise" />
 
     <grass />
   </section>
@@ -52,9 +49,7 @@ import ordersRevise from "@/components/orders/ordersRevise.vue"
 export default {
   mixins: [getStaId],
   components: {
-    sidebar,
-    grass,
-    ordersRevise,
+    sidebar, grass, ordersRevise, 
   },
   data() {
     return {
@@ -62,69 +57,62 @@ export default {
         {
           type: 'index',
           title: "No",
-          width: 50,
+          // width: 65,
         },
         {
           title: "訂單編號",
           key: "ord_id",
           sortable: true,
           sortType: 'asc',
-          // width: 75,
+          // width: 100,
         },
         {
           title: "姓名",
           key: "mem_name",
-          sortable: true,
           ellipsis: true,
-          // width: 100,
+          // width: 90,
         },
         {
           title: "稱謂",
           key: "mem_title",
-          sortable: true,
           ellipsis: true,
-          // width: 40,
+          // width: 75,
         },
         {
           title: "票券日期",
           key: "ord_tidate",
-          sortable: true,
           ellipsis: true,
-          width: 110,
+          // width: 115,
         },
         {
           title: "付款金額",
           key: "ord_payprice",
-          sortable: true,
           ellipsis: true,
-          // width: 88,
+          // width: 100,
         },
         {
           title: "總票數",
           key: "allqty",
-          sortable: true,
           ellipsis: true,
-          // width: 70,
+          // width: 90,
         },
         {
           title: "票券型態",
           key: "ord_ticktype",
-          sortable: true,
           ellipsis: true,
-          // width: 88,
+          // width: 100,
         },
         {
           title: "處理狀態",
           key: "ord_status",
-          sortable: true,
           ellipsis: true,
-          // width: 88,
+          // width: 85,
         },
         {
           title: "修改",
           slot: "action",
           align: "right",
-          // width: 62,
+          width: 70,
         },
       ],
       defaultSort: {
@@ -152,8 +140,6 @@ export default {
       // 索引當前頁面在整個資料陣列中的範圍
       const startIndex = (this.currentPage - 1) * this.pageSize; // 起始索引
       const endIndex = startIndex + this.pageSize; // 結束索引
-      // console.log(this.orders);
-      // console.log(typeof this.orders);
       this.currentPageData = Object.values(this.orders).slice(startIndex, endIndex); // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
     },
     async fetchOrders() {
@@ -163,8 +149,6 @@ export default {
             searchTerm: this.searchTerm
           }
         });
-        // console.log('response.data', typeof response.data);
-        // console.log('response.data',  response.data);
         
         this.orders = response.data;
         for(var key in this.orders){
@@ -173,13 +157,6 @@ export default {
             order.cou_name='不使用優惠券';
           }
         }
-        // console.log(this.orders[0].cou_name);
-        // console.log(typeof this.orders[0].cou_name);
-        // console.log(this.orders[3].cou_name);
-        // console.log(typeof this.orders[3].cou_name);
-          // console.log(typeof this.orders.cou_name);    
-          // console.log(this.orders.cou_name); 
-
         this.total = this.orders.length;
         this.updateCurrentPageData();
       } catch (error) {
@@ -229,24 +206,11 @@ export default {
     reviseToggle(bool) {
       this.showRevise = bool;
     },
-    // searchHandle(){
-    //   axios.get(`${import.meta.env.VITE_API_URL}/ordersSearch.php`, {
-    //     params:{
-    //       searchTerm: this.searchTerm
-    //   }})
-    //   .then(response=>{
-    //     this.orders=response.data;
-    //   })
-    // }
   },
   watch: {
     searchTerm() {
       this.fetchOrders();
     }
-  },
-  created: async function () {
-    // 等待 this.fetchOrders() 函數執行完成才created
-    await this.fetchOrders();
   },
   created(){
     this.fetchOrders();
