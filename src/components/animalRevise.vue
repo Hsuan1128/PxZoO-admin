@@ -277,7 +277,7 @@ export default {
         axios.get(`${import.meta.env.VITE_API_URL}/locationShow.php`)
         .then(response => {
         this.mysqlLocation = response.data; // 假設返回的數據是一個數組
-        //console.log(this.mysqlLocation)
+        console.log(this.mysqlLocation)
         })
         .catch(error => {
         console.error("Error fetching data: ", error);
@@ -433,13 +433,13 @@ export default {
         },
 
         locationShow(){
-            this.selectlocation = this.mysqlLocation.filter(item=>item.category_name === this.editedCategoryName)
-            // console.log(this.selectlocation);
+            this.selectlocation = this.mysqlLocation.filter(item=>item.category_name === this.editData.categoryName)
+            console.log(this.selectlocation);
         }
     },
     watch: {
         'rowdata.animal_enterdate': function(newVal) {
-        this.animalEnterdate = newVal;
+        this.editData.animalEnterdate = newVal;
         },
         //這裡主要作用是顯示所點選的資料並綁定在input上變成值
         rowdata: {
@@ -471,18 +471,18 @@ export default {
                 }
             }
         },
-        categoryName: {
+        'editData.categoryName': {
             deep: true, // 使用 deep: true 來監聽 editedCategoryName 對象內部屬性的變化
             handler(newVal) { // newVal 是變化後的 editedCategoryName 的值
             // 檢查 newVal 是否為真（即 editedCategoryName 是否存在）
             if (newVal) {
                 //抓取館別名稱顯示對應的館別位置
                 this.locationShow()
-                this.editData.editedLocationName = ""
+                this.editData.locationName = ""
             }
             }
         },
-        locationName:{
+        'editData.locationName':{
             deep: true, // 使用 deep: true 來監聽 editedCategoryName 對象內部屬性的變化
             handler() { // newVal 是變化後的 editedCategoryName 的值
                 if(this.editData.locationName === this.rowdata.location_name){

@@ -150,7 +150,7 @@ export default {
     };
   },
   created() {
-    axios.get(`${import.meta.env.VITE_API_URL}/animalShow.php`)
+    axios.get(`${import.meta.env.VITE_API_URL}/animalshow.php`)
       .then(response => {
         this.data = response.data; // 假設返回的數據是一個數組
         this.total = this.data.length;
