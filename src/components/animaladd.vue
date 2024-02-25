@@ -1,23 +1,35 @@
 <template>
-  <div class="animal_add_bg">
+  <div class="animaladd_bg">
     <div class="animaladd">
-        <h1 class="pcSmallTitle">新增動物資訊</h1>
+        <h1>新增動物資訊</h1>
         <div class="animaladd_content">
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">動物種類
                 </label>
-                <input type="text"  placeholder="請輸入動物種類" maxlength="10" v-model="formData.animal_species">
+                <input type="text"
+                class="animaladd_text"  
+                placeholder="請輸入動物種類" 
+                maxlength="10" 
+                v-model="formData.animal_species">
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">動物名稱</label>
-                <input type="text" placeholder="請輸入動物名稱" maxlength="10"  v-model="formData.animal_name">
+                <input type="text"
+                class="animaladd_text"  
+                placeholder="請輸入動物名稱" 
+                maxlength="10" 
+                v-model="formData.animal_name">
             </div>
+
             <!-- 改下拉 -->
             <div class="animaladd_content_align">
               <label for="category" class="pcInnerText">館別名稱
                 </label>
-              <select name="category" placeholder="請選擇館別名稱" v-model="formData.category_name" id="category">
+              <select name="category" 
+              placeholder="請選擇館別名稱" 
+              v-model="formData.category_name" 
+              id="category">
                 <option value="" disabled hidden>請選擇館別名稱</option>
                 <option v-for="category in categoriesName">{{category}}</option>
               </select>
@@ -25,7 +37,10 @@
             <!-- 改下拉 -->
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">館別位置</label>
-                <select name="location" placeholder="請選擇館別位置" v-model="formData.location_name" id="location">
+                <select name="location" 
+                placeholder="請選擇館別位置"
+                v-model="formData.location_name" 
+                id="location">
                 <option value="" disabled hidden>請選擇館別位置</option>
                 <option v-for="location in selectlocation">{{location.location_name}}</option>
               </select>
@@ -34,76 +49,161 @@
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">入園日期
                 </label>
-                <input type="date" placeholder="請輸入消息日期"  v-model="formData.animal_enterdate">
+                <input type="date" 
+                placeholder="請輸入消息日期"
+                class="animaladd_text"   
+                v-model="formData.animal_enterdate"
+                @click="toggleDatePicker">
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">平均壽命</label>
-                <textarea class="animaladd_textarea" placeholder="請輸入平均壽命"
-                maxlength="100" rows="7" v-model="formData.animal_lifespan"></textarea>
+                <textarea class="animaladd_textarea" 
+                placeholder="請輸入平均壽命"
+                maxlength="100" rows="7" 
+                v-model="formData.animal_lifespan"></textarea>
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">分布地區</label>
-                <textarea class="animaladd_textarea" placeholder="請輸入分布地區" 
-                maxlength="100" rows="7" v-model="formData.animal_area"></textarea>
+                <textarea class="animaladd_textarea" 
+                placeholder="請輸入分布地區" 
+                maxlength="100" rows="7" 
+                v-model="formData.animal_area"></textarea>
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">食性</label>
-                <textarea class="animaladd_textarea" placeholder="請輸入食性" 
-                maxlength="150" rows="9" v-model="formData.animal_food"></textarea>
+                <textarea class="animaladd_textarea" 
+                placeholder="請輸入食性" 
+                maxlength="150" rows="9" 
+                v-model="formData.animal_food"></textarea>
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">特徵</label>
-                <textarea class="animaladd_textarea" placeholder="請輸入特徵" 
-                maxlength="150" rows="9" v-model="formData.animal_features"></textarea>
+                <textarea class="animaladd_textarea" 
+                placeholder="請輸入特徵" 
+                maxlength="150" rows="9" 
+                v-model="formData.animal_features"></textarea>
             </div>
 
             <div class="animaladd_content_align">
                 <label for="" class="pcInnerText">介紹</label>
-                <textarea class="animaladd_textarea" placeholder="請輸入介紹" 
-                maxlength="150" rows="9" v-model="formData.animal_description"></textarea>
+                <textarea class="animaladd_textarea" 
+                placeholder="請輸入介紹" 
+                maxlength="150" rows="9"
+                v-model="formData.animal_description"></textarea>
             </div>
 
-            <div class="animaladd_content_align">
-                <label for="" class="pcInnerText">圖片A</label>
-                <input type="file" placeholder="請上傳圖片" name="animal_pic_a"
-                accept="image/*" @change="handleFileChange('animal_pic_a', $event)">
+            <div class="animaladd_content_align animaladd_img">
+              <label class="pcInnerText">圖片A</label>
+              <label class="pcInnerText animaladd_imgtext ">
+                <span v-if="fileNamea">{{ fileNamea }}</span>
+                <span v-else>請選擇檔案</span>   
+                <div class="iconBtn pcInnerText">
+                  <p class="iconText">
+                    <img src="@/assets/images/login/icon/image.svg" alt="" class="buttonIcon"/>
+                    選擇檔案
+                  </p>
+                  <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
+                </div>
+                <input type="file" id="animal_pic_a"
+                name="animal_pic_a"
+                accept="image/png, image/jpeg" @change="handleFileChange('animal_pic_a', $event)">
+              </label>
+            </div>
+            
+            <div class="animaladd_content_align animaladd_img">
+              <label class="pcInnerText">圖片B</label>
+              <label class="pcInnerText animaladd_imgtext ">
+                <span v-if="fileNameb">{{ fileNameb }}</span>
+                <span v-else>請選擇檔案</span>   
+                <div class="iconBtn pcInnerText">
+                  <p class="iconText">
+                    <img src="@/assets/images/login/icon/image.svg" alt="" class="buttonIcon"/>
+                    選擇檔案
+                  </p>
+                  <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
+                </div>
+                <input type="file" id="animal_pic_b"
+                name="animal_pic_b"
+                accept="image/png, image/jpeg" @change="handleFileChange('animal_pic_b', $event)">
+              </label>
             </div>
 
-            <div class="animaladd_content_align">
-                <label for="" class="pcInnerText">圖片B</label>
-                <input type="file" placeholder="請上傳圖片" name="animal_pic_b" 
-                accept="image/*" @change="handleFileChange('animal_pic_b', $event)">
+            <div class="animaladd_content_align animaladd_img">
+              <label class="pcInnerText">圖片C</label>
+              <label class="pcInnerText animaladd_imgtext ">
+                <span v-if="fileNamec">{{ fileNamec }}</span>
+                <span v-else>請選擇檔案</span>   
+                <div class="iconBtn pcInnerText">
+                  <p class="iconText">
+                    <img src="@/assets/images/login/icon/image.svg" alt="" class="buttonIcon"/>
+                    選擇檔案
+                  </p>
+                  <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
+                </div>
+                <input type="file" id="animal_pic_c"
+                name="animal_pic_c"
+                accept="image/png, image/jpeg" @change="handleFileChange('animal_pic_c', $event)">
+              </label>
             </div>
 
-            <div class="animaladd_content_align">
-                <label for="" class="pcInnerText">圖片C</label>
-                <input type="file" placeholder="請上傳圖片" name="animal_pic_c"  
-                accept="image/*" @change="handleFileChange('animal_pic_c', $event)">
+            <div class="animaladd_content_align animaladd_img">
+              <label class="pcInnerText">Icon</label>
+              <label class="pcInnerText animaladd_imgtext ">
+                <span v-if="fileNameIcon">{{ fileNameIcon }}</span>
+                <span v-else>請選擇檔案，檔案類型：png</span>   
+                <div class="iconBtn pcInnerText">
+                  <p class="iconText">
+                    <img src="@/assets/images/login/icon/image.svg" alt="" class="buttonIcon"/>
+                    選擇檔案
+                  </p>
+                  <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
+                </div>
+                <input type="file" id="animal_icon"
+                name="animal_icon"
+                accept="image/png" @change="handleFileChange('animal_icon', $event)">
+              </label>
             </div>
 
-            <div class="animaladd_content_align">
-                <label for="" class="pcInnerText">Icon</label>
-                <input type="file" name="animal_icon" placeholder="請上傳圖片，檔案類型：png"  accept="image/png" @change="handleFileChange('animal_icon', $event)">
+            <div class="animaladd_content_align animaladd_img">
+              <label class="pcInnerText">動物聲音</label>
+              <label class="pcInnerText animaladd_imgtext ">
+                <span v-if="fileNameSound">{{ fileNameSound }}</span>
+                <span v-else>請選擇音檔，檔案類型：mp3</span>   
+                <div class="iconBtn pcInnerText">
+                  <p class="iconText">
+                    <img src="@/assets/images/login/icon/image.svg" alt="" class="buttonIcon"/>
+                    選擇音檔
+                  </p>
+                  <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
+                </div>
+                <input type="file" id="animal_sound"
+                name="animal_sound"
+                accept="audio/mp3" @change="handleFileChange('animal_sound', $event)">
+              </label>
             </div>
 
-            <div class="animaladd_content_align">
-                <label for="" class="pcInnerText">動物聲音</label>
-                <input type="file" name="animal_sound" placeholder="請上傳音檔，檔案類型：mp3" 
-                accept="audio/*" @change="handleFileChange('animal_sound', $event)">
+            <div class="animaladd_content_align animaladd_img">
+              <label class="pcInnerText">列表圖</label>
+              <label class="pcInnerText animaladd_imgtext ">
+                <span v-if="fileNameSmall">{{ fileNameSmall }}</span>
+                <span v-else>請選擇檔案</span>   
+                <div class="iconBtn pcInnerText">
+                  <p class="iconText">
+                    <img src="@/assets/images/login/icon/image.svg" alt="" class="buttonIcon"/>
+                    選擇檔案
+                  </p>
+                  <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
+                </div>
+                <input type="file" id="animal_small_pic"
+                name="animal_small_pic"
+                accept="image/png, image/jpeg" @change="handleFileChange('animal_small_pic', $event)">
+              </label>
             </div>
 
-            <div class="animaladd_content_align">
-                <label for="" class="pcInnerText">列表圖</label>
-                <input type="file" placeholder="請上傳圖片" name="animal_small_pic" 
-                accept="image/*"
-                @change="handleFileChange('animal_small_pic', $event)">
-            </div>
-        </div>
-        
         <div class="animaladd_btns">
             <button class="defaultBtn pcInnerText" @click="saveAnimaldata" >
                 儲存
@@ -117,6 +217,7 @@
         <animalConfirm v-show="ConfirmSwitch" :ConfirmSwitch="ConfirmSwitch" @update-switch="ConfirmSwitch = $event"/>
         </div>
     </div>
+  </div>
 </div>
 </template>
 
@@ -159,6 +260,13 @@ export default {
       categoriesName: ["草原之聲","極地秘境","叢林奇蹟","鳥園樂章","海洋奇觀"],
       selectlocation:[],
       ConfirmSwitch:false,
+      //顯示檔名
+      fileNamea: '',
+      fileNameb: '',
+      fileNamec: '',
+      fileNameIcon: '',
+      fileNameSound: '',
+      fileNameSmall: '',
   };
   },
   created() {
@@ -190,6 +298,7 @@ export default {
     updateaddSwitch() {
       this.$emit('update-switch', !this.addSwitch);
       this.$nextTick(() => {
+        location.reload();
     // console.log(this.addSwitch);
   });
     },
@@ -197,10 +306,37 @@ export default {
       this.ConfirmSwitch = newValue;
       this.$emit('change', this.ConfirmSwitch);
     },
+    toggleDatePicker() {
+      this.showDatePicker = !this.showDatePicker;
+    },
     handleFileChange(field, event) {
       // 當文件選擇時觸發，將文件對象存儲到 formData 中
       this.formData[field] = event.target.files[0];
-      console.log(this.formData[field])
+      // console.log([field])
+
+      // 根據文件類型更新相應的文件名
+    switch (field) {
+        case 'animal_pic_a':
+            this.fileNamea = this.formData[field].name;
+            break;
+        case 'animal_pic_b':
+            this.fileNameb = this.formData[field].name;
+            break;
+        case 'animal_pic_c':
+            this.fileNamec = this.formData[field].name;
+            break;
+        case 'animal_icon':
+            this.fileNameIcon = this.formData[field].name;
+            break;
+        case 'animal_sound':
+            this.fileNameSound = this.formData[field].name;
+            break;
+        case 'animal_small_pic':
+            this.fileNameSmall = this.formData[field].name;
+            break;
+        default:
+            break;
+    }
     },
     // handleDateChange(date) {
     // // 將選擇的日期值設置到 formData.animal_enterdate 中
@@ -216,7 +352,7 @@ export default {
         formData.append(key, this.formData[key]);
         
       }
-      console.log(this.formData)
+      // console.log(this.formData)
       axios.post(`${import.meta.env.VITE_API_URL}/animaladd.php`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // 指定文件上傳格式
@@ -224,11 +360,11 @@ export default {
       })
         .then(response => {
           console.log(response.data);
-          console.log(this.formData)
+          // console.log(this.formData)
           // 提交成功後的處理
           this.updateaddSwitch();
            // 觸發關閉表單的方法
-          //  location.reload();
+          location.reload();
         })
         .catch(error => {
           console.error('Error:', error);
@@ -242,9 +378,8 @@ export default {
     },
 };
 </script>
-
 <style lang="scss">
-.animal_add_bg{
+.animaladd_bg{
   width: 100%;
   height: 100%;
   background-color: #000000dc;
@@ -254,55 +389,115 @@ export default {
 .animaladd{
   overflow: auto;
   width: 73.64vw;
-  height: 90vh;
+  height: 45vw;
   background-color: #f5efeb;
   position: absolute;
   top: 50%;
-  left: 55%;
+  left: 50%;
   transform: translate(-50%,-50%);
   z-index: 10;
   h1{
-      margin-top: 2vw;
-      text-align: center;
+    margin-top: 2vw;
+    text-align: center;
+    color: #11A729;
+  }
+  .pcInnerText{
+    color: #3F3F3F;
   }
   .animaladd_content{
-      width: 60.82vw;
-      margin: 3vw auto 0;
+    width: 60.82vw;
+    margin: 3vw auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5vw;
+  
+    .animaladd_content_align{
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5vw;
-   
-      .animaladd_content_align{
-          display: flex;
-          width: 100%;
-          label{
-              margin-right: 20px;
-              display: block;
-              width: 15%;
-          }
-          input, select{
-            width: 85%;
-            height: 2vw;
-            padding-inline: 8px;
-            border: none;
+      width: 100%;
 
-          }
-          .animaladd_textarea{
-            width: 85%;
-            height: 10vw;
-            resize: none;
-            padding-inline: 8px;
-            border: none;
-
-          }
+      label{
+        // margin-right: 20px;
+        display: block;
+        width: 15%;
       }
+
+      input{
+        width: 85%;
+        height: 2vw;
+        padding-inline: 8px;
+        border: none;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+
+      .animaladd_text{
+        padding: 0.5vw 0.5vw;
+        background-color: #fff;
+        border: 2px #3F3F3F solid;
+        width: 100%;
+        height: 2.5vw;
+        outline: none;
+        vertical-align: top;
+        border-radius: 0;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        &::placeholder{
+          color: #CCC;
+        }
+      }
+
+      .animaladd_imgtext{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        .iconBtn{
+          width: 140px;
+        }
+      } 
+
+      .animaladd_textarea{
+        padding: 0.5vw 0.5vw;
+        background-color: #fff;
+        border: 2px #3F3F3F solid;
+        width: 100%;
+        height: 10vw;
+        outline: none;
+        vertical-align: top;
+        border-radius: 0;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        resize: none;
+        &::placeholder{
+          color: #CCC;
+        }
+      }
+
+      select{
+        padding: 0.5vw 0.5vw;
+        background-color: #fff;
+        border: 2px #3F3F3F solid;
+        width: 100%;
+        height: 2.5vw;
+        outline: none;
+        vertical-align: top;
+        border-radius: 0;
+        resize: none;
+        &::placeholder{
+          color: #CCC;
+        }
+      }
+    }
   }
   .animaladd_btns{
-      width: 280px;
-      margin: 3vw auto;
-      display: flex;
-      justify-content: space-between;
+    width: 280px;
+    margin: 3vw auto;
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>
