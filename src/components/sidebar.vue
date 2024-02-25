@@ -51,7 +51,7 @@
         />
         <RouterLink to="/news">消息管理</RouterLink>
       </li>
-      
+
       <li>
         <img
           src="../assets/images/sidebar/animal.svg"
@@ -155,6 +155,7 @@ export default {
     },
     logout() {
       this.$router.push("/");
+      localStorage.clear();
     },
   },
 };

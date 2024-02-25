@@ -4,12 +4,12 @@
       <div class="confirm_content">
         <p class="pcInnerText">人員資訊有變更，是否儲存</p>
         <div class="confirm_btns">
-          <button class="defaultBtn pcInnerText" @click="transferData">
-            儲存
+          <button class="defaultBtn pcInnerText" @click="BackToConfirm">
+            繼續編輯
             <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
           </button>
-          <button class="defaultBtn pcInnerText" @click="updataConfirmSwitch">
-            取消
+          <button class="defaultBtn pcInnerText" @click="BackToList">
+            回到列表
             <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
           </button>
         </div>
@@ -25,46 +25,24 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   props: {
     ConfirmSwitch: false,
     confirmData: {
       type: Object,
-      default: () => ({}),
     },
   },
   data() {
     return {};
   },
   methods: {
-    updataConfirmSwitch() {
+    BackToList() {
       //控制修改確認彈窗的顯示/隱藏
       this.$emit("update-switch", !this.ConfirmSwitch);
+      this.$emit("trigger-update-revise-switch");
     },
-    transferData() {
-      //引入修改的PHP
-      axios
-        .post(
-          `${import.meta.env.VITE_API_URL}/staffRevise.php`,
-          this.confirmData,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then(() => {
-          //關閉修改確認的彈窗
-          this.updataConfirmSwitch();
-          //關閉修改的彈窗
-          this.$emit("trigger-update-revise-switch");
-          //重新整理頁面讓資料更新成更改後的
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.error("更新錯誤:", error);
-        });
+    BackToConfirm() {
+      this.$emit("update-switch", !this.ConfirmSwitch);
     },
   },
   components: {},

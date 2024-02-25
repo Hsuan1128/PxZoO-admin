@@ -22,15 +22,30 @@
         <Table
           stripe
           :columns="columns"
-          :data="data"
           ref="table"
+          :data="data"
           class="custom-table"
         >
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
           <template #status="{ row }">
-            <Switch v-model="row.active" />
+            <Switch
+              size="large"
+              v-model="row.sta_status"
+              :true-value="1"
+              :false-value="0"
+              true-color="#13ce66"
+              false-color="#ff9900"
+              @on-change="switchChange($event, row)"
+            >
+              <template #open>
+                <span>正常</span>
+              </template>
+              <template #close>
+                <span>停權</span>
+              </template></Switch
+            >
           </template>
           <template #action="{ row, index }" class="actionArea">
             <Button
@@ -71,10 +86,9 @@
 
 <script>
 import sidebar from "@/components/sidebar.vue";
-import Switch from "@/components/switch.vue";
 import grass from "@/components/grass.vue";
 import staAdd from "@/components/staffAdd.vue";
-import { Table } from "view-ui-plus";
+import { Table, Switch } from "view-ui-plus";
 import axios from "axios";
 import { mapActions } from "pinia";
 import userStore from "@/stores/auth";
@@ -114,7 +128,8 @@ export default {
         {
           title: "狀態",
           slot: "status",
-          align: "left",
+          width: 100,
+          align: "center",
         },
         {
           title: "刪改",
@@ -127,7 +142,10 @@ export default {
       rowdata: [],
       show: false,
       addList: false,
-      sta_id: "",
+      switchdata: {
+        sta_id: "",
+        sta_status: "",
+      },
     };
   },
   created() {
@@ -176,6 +194,34 @@ export default {
             console.error("Error:", error);
           });
       }
+    },
+    switchChange(status, row) {
+      console.log(status);
+      this.updateStatusData(row);
+    },
+    updateStatusData(row) {
+      this.switchdata = {
+        sta_id: row.sta_id,
+        sta_status: row.sta_status,
+      };
+      axios
+        .post(
+          `${import.meta.env.VITE_API_URL}/staffStatusSwitch.php`,
+          this.switchdata,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          console.log(this.switchdata);
+          // 提交成功後的處理
+        })
+        .catch((error) => {
+          console.error("搜尋出錯:", error);
+        });
     },
   },
   components: {

@@ -7,8 +7,6 @@ const userStore = defineStore({
   id: "userStore",
   state: () => ({
     token: localStorage.getItem("token") || "", // 用户令牌
-    userData: {}, // 用户数据
-    position: "", // 用户职位信息
   }),
   getters: {
     // 计算属性，返回欢迎消息
@@ -42,17 +40,15 @@ const userStore = defineStore({
     },
     // 更新用户数据
     updateUserData(val) {
+      console.log(val);
       this.userData = {
-        name: val.mem_name,
+        pos: val.sta_pos,
+        id: val.sta_id,
         validation: val.mem_validation,
         state: val.mem_state,
         role: "editor", // 如果有权限可以把权限角色记载数据库
       };
       localStorage.setItem("userData", JSON.stringify(this.userData));
-    },
-    // 更新用户职位信息
-    updatePosition(position) {
-      this.position = position;
     },
     // 检查用户数据
     checkUserData() {

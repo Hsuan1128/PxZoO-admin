@@ -98,7 +98,7 @@ export default {
     // 判斷有沒有登入過，如果沒有token等同於沒有登入
     const user = this.checkLogin();
     if (user) {
-      this.$router.push("/");
+      this.$router.push("home");
     }
   },
   methods: {
