@@ -5,35 +5,27 @@
       <div class="Revise_content">
         <div class="Revise_content_align">
           <label for="ticketsName" class="pcInnerText">信箱</label>
-          <input
-            v-model="sta_email"
-            type="text"
-            :placeholder="rowdata.sta_email"
-          />
+          <input v-model="sta_email" type="text" />
         </div>
 
         <div class="Revise_content_align">
           <label for="ticketsPrice" class="pcInnerText">帳號</label>
-          <input v-model="sta_acc" type="text" :placeholder="rowdata.sta_acc" />
+          <input v-model="sta_acc" type="text" />
         </div>
 
         <div class="Revise_content_align">
           <label for="ticketsRule" class="pcInnerText">密碼</label>
-          <input
-            v-model="sta_psw"
-            class="Revise_textarea"
-            :placeholder="rowdata.sta_psw"
-          />
+          <input v-model="sta_psw" class="Revise_textarea" />
         </div>
       </div>
 
       <div class="Revise_btns">
-        <button class="defaultBtn pcInnerText" @click="staffRevise">
+        <button class="defaultBtn pcInnerText" @click="transferData">
           儲存
           <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
         </button>
 
-        <button class="defaultBtn pcInnerText" @click="updateReviseSwitch">
+        <button class="defaultBtn pcInnerText" @click="staffRevise">
           返回列表
           <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
         </button>
@@ -51,7 +43,7 @@
 
 <script>
 import staffConfirm from "@/components/staffConfirm.vue";
-
+import axios from "axios";
 export default {
   props: {
     ReviseSwitch: false,
@@ -66,8 +58,24 @@ export default {
       sta_email: "",
       sta_acc: "",
       sta_psw: "",
-      confirmData: [],
+      confirmData: {},
     };
+  },
+  watch: {
+    // 監聽 rowdata 屬性的變化
+    rowdata: {
+      deep: true, // 使用 deep: true 來監聽 rowdata 對象內部屬性的變化
+      handler(newVal) {
+        // newVal 是變化後的 rowdata 的值
+        // 檢查 newVal 是否為真（即 rowdata 是否存在）
+        if (newVal) {
+          // 將 rowdata 對象中的特定屬性賦值給 data 中的對應屬性
+          this.sta_email = newVal.sta_email;
+          this.sta_acc = newVal.sta_acc;
+          this.sta_psw = newVal.sta_psw;
+        }
+      },
+    },
   },
   methods: {
     updateReviseSwitch() {
@@ -75,13 +83,15 @@ export default {
       this.$emit("update-switch", !this.ReviseSwitch);
     },
     prepareConfirmData() {
-      //把資料傳送到ticketsConfirm的組件
       this.confirmData = {
         sta_email: this.sta_email,
         sta_acc: this.sta_acc,
         sta_psw: this.sta_psw,
         sta_id: this.rowdata.sta_id,
       };
+    },
+    test() {
+      location.reload();
     },
     staffRevise() {
       //判斷輸入資料的情況做出對應的行為
@@ -98,6 +108,38 @@ export default {
         }
       } else {
         alert("請填寫所有欄位");
+      }
+    },
+    transferData() {
+      //判斷輸入資料的情況做出對應的行為
+      if (
+        this.rowdata.sta_email != this.sta_email ||
+        this.rowdata.sta_acc != this.sta_acc ||
+        this.rowdata.sta_psw != this.sta_psw
+      ) {
+        //傳遞更新的資料到ConfirmData物件裡
+        this.prepareConfirmData();
+        //引入修改的PHP
+        axios
+          .post(
+            `${import.meta.env.VITE_API_URL}/staffRevise.php`,
+            this.confirmData,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then(() => {
+            //關閉修改的彈窗
+            this.updateReviseSwitch();
+            location.reload();
+          })
+          .catch((error) => {
+            console.error("更新錯誤:", error);
+          });
+      } else {
+        this.updateReviseSwitch();
       }
     },
   },

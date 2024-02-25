@@ -15,12 +15,33 @@
         </div>
       </div>
       <div class="formArea">
-        <Table stripe :columns="columns" :data="data" class="custom-table">
+        <Table
+          stripe
+          :columns="columns"
+          ref="table"
+          :data="data"
+          class="custom-table"
+        >
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
-          <template #action="{ row }">
-            <Switch v-model="row.active" />
+          <template #status="{ row }">
+            <Switch
+              size="large"
+              v-model="row.mem_status"
+              :true-value="1"
+              :false-value="0"
+              true-color="#13ce66"
+              false-color="#ff9900"
+              @on-change="switchChange($event, row)"
+            >
+              <template #open>
+                <span>正常</span>
+              </template>
+              <template #close>
+                <span>停權</span>
+              </template></Switch
+            >
           </template>
         </Table>
       </div>
@@ -31,10 +52,10 @@
 
 <script>
 import sidebar from "@/components/sidebar.vue";
-import Switch from "@/components/switch.vue";
+// import Switch from "@/components/switch.vue";
 import grass from "@/components/grass.vue";
 import axios from "axios";
-import { Table, Page } from "view-ui-plus";
+import { Table, Page, Switch } from "view-ui-plus";
 export default {
   data() {
     return {
@@ -79,12 +100,17 @@ export default {
         },
         {
           title: "狀態",
-          slot: "action",
+          slot: "status",
           width: 100,
           align: "center",
         },
       ],
       data: [],
+      rowdata: [],
+      switchdata: {
+        mem_id: "",
+        mem_status: "",
+      },
     };
   },
   created() {
@@ -97,7 +123,36 @@ export default {
         console.error("Error fetching data:", error);
       });
   },
-  methods: {},
+  methods: {
+    switchChange(status, row) {
+      console.log(status);
+      this.updateStatusData(row);
+    },
+    updateStatusData(row) {
+      this.switchdata = {
+        mem_id: row.mem_id,
+        mem_status: row.mem_status,
+      };
+      axios
+        .post(
+          `${import.meta.env.VITE_API_URL}/memberStatusSwitch.php`,
+          this.switchdata,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          console.log(this.switchdata);
+          // 提交成功後的處理
+        })
+        .catch((error) => {
+          console.error("搜尋出錯:", error);
+        });
+    },
+  },
   components: {
     sidebar,
     Switch,
@@ -107,6 +162,3 @@ export default {
   },
 };
 </script>
-<!-- <style>
-@import "bootstrap/dist/css/bootstrap.css";
-</style> -->
