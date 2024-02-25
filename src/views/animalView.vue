@@ -19,15 +19,25 @@
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
+
           <template #status="{ row }">
             <Switch  size="large" v-model="row.animal_status" :true-value="1" :false-value="0"  true-color="#13ce66"
-        false-color="#ff9900" @on-change="switchChange($event, row)"> <template #open>
-          <span>上架</span>
-        </template>
-        <template #close>
-          <span>下架</span>
-        </template></Switch>
+            false-color="#ff9900" @on-change="switchChange($event, row)"> 
+            <!-- 
+              將 Switch 元件的狀態綁定到 row.animal_status 上，
+              true-value 屬性設置為 1，表示開啟狀態，
+              false-value 屬性設置為 0，表示關閉狀態。
+              true-color 和 false-color 分別設置開啟和關閉狀態的顏色。
+              @on-change 監聽開關狀態變化，調用 switchChange 方法，並將事件對象和行數據作為參數傳遞給 row。
+            -->
+            <template #open>
+              <span>上架</span>
+            </template>
+            <template #close>
+              <span>下架</span>
+            </template></Switch>
           </template>
+
           <template #action="{ row, index }">
             <Button type="primary" class="trash" size="small" style="margin-right: 5px" @click="AnimalModification(row)">
               <img src="../assets/images/formicon/revise.svg" alt="" />
@@ -75,13 +85,13 @@ export default {
         {
           title: "館別名稱",
           key: "category_name",
-          width: 110,
+          width: 90,
           align: "left",
         },
         {
           title: "位置名稱",
           key: "location_name",
-          width: 140,
+          width: 110,
           align: "left",
         },
         {
@@ -93,7 +103,7 @@ export default {
         {
           title: "動物名稱",
           key: "animal_name",
-          width: 110,
+          width: 90,
           align: "left",
         },
         {
@@ -167,7 +177,7 @@ export default {
 
       // 重新從數據源（可能是伺服器或其他地方）獲取新頁碼的資料，以便更新顯示在頁面上。
 
-      axios.get(`${import.meta.env.VITE_API_URL}/animalShow.php`)
+      axios.get(`${import.meta.env.VITE_API_URL}/animalshow.php`)
         .then(response => {
           this.data = response.data; // 假設返回的數據是一個數組
           this.total = this.data.length;
@@ -202,19 +212,14 @@ export default {
     },
     //switch
     switchChange(status, row) {
-      // if(row.animal_status == 1){
-      //   row.animal_status = 0
-      // }else{
-      //   row.animal_status = 1
-      // }
-      console.log(status)
-      this.updateStatusData(row)
-    },
-    updateStatusData(row) {
+      //status其實用不到只是測試用
+      // console.log(status)
+
       this.switchdata = {
         animal_id: row.animal_id,
         animal_status: row.animal_status
       }
+      //傳資料到php
       axios.post(`${import.meta.env.VITE_API_URL}/animalReviseSwitch.php`, this.switchdata, {
         headers: {
           'Content-Type': 'application/json'
@@ -222,7 +227,7 @@ export default {
       })
         .then(response => {
           console.log(response.data);
-          console.log(this.switchdata);
+          // console.log(this.switchdata);
           // 提交成功後的處理
         })
         .catch(error => {
@@ -242,7 +247,7 @@ export default {
     AnimalModification(row) {
       this.ReviseSwitch = !this.ReviseSwitch
       this.rowdata = row;
-      console.log(this.rowdata)
+      // console.log(this.rowdata.animai_pic_a)
     }
   },
   components: {

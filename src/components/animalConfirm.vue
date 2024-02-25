@@ -1,16 +1,16 @@
 <template>
     <div class="confirm_bg">
-        <div class="confirm">
+        <div class="confirm" id="animal">
             <div class="confirm_content">
                 <p class="pcInnerText">動物資訊有變更，是否儲存</p>
                 <div class="confirm_btns">
                     <button class="defaultBtn pcInnerText"
-                    @click="transferData">
-                        儲存
+                    @click="closeConfirmSwitch">
+                        取消
                         <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                     </button>
                     <button class="defaultBtn pcInnerText" @click="updataConfirmSwitch">
-                        取消
+                        返回列表
                         <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                     </button>
                 </div>
@@ -41,27 +41,14 @@ import axios from 'axios';
         methods: {
             updataConfirmSwitch(){
                 this.$emit('update-switch', !this.ConfirmSwitch)
-                console.log(this.ConfirmSwitch);
+                // console.log(this.ConfirmSwitch);
+                this.$emit('trigger-update-revise-switch')
+                //重新整理頁面讓資料更新成更改後的
+                location.reload();
             },
-            transferData(){
-                //引入修改的PHP
-                axios.post(`${import.meta.env.VITE_API_URL}/animalRevise.php`, this.confirmData,{
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(() => {
-                    //關閉修改確認的彈窗
-                    this.updataConfirmSwitch()
-                    //關閉修改的彈窗
-                    this.$emit('trigger-update-revise-switch')
-                    //重新整理頁面讓資料更新成更改後的
-                    // window.location.reload();
-                })
-                .catch(error => {
-                    console.error('更新錯誤:', error);
-                });
+            closeConfirmSwitch(){
+                //控制修改確認彈窗的顯示/隱藏
+                this.$emit('update-switch', !this.ConfirmSwitch)
             },
         },
         components: {
