@@ -120,7 +120,7 @@ export default {
   };
   },    
   methods: {
-      // 更新開關狀態
+    // 更新開關狀態
     updateaddSwitch() {
       this.$emit('update-switch', !this.addSwitch);
       window.location.reload();
@@ -140,19 +140,6 @@ export default {
         console.log(this.fileName);
       }
     },
-
-
-    // // 處理檔案更改（分類圖片）
-    // handleTypeFileChange(field, event) {
-    //   // 當文件選擇時觸發，將文件對象存儲到 formData 中
-    //   this.formData[field] = event.target.files[0];
-    //   // 使用 $nextTick 確保 Vue 已經更新 DOM
-    //   this.$nextTick(() => {
-    //     // 更新分類圖片的檔名
-    //     this.typefileName = this.formData[field].name;
-    //     console.log(this.typefileName);
-    //   });
-    // },
 
     // 提交表單數據
     saveNews() {
