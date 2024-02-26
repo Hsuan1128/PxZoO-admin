@@ -5,12 +5,12 @@
             <div class="Revise_content">
                 <div class="Revise_content_align">
                     <label for="ticketsName" class="pcInnerText">門票名稱</label>
-                    <input v-model="editedTicketsName" type="text">
+                    <input v-model="editedTicketsName" type="text" style="border: 2px #3F3F3F solid;">
                 </div>
     
                 <div class="Revise_content_align">
                     <label for="ticketsPrice" class="pcInnerText">門票價錢</label>
-                    <input v-model="editedTicketsPrice" type="text">
+                    <input v-model="editedTicketsPrice" type="text" style="border: 2px #3F3F3F solid;">
                 </div>
     
                 <div class="Revise_content_align">
@@ -120,7 +120,7 @@ export default {
                 .then(() => {
                     //關閉修改的彈窗
                     this.updateReviseSwitch()
-                    location.reload();
+                    location.reload();  
                 })
                 .catch(error => {
                     console.error('更新錯誤:', error);

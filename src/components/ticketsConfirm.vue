@@ -2,14 +2,14 @@
     <div class="confirm_bg">
         <div class="confirm">
             <div class="confirm_content">
-                <p class="pcInnerText">門票資訊尚未儲存，是否返回編輯</p>
+                <p class="pcInnerText">門票資訊尚未儲存，是否繼續編輯</p>
                 <div class="confirm_btns">
                     <button class="defaultBtn pcInnerText" @click="BackToConfirm">
                         繼續編輯
                         <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                     </button>
                     <button class="defaultBtn pcInnerText" @click="BackToList">
-                        回到列表
+                        返回列表
                         <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                     </button>
                 </div>
