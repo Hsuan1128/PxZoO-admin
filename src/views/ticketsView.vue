@@ -7,7 +7,7 @@
       </div>
 
       <div class="formArea">
-        <Table stripe :columns="columns" :data="data" ref="table" class="custom-table">
+        <Table stripe :columns="columns" :data="data" ref="table" class="custom-table" no-data-text="查無門票資料">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
