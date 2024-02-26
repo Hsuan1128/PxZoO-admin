@@ -53,9 +53,9 @@
               ><img src="../assets/images/formicon/delete.svg" alt="" /></Button
           ></template>
         </Table>
-        <template>
+        <!-- <template>
           <Page :total="100" />
-        </template>
+        </template> -->
       </div>
 
       <div class="pages">
@@ -170,7 +170,7 @@ export default {
 
       // 重新從數據源（可能是伺服器或其他地方）獲取新頁碼的資料，以便更新顯示在頁面上。
 
-      axios.get(`${import.meta.env.VITE_API_URL}/commentShow.php`)
+      axios.get(`${import.meta.env.VITE_API_URL}/commentShow.php?type=comment`)
       .then(response => {
         this.data = response.data; // 假設返回的數據是一個數組
         this.total = this.data.length;

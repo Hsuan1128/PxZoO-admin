@@ -204,11 +204,11 @@ export default {
                 label {
                     // margin-right: 20px;
                     display: block;
-                    width: 15%;
+                    width: 25%;
                 }
 
                 input {
-                    width: 85%;
+                    width: 75%;
                     height: 2vw;
                     padding-inline: 8px;
                     border: none;
@@ -235,14 +235,6 @@ export default {
                     }
                 }
 
-                .revise_imgtext{
-                    display: flex;
-                    justify-content: space-between;
-                    width: 100%;
-                    .iconBtn{
-                    width: 140px;
-                    }
-                } 
 
                 .Revise_textarea {
                     padding: 0.5vw 0.5vw;
@@ -260,6 +252,10 @@ export default {
                     &::placeholder{
                         color: #CCC;
                     }
+                }
+
+                .Revise_img{
+                    width: 20vw;
                 }
 
                 select{

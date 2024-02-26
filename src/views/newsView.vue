@@ -53,9 +53,9 @@
               ><img src="../assets/images/formicon/delete.svg" alt="" /></Button
           ></template>
         </Table>
-        <template>
+        <!-- <template>
           <Page :total="100" />
-        </template>
+        </template> -->
       </div>
 
       <div class="pages">
@@ -69,7 +69,7 @@
     </div>
     
     <newsrevise v-show="ReviseSwitch" :rowdata="rowdata" :ReviseSwitch="ReviseSwitch"
-      @update-switch="ReviseSwitch = $event" />
+      @update-switch="ReviseSwitch = $event"  />
 
     <newsadd v-show="addSwitch" :addSwitch="addSwitch" @update-switch="addSwitch = $event" />
 
