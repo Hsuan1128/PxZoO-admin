@@ -52,7 +52,6 @@
 
 <script>
 import sidebar from "@/components/sidebar.vue";
-// import Switch from "@/components/switch.vue";
 import grass from "@/components/grass.vue";
 import axios from "axios";
 import { Table, Page, Switch } from "view-ui-plus";
@@ -101,7 +100,7 @@ export default {
         {
           title: "狀態",
           slot: "status",
-          width: 100,
+          width: 120,
           align: "center",
         },
       ],
@@ -130,8 +129,8 @@ export default {
     },
     updateStatusData(row) {
       this.switchdata = {
-        mem_id: row.mem_id,
-        mem_status: row.mem_status,
+        // mem_id: row.mem_id,
+        // mem_status: row.mem_status,
       };
       axios
         .post(
