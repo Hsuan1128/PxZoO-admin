@@ -39,12 +39,12 @@
 
         <section class="tiqty" v-if="tiqtyOpen">
           <chartTable :labels="labels" :data="ticket" :frame="ticketFrame" />
-          <!-- <ticketChart :labels="labels" :data="ticket" :frame="ticketFrame"/> -->
+          <ticketChart :labels="labels" :data="ticket" :frame="ticketFrame"/>
         </section>
 
         <section class="money" v-if="moneyOpen">
           <chartTable :labels="labels" :data="money" :frame="moneyFrame" />
-          <!-- <moneyChart :labels="labels" :data="money" :frame="moneyFrame"/> -->
+          <moneyChart :labels="labels" :data="money" :frame="moneyFrame"/>
         </section>
 
       </div>
@@ -60,13 +60,13 @@ import sidebar from "@/components/sidebar.vue";
 import grass from "@/components/grass.vue";
 import chartTable from "@/components/charts/chartTable.vue";
 import peopleChart from "@/components/charts/peopleChart.vue";
-// import ticketChart from "@/components/charts/ticketChart.vue";
-// import moneyChart from "@/components/charts/moneyChart.vue";
+import ticketChart from "@/components/charts/ticketChart.vue";
+import moneyChart from "@/components/charts/moneyChart.vue";
 
 export default {
   components: {
     sidebar, grass, chartTable, peopleChart, 
-    // ticketChart, moneyChart, 
+    ticketChart, moneyChart, 
   },
   data() {
     return {

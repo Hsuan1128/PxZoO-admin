@@ -62,8 +62,8 @@ export default {
         {
           title: "訂單編號",
           key: "ord_id",
-          sortable: true,
-          sortType: 'asc',
+          // sortable: true,
+          // sortType: 'asc',
           // width: 100,
         },
         {
@@ -180,8 +180,8 @@ export default {
     fetchOrderUpdate(staff, status, bool) {
       // 修改訂單明細
       axios.post(`${import.meta.env.VITE_API_URL}/orderUpdate.php`, {
-        // sta_id: this.sta_id, //等localstorage補上再試用
-        sta_id: 1,
+        sta_id: this.sta_id, //等localstorage補上再試用
+        // sta_id: 1,S
         ord_status: status,
         ord_id: this.selectedOrder.ord_id,
       }, {
