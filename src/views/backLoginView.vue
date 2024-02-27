@@ -25,6 +25,7 @@
           class="meerkat"
         />
       </div>
+
       <div class="acc">
         <div class="img">
           <img
@@ -109,7 +110,7 @@ export default {
       "updateUserData",
     ]),
     toMainPage() {
-      this.$router.push("home");
+      this.$router.push("/");
     },
     staffLogin() {
       if (this.sta_acc == "") {
@@ -129,13 +130,15 @@ export default {
           .then((res) => {
             console.log(res);
             if (res && res.data) {
-              if (res.data.code == 1) {
+              if (res.data.code == 1 && res.data.staInfo.sta_status == 1) {
                 this.updateToken(res.data.session_id);
                 this.updateUserData(res.data.staInfo);
                 alert(res.data.staInfo.sta_pos + " 歡迎登入");
                 this.$router.push({
                   name: "home",
                 });
+              } else if (res.data.staInfo.sta_status == 0) {
+                alert("已停權");
               } else {
                 alert("登入失敗");
               }

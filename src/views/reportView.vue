@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="formArea">
-        <Table stripe :columns="columns" :data="data" ref="table" class="custom-table">
+        <Table stripe :columns="columns" :data="data"  no-data-text="查無留言資料" ref="table" class="custom-table">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
