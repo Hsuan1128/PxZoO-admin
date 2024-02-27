@@ -2,7 +2,7 @@
     <div class="confirm_bg">
         <div class="confirm">
             <div class="confirm_content">
-                <p class="pcInnerText">檢舉留言資訊有變更，是否儲存</p>
+                <p class="pcInnerText">檢舉留言資訊有變更，是否繼續編輯</p>
                 <div class="confirm_btns">
                     <button class="defaultBtn pcInnerText" @click="closeConfirmSwitch">
                         繼續編輯

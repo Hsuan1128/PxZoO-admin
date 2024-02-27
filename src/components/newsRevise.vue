@@ -203,25 +203,25 @@ export default {
                 this.rowdata.news_text_2 !== this.news_text_2 ||
                 this.rowdata.news_text_3 !== this.news_text_3 ||
                 this.rowdata.news_text_4 !== this.news_text_4) {
-                this.prepareConfirmData();
-                axios.post(`${import.meta.env.VITE_API_URL}/newsRevises.php`, this.confirmData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    },
-                })
-                .then((res) => {
-                    console.log(res);
-                    console.log('修改已送出');
-                    this.$emit('trigger-update-revise-switch');
-                    window.location.reload();
-                })
-                .catch(error => {
-                    console.error('更新錯誤:', error);
-                });
-            } else {
-                // 如果没有修改，直接关闭修改表单
-                this.updateReviseSwitch();
-            }
+                    this.prepareConfirmData();
+                    axios.post(`${import.meta.env.VITE_API_URL}/newsRevises.php`, this.confirmData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        },
+                    })
+                    .then((res) => {
+                        console.log(res);
+                        console.log('修改已送出');
+                        this.$emit('trigger-update-revise-switch');
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('更新錯誤:', error);
+                    });
+                } else {
+                    // 如果没有修改，直接关闭修改表单
+                    this.updateReviseSwitch();
+                }
         },
 
         newsRevise() {
@@ -234,13 +234,14 @@ export default {
                 this.rowdata.news_text_2 !== this.news_text_2 ||
                 this.rowdata.news_text_3 !== this.news_text_3 ||
                 this.rowdata.news_text_4 !== this.news_text_4) {
-                this.ConfirmSwitch = true;
-                console.log('Has changes:', this.hasChanges);
-                this.prepareConfirmData();
-            } else {
-                this.updateReviseSwitch();
-                this.$emit('trigger-update-revise-switch');
-            }
+                    this.ConfirmSwitch = true;
+                    console.log('Has changes:', !this.hasChanges);
+                    this.prepareConfirmData();
+                    this.$emit('trigger-update-revise-switch');
+                } else {
+                    this.updateReviseSwitch();
+                    // this.$emit('trigger-update-revise-switch');
+                }
         }
 
 
