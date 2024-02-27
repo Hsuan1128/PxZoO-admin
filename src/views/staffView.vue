@@ -22,8 +22,8 @@
         <Table
           stripe
           :columns="columns"
-          ref="table"
           :data="data"
+          ref="table"
           class="custom-table"
         >
           <template #name="{ row }">
@@ -31,6 +31,7 @@
           </template>
           <template #status="{ row }">
             <Switch
+              v-if="auth == 1"
               size="large"
               v-model="row.sta_status"
               :true-value="1"
@@ -44,27 +45,33 @@
               </template>
               <template #close>
                 <span>停權</span>
-              </template></Switch
-            >
+              </template>
+            </Switch>
+            <div v-else></div>
           </template>
           <template #action="{ row, index }" class="actionArea">
             <Button
+              v-if="auth == 1"
               type="primary"
               class="trash"
               size="small"
               @click="staffModification(row)"
               ><img src="../assets/images/formicon/revise.svg" alt=""
             /></Button>
+            <div v-else></div>
             <Button
+              v-if="auth == 1"
               type="error"
               class="trash"
               size="small"
               @click="delSta(row, index)"
-              ><img src="../assets/images/formicon/delete.svg" alt="" /></Button
+              ><img src="../assets/images/formicon/delete.svg" alt=""
+            /></Button>
+            <div v-else></div
           ></template>
         </Table>
       </div>
-      <div class="add">
+      <div class="add" v-if="auth == 1">
         <img
           src="@/assets/images/formicon/plus.svg"
           alt="add"
@@ -72,6 +79,7 @@
           @click="openAddLsit"
         />
       </div>
+      <div v-else></div>
     </div>
     <staffRevise
       v-show="ReviseSwitch"
@@ -96,6 +104,7 @@ import staffRevise from "@/components/staffRevise.vue";
 export default {
   data() {
     return {
+      ReviseSwitch: false,
       columns: [
         {
           title: "編號",
@@ -138,25 +147,37 @@ export default {
           align: "center",
         },
       ],
+      //儲存參數的陣列
       data: [],
       rowdata: [],
+
+      //修改燈箱
       show: false,
       addList: false,
+
+      //switch參數
       switchdata: {
         sta_id: "",
         sta_status: "",
       },
+      statusData: [],
+      //管理員id辨識
+      auth: "",
     };
   },
   created() {
     axios
       .get(`${import.meta.env.VITE_API_URL}/staff.php`)
       .then((res) => {
+        console.log(res);
         this.data = res.data;
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+    this.auth = localStorage.getItem("userData")
+      ? JSON.parse(localStorage.getItem("userData")).id
+      : "";
   },
   computed: {},
   methods: {
@@ -216,7 +237,6 @@ export default {
         )
         .then((response) => {
           console.log(response.data);
-          console.log(this.switchdata);
           // 提交成功後的處理
         })
         .catch((error) => {

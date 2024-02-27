@@ -134,15 +134,19 @@
 </template>
 
 <script>
+import userStore from "../stores/auth";
+import { mapActions } from "pinia";
 export default {
   data() {
     return {
+      userStore: userStore(),
       messageIsOpen: false,
       voteIsOpen: false,
       saleOpen: false,
     };
   },
   methods: {
+    ...mapActions(userStore, ["updateName", "updateUserData"]),
     toggle(section) {
       if (section === "message") {
         this.messageIsOpen = !this.messageIsOpen;
@@ -155,6 +159,8 @@ export default {
     },
     logout() {
       this.$router.push("/");
+      this.userStore.updateToken("");
+      this.userStore.updateUserData("");
       localStorage.clear();
     },
   },
