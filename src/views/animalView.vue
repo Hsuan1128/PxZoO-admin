@@ -15,7 +15,9 @@
         </div>
       </div>
       <div class="formArea">
-        <Table stripe :columns="columns" :data="currentPageData" ref="table" class="custom-table">
+        <Table stripe :columns="columns"
+        no-data-text="查無動物資料"
+        :data="currentPageData" ref="table" class="custom-table">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
@@ -162,7 +164,8 @@ export default {
       });
   },
   watch: {
-    searchTerm(newTerm, oldTerm) {
+    searchTerm() {
+      this.currentPage = 1
       this.filterHandle()
     }
   },
@@ -190,9 +193,12 @@ export default {
     filterHandle() {
       axios.get(`${import.meta.env.VITE_API_URL}/animalsearch.php`, { params: { searchTerm: this.searchTerm } })
         .then(response => {
-          this.data = response.data;
-          this.total = this.data.length;
-          this.currentPage = 1
+          if (response.data.errMsg) {
+            this.data = [];
+          }else{
+            this.data = response.data;
+            this.total = this.data.length;
+          }
           this.updateCurrentPageData();
         })
         .catch(error => {
