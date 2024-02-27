@@ -2,11 +2,11 @@
     <div class="confirm_bg">
         <div class="confirm" id="animal">
             <div class="confirm_content">
-                <p class="pcInnerText">動物資訊有變更，是否儲存</p>
+                <p class="pcInnerText">動物資訊尚未儲存，是否繼續編輯</p>
                 <div class="confirm_btns">
                     <button class="defaultBtn pcInnerText"
                     @click="closeConfirmSwitch">
-                        取消
+                    繼續編輯
                         <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
                     </button>
                     <button class="defaultBtn pcInnerText" @click="updataConfirmSwitch">

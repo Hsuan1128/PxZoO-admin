@@ -452,7 +452,7 @@ export default {
 
                     this.editData.animalName = newVal.animal_name
                     this.editData.categoryName = newVal.category_name
-                    this.editData.locationName = newVal.location_name
+                    // this.editData.locationName = newVal.location_name
                     this.editData.animalEnterdate = newVal.animal_enterdate
                     this.editData.animalLifespan = newVal.animal_lifespan
                     this.editData.animalArea = newVal.animal_area
@@ -478,7 +478,7 @@ export default {
             if (newVal) {
                 //抓取館別名稱顯示對應的館別位置
                 this.locationShow()
-                this.editData.locationName = ""
+                this.editData.locationName = this.rowdata.location_name
             }
             }
         },
