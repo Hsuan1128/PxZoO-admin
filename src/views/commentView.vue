@@ -19,6 +19,7 @@
           stripe
           :columns="columns"
           :data="data"
+          no-data-text="查無留言資料" 
           ref="table"
           class="custom-table"
         >
