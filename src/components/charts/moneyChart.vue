@@ -6,7 +6,6 @@
 
 <script>
 import Chart from 'chart.js/auto';
-
 export default {
   props: {
     labels: Array,
