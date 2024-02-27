@@ -179,7 +179,7 @@ export default {
       currentPage: 1, // 當前頁碼
       switchdata: {
        question_id: '',
-       question_status: ''
+      //  question_status:'',
       },
     };
   },
