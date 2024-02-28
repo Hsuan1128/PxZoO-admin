@@ -115,6 +115,12 @@ const router = createRouter({
         title: "銷售統計",
       },
     },
+    // 404頁面：沒有被配置的路由都會去NotFound
+    { 
+      path: '/:pathMatch(.*)*', 
+      name: 'NotFound', 
+      component: () => import('../views/NotFoundView.vue')
+    },
   ],
 });
 //跳轉頁面時跳到頂端
