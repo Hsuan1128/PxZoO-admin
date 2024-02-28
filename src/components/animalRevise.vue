@@ -277,10 +277,10 @@ export default {
         axios.get(`${import.meta.env.VITE_API_URL}/locationShow.php`)
         .then(response => {
         this.mysqlLocation = response.data; // 假設返回的數據是一個數組
-        console.log(this.mysqlLocation)
+        // console.log(this.mysqlLocation)
         })
         .catch(error => {
-        console.error("Error fetching data: ", error);
+        // console.error("Error fetching data: ", error);
         });
     },
     methods: {
@@ -394,7 +394,7 @@ export default {
                     location.reload();
                 })
                 .catch(error => {
-                    console.error('更新錯誤:', error);
+                    // console.error('更新錯誤:', error);
                 });
             } else {
                 this.updateReviseSwitch();

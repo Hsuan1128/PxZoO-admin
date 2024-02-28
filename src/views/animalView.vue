@@ -15,29 +15,28 @@
         </div>
       </div>
       <div class="formArea">
-        <Table stripe :columns="columns"
-        no-data-text="查無動物資料"
-        :data="currentPageData" ref="table" class="custom-table">
+        <Table stripe :columns="columns" no-data-text="查無動物資料" :data="currentPageData" ref="table" class="custom-table">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
 
           <template #status="{ row }">
-            <Switch  size="large" v-model="row.animal_status" :true-value="1" :false-value="0"  true-color="#13ce66"
-            false-color="#ff9900" @on-change="switchChange($event, row)"> 
-            <!-- 
+            <Switch size="large" v-model="row.animal_status" :true-value="1" :false-value="0" true-color="#13ce66"
+              false-color="#ff9900" @on-change="switchChange($event, row)">
+              <!-- 
               將 Switch 元件的狀態綁定到 row.animal_status 上，
               true-value 屬性設置為 1，表示開啟狀態，
               false-value 屬性設置為 0，表示關閉狀態。
               true-color 和 false-color 分別設置開啟和關閉狀態的顏色。
               @on-change 監聽開關狀態變化，調用 switchChange 方法，並將事件對象和行數據作為參數傳遞給 row。
             -->
-            <template #open>
-              <span>上架</span>
-            </template>
-            <template #close>
-              <span>下架</span>
-            </template></Switch>
+              <template #open>
+                <span>上架</span>
+              </template>
+              <template #close>
+                <span>下架</span>
+              </template>
+            </Switch>
           </template>
 
           <template #action="{ row, index }">
@@ -154,13 +153,13 @@ export default {
   created() {
     axios.get(`${import.meta.env.VITE_API_URL}/animalshow.php`)
       .then(response => {
-        this.data = response.data; // 假設返回的數據是一個數組
+        this.data = response.data; 
         this.total = this.data.length;
         // console.log(this.data);
         this.updateCurrentPageData();
       })
       .catch(error => {
-        console.error("Error fetching data: ", error);
+        // console.error("Error fetching data: ", error);
       });
   },
   watch: {
@@ -179,7 +178,6 @@ export default {
       this.currentPage = page;
 
       // 重新從數據源（可能是伺服器或其他地方）獲取新頁碼的資料，以便更新顯示在頁面上。
-
       axios.get(`${import.meta.env.VITE_API_URL}/animalshow.php`)
         .then(response => {
           this.data = response.data; // 假設返回的數據是一個數組
@@ -187,7 +185,7 @@ export default {
           this.updateCurrentPageData();
         })
         .catch(error => {
-          console.error("Error fetching data: ", error);
+          // console.error("Error fetching data: ", error);
         });
     },
     filterHandle() {
@@ -195,14 +193,14 @@ export default {
         .then(response => {
           if (response.data.errMsg) {
             this.data = [];
-          }else{
+          } else {
             this.data = response.data;
             this.total = this.data.length;
           }
           this.updateCurrentPageData();
         })
         .catch(error => {
-          console.error('搜尋出錯:', error);
+          // console.error('搜尋出錯:', error);
         });
     },
 
@@ -215,6 +213,7 @@ export default {
       const endIndex = startIndex + this.pageSize;
       // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
       this.currentPageData = this.data.slice(startIndex, endIndex);
+      // console.log(currentPageData)
     },
     //switch
     switchChange(status, row) {
@@ -232,12 +231,11 @@ export default {
         },
       })
         .then(response => {
-          console.log(response.data);
-          // console.log(this.switchdata);
+          // console.log(response.data);
           // 提交成功後的處理
         })
         .catch(error => {
-          console.error('搜尋出錯:', error);
+          // console.error('搜尋出錯:', error);
         });
     },
 
@@ -245,10 +243,7 @@ export default {
     addAnimalItem() {
       this.addSwitch = true
     },
-    // updateReviseSwitch(newValue) {
-    //   this.ReviseSwitch = newValue;
-    //   this.$emit('change', this.ReviseSwitch);
-    // },
+
     //修改資料
     AnimalModification(row) {
       this.ReviseSwitch = !this.ReviseSwitch
