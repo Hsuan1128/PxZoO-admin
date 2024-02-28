@@ -212,7 +212,13 @@ export default {
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
       // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
-      this.currentPageData = this.data.slice(startIndex, endIndex);
+      // 轉換部分型別
+      this.currentPageData = this.data.slice(startIndex, endIndex).map(item => {
+        return {
+          ...item,
+          animal_status: parseInt(item.animal_status)
+        }
+      })
       // console.log(currentPageData)
     },
     //switch
