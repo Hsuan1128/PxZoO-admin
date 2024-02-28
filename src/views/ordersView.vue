@@ -22,7 +22,7 @@
 
           <template #action="{ row, index }">
             <Button type="primary" class="trash" size="small" style="margin-right: 5px" @click="openRevise(row)">
-              <img src="../assets/images/formicon/revise.svg" alt="" />
+              <img src="../assets/images/formicon/revise.svg" alt="editbtn_decoration" />
             </Button>
           </template>
         </Table>
@@ -154,8 +154,16 @@ export default {
           this.orders = [];
         }else{
           this.orders = response.data;
+          console.log('this',this.orders);
+          // console.log('typeof ',typeof this.orders[0].ord_payprice);
+          // this.orders.ord_payprice
           for(var key in this.orders){
             let order = this.orders[key];
+            
+            order.allqty=this.formatNumber(parseInt(order.allqty));
+            order.ord_tiprice=this.formatNumber(order.ord_tiprice);
+            order.ord_couprice=this.formatNumber(order.ord_couprice);
+            order.ord_payprice=this.formatNumber(order.ord_payprice);
             if(order.cou_name===null){
               order.cou_name='不使用優惠券';
             }
@@ -178,6 +186,12 @@ export default {
       })
         .then(response => {
           this.orderDetail = response.data;
+          
+          // for(var key in this.orderDetail){
+          //   let order = this.orderDetail[key];
+          //   order.allqty=this.formatNumber(order.allqty);
+          // }
+          // console.log(this.orderDetail);
         })
         .catch(error => {
           console.error("Error fetching data: ", error);
@@ -203,6 +217,9 @@ export default {
           console.error("Error fetching data:", error);
         })
     },
+    formatNumber(number){
+      return number.toLocaleString('zh-TW', { useGrouping: true });
+    },
     openRevise(row) {
       this.selectedOrder = row;
       this.showRevise = true;
@@ -223,6 +240,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
 .trash {
   border: transparent;
