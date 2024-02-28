@@ -42,7 +42,6 @@ export default {
             borderColor: "#fed001",
             backgroundColor: "#fed001",
             order: 0,
-            // type: 'line',
             pointStyle: "circle",
             fill: false, // 是否填滿底色
             pointRadius: 4, // 每個數據點的半徑為 10px
@@ -86,20 +85,6 @@ export default {
       },
     }
   },
-  computed:{
-    y(){
-      const maxValues = this.data[0].map((value, index) => Math.max(value, this.data[1][index])); // 最高值
-      const minValues = this.data[0].map((value, index) => Math.min(value, this.data[1][index])); // 最低值
-      this.yMax= Math.ceil(maxValues); // 最高值無條件進位的值
-      this.yMin = Math.floor(minValues); // 最低值無條件捨去的值
-    },
-    y2(){
-      const maxValue = Math.max(...this.data[2]); // 最高值
-      const minValue = Math.min(...this.data[2]); // 最低值
-      this.y2Max= Math.ceil(maxValue); // 最高值無條件進位的值
-      this.y2Min = Math.floor(minValue); // 最低值無條件捨去的值
-    },
-  },
   mounted() {
     // 獲取 canvas 元素的引用
     let chartRef = this.$refs.myChart;
@@ -107,14 +92,13 @@ export default {
       let ctx = chartRef.getContext('2d');
       if (ctx) {
         this.chartInstance = new Chart(ctx, {type: 'line', data: this.chartData, options: this.options});
-        console.log('getContext 成功');
+        // console.log('getContext 成功');
       } else {
-        console.error('getContext 失敗');
+        // console.error('getContext 失敗');
       }
     } else {
-      console.error('$refs.myChart 不存在');
+      // console.error('$refs.myChart 不存在');
     }
   },
-  created(){},
 }
 </script>

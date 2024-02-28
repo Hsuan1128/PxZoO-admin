@@ -89,7 +89,12 @@
         vertical-align: middle;
         width: max-content;
     }
-    caption{ margin-bottom: 15px;}
+    caption{ 
+        margin-bottom: 15px;
+        span{
+            @include pcInnerText;
+        }
+    }
     tr{
         height: 40px;
         padding: 8px;

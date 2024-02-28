@@ -113,12 +113,12 @@ export default {
       let ctx = chartRef.getContext('2d');
       if (ctx) {
         this.chartInstance = new Chart(ctx, {type: 'bar', data: this.chartData, options: this.options});
-        console.log('getContext 成功');
+        // console.log('getContext 成功');
       } else {
-        console.error('getContext 失敗');
+        // console.error('getContext 失敗');
       }
     } else {
-      console.error('$refs.myChart 不存在');
+      // console.error('$refs.myChart 不存在');
     }
   },
 };
