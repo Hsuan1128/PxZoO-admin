@@ -1,34 +1,19 @@
 //變數
 @use "sass:math";
 @import "base/reset";
-@import "base/var";
 @import "base/color";
 @import "base/font";
-
-//函式
-@import "mixin/mixin";
 
 //組件
 @import "components/btn";
 @import "components/sidebar";
 
-//layout
+//函式
+@import "mixin/mixin";
 
 //page
-@import "page/backLogin";
 @import "page/home";
 @import "page/staff";
-@import "page/member";
-// @import "page/comment";
-// @import "page/report";
-// @import "page/news";
 @import "page/animal";
-// @import "page/voteActivity";
-// @import "page/votes";
-// @import "page/questions";
-@import "page/tickets"; //有css樣式在裡面
-// @import "page/orders";
+@import "page/tickets";
 @import "page/charts";
-
-//套件
-@import "plugin/bootstrap";
