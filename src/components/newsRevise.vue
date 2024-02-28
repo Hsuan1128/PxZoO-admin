@@ -139,7 +139,6 @@ export default {
             news_text_4:  this.rowdata.news_text_4,
             ConfirmSwitch: false,
             confirmData: new FormData(),
-            uploadImagePlaceholder: '請上傳圖片',
             typefileName: '',
             fileName: '',
             };

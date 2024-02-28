@@ -231,15 +231,18 @@ switchChange(status, row) {
   },
   filterHandle(){
       axios.get(`${import.meta.env.VITE_API_URL}/questionSearch.php?`, { params: { searchTerm: this.searchTerm } })
-        .then(response => {
+      .then(response => {
+        if (response.data.errMsg){
+          this.data = [];
+        }else{
           this.data = response.data;
           this.total = this.data.length;
-          this.currentPage = 1
-          this.updatedata();
-        })
-        .catch(error => {
-          console.error('搜尋出錯:', error);
-        });
+        }
+        this.updatedata();
+      })
+      .catch(error => {
+        console.error('搜尋出錯:', error);
+      });
   },
   updatedata() {
      // 這個函數用來更新當前頁面所顯示的資料
@@ -249,7 +252,12 @@ switchChange(status, row) {
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
         // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
-      this.data = this.data.slice(startIndex, endIndex);
+        this.data = this.data.slice(startIndex, endIndex).map(item => {
+        return {
+          ...item,
+          animal_status: parseInt(item.animal_status)
+        }
+      })
     },
     updateaddSwitch(newValue) {
       this.addSwitch = newValue;
@@ -297,8 +305,9 @@ switchChange(status, row) {
     });
 },
   watch:{
-    searchTerm(newTerm, oldTerm){
+    searchTerm(){
       this.filterHandle()
+      this.currentPage = 1
     }
   },
   
