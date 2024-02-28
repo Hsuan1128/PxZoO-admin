@@ -8,21 +8,25 @@
     <div class="staffForm">
       <div class="titleSearch">
         <h2 class="pcSmTitle">後台管理</h2>
-        <!-- <div class="searchArea">
+        <div class="searchArea">
           <button class="search pcInnerText">查詢</button>
           <div class="inputArea">
-            <input type="text" placeholder="請輸入後台人員資訊" />
+            <input
+              type="text"
+              placeholder="請輸入後台人員資訊"
+              v-model.trim="searchTerm"
+            />
             <button class="scope">
               <img src="../assets/images/formicon/scope.svg" alt="scope" />
             </button>
           </div>
-        </div> -->
+        </div>
       </div>
       <div class="formArea">
         <Table
           stripe
           :columns="columns"
-          :data="data"
+          :data="currentPageData"
           ref="table"
           class="custom-table"
         >
@@ -70,6 +74,17 @@
             <div v-else></div
           ></template>
         </Table>
+      </div>
+      <div class="pages">
+        <Page
+          class="pcInnerText"
+          prev-text="|<"
+          next-text=">|"
+          :current="currentPage"
+          :total="total"
+          size="small"
+          @on-change="handleChangePage"
+        />
       </div>
       <div class="add" v-if="auth == 1">
         <img
@@ -150,6 +165,14 @@ export default {
       //儲存參數的陣列
       data: [],
       rowdata: [],
+      //查詢
+      searchTerm: "",
+
+      currentPageData: [],
+      //分頁
+      total: 0, // 總條數
+      pageSize: 10, // 每頁顯示條數
+      currentPage: 1, // 當前頁碼
 
       //修改燈箱
       show: false,
@@ -169,8 +192,8 @@ export default {
     axios
       .get(`${import.meta.env.VITE_API_URL}/staff.php`)
       .then((res) => {
-        console.log(res);
         this.data = res.data;
+        this.updateCurrentPageData();
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -216,6 +239,60 @@ export default {
           });
       }
     },
+    //分頁
+    handleChangePage(page) {
+      // 當使用者改變當前頁面時，這個函數被呼叫。
+      // page 參數代表使用者所選擇的新頁碼。
+      this.currentPage = page;
+
+      // 重新從數據源（可能是伺服器或其他地方）獲取新頁碼的資料，以便更新顯示在頁面上。
+
+      axios
+        .get(`${import.meta.env.VITE_API_URL}/staff.php?type=staff`)
+        .then((response) => {
+          this.data = response.data; // 假設返回的數據是一個數組
+          this.total = this.data.length;
+          this.updatecurrentPageData();
+        })
+        .catch((error) => {
+          console.error("Error fetching data: ", error);
+        });
+    },
+    filterHandle() {
+      axios
+        .get(`${import.meta.env.VITE_API_URL}/staffSearch.php?type=member`, {
+          params: { searchTerm: this.searchTerm },
+        })
+        .then((response) => {
+          if (response.data.errMsg) {
+            this.data = [];
+          } else {
+            this.data = response.data;
+            this.total = this.data.length;
+          }
+          this.updateCurrentPageData();
+        })
+        .catch((error) => {
+          console.error("搜尋出錯:", error);
+        });
+    },
+    updateCurrentPageData() {
+      // 這個函數用來更新當前頁面所顯示的資料
+
+      // 計算起始索引 (startIndex) 和結束索引
+      // 這些索引表示當前頁面在整個資料陣列中的範圍。
+      const startIndex = (this.currentPage - 1) * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+      // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
+      this.currentPageData = this.data
+        .slice(startIndex, endIndex)
+        .map((item) => {
+          return {
+            ...item,
+            sta_status: parseInt(item.sta_status),
+          };
+        });
+    },
     switchChange(status, row) {
       console.log(status);
       this.updateStatusData(row);
@@ -242,6 +319,12 @@ export default {
         .catch((error) => {
           console.error("搜尋出錯:", error);
         });
+    },
+  },
+  watch: {
+    searchTerm() {
+      this.currentPage = 1;
+      this.filterHandle();
     },
   },
   components: {
