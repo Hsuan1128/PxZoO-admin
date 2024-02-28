@@ -4,16 +4,20 @@
 @import "base/color";
 @import "base/font";
 
+//函式
+@import "mixin/mixin";
+
 //組件
 @import "components/btn";
 @import "components/sidebar";
 
-//函式
-@import "mixin/mixin";
+//layout
 
 //page
+@import "page/backLogin";
 @import "page/home";
 @import "page/staff";
 @import "page/animal";
-@import "page/tickets";
+@import "page/tickets"; //有css樣式在裡面
 @import "page/charts";
+
