@@ -129,8 +129,8 @@ export default {
     },
     updateStatusData(row) {
       this.switchdata = {
-        // mem_id: row.mem_id,
-        // mem_status: row.mem_status,
+        mem_id: row.mem_id,
+        mem_status: row.mem_status,
       };
       axios
         .post(
