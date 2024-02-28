@@ -1,20 +1,20 @@
 <template>
   <sidebar />
   <section class="staffArea">
-    <div class="staffForm">
+    <div class="staffForm orders">
       <div class="titleSearch">
         <h2 class="pcSmTitle">銷售管理 | 購票訂單</h2>
         <div class="searchArea">
           <button class="search pcInnerText">查詢</button>
           <div class="inputArea">
-            <input type="text" placeholder="請輸入姓名 / 訂單編號" v-model.trim="searchTerm" />
+            <input type="text" placeholder="姓名 / 訂單編號 / 票券日期" v-model.trim="searchTerm" />
             <button class="scope">
               <img src="../assets/images/formicon/scope.svg" alt="scope" />
             </button>
           </div>
         </div>
       </div>
-      <div class="formArea orders">
+      <div class="formArea">
         <Table stripe :columns="columns" :data="currentPageData" ref="table" no-data-text="查無訂單資料" :default-sort="defaultSort" class="custom-table" :border="false">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
@@ -49,7 +49,7 @@ import ordersRevise from "@/components/orders/ordersRevise.vue"
 export default {
   mixins: [getStaId],
   components: {
-    sidebar, grass, ordersRevise, 
+    sidebar, grass, ordersRevise
   },
   data() {
     return {
@@ -57,7 +57,7 @@ export default {
         {
           type: 'index',
           title: "No",
-          // width: 65,
+          width: 65,
         },
         {
           title: "訂單編號",
@@ -120,7 +120,7 @@ export default {
         order: 'asc', // 設置排序方式，'asc' 為升序，'desc' 為降序
       },
       searchTerm: '', //搜尋
-      orders: [], //所有數據
+      orders: [] || '', //所有數據
       currentPageData: [], // 當前頁顯示的數據
       orderDetail: [],
       total: 0, // 總條數
@@ -150,15 +150,21 @@ export default {
           }
         });
         
-        this.orders = response.data;
-        for(var key in this.orders){
-          let order = this.orders[key];
-          if(order.cou_name===null){
-            order.cou_name='不使用優惠券';
+        if (response.data.errMsg) {
+          this.orders = [];
+        }else{
+          this.orders = response.data;
+          for(var key in this.orders){
+            let order = this.orders[key];
+            if(order.cou_name===null){
+              order.cou_name='不使用優惠券';
+            }
           }
         }
+
         this.total = this.orders.length;
         this.updateCurrentPageData();
+
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -177,7 +183,7 @@ export default {
           console.error("Error fetching data: ", error);
         })
     },
-    fetchOrderUpdate(staff, status, bool) {
+    fetchOrderUpdate(status, bool) {
       // 修改訂單明細
       axios.post(`${import.meta.env.VITE_API_URL}/orderUpdate.php`, {
         sta_id: this.sta_id,
@@ -208,6 +214,7 @@ export default {
   },
   watch: {
     searchTerm() {
+      this.currentPage = 1;
       this.fetchOrders();
     }
   },

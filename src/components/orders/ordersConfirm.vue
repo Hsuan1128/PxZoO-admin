@@ -2,14 +2,14 @@
   <div class="confirm_bg">
     <div class="confirm">
       <div class="confirm_content">
-        <p class="pcInnerText">訂單資訊有變更，是否儲存</p>
+        <p class="pcInnerText">訂單資訊有變更，是否繼續編輯</p>
         <div class="confirm_btns">
-          <button class="defaultBtn pcInnerText" @click="confirmSave">
-            儲存
+          <button class="defaultBtn pcInnerText" @click="keepEdit">
+            編輯
             <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
           </button>
           <button class="defaultBtn pcInnerText" @click="resetAlterStatus">
-            取消
+            返回列表
             <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
           </button>
         </div>
@@ -28,8 +28,8 @@ export default {
     return {};
   },
   methods: {
-    confirmSave() {
-      this.$emit('confirmSave');
+    keepEdit() {
+      this.$emit('keepEdit');
     },
     resetAlterStatus() {
       this.$emit('newAlterStatus');

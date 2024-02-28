@@ -61,7 +61,7 @@
       </div>
     </div>
 
-    <ordersConfirm v-show="openConfirm" @confirmSave="orderSave" @newAlterStatus="updateAlterStatus" />
+    <ordersConfirm v-show="openConfirm" @keepEdit="closeConfirm" @newAlterStatus="updateAlterStatus" />
 
   </div>
 </template>
@@ -109,6 +109,9 @@ export default {
       this.alterStatus = false;
       this.$emit('closeRevise', false);
     },
+    closeConfirm() {
+      this.openConfirm = false;
+    }
   },
   computed: {
     formattedOrderDetailQty() {
