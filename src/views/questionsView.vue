@@ -255,7 +255,7 @@ switchChange(status, row) {
         this.data = this.data.slice(startIndex, endIndex).map(item => {
         return {
           ...item,
-          animal_status: parseInt(item.animal_status)
+          question_status: parseInt(item.question_status)
         }
       })
     },

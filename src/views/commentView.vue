@@ -99,7 +99,7 @@ export default {
         {
           title: "留言內容",
           key: "com_text",
-          
+          width: 400,
           align: "left",
         },
         {
@@ -196,7 +196,7 @@ export default {
       this.data = this.data.slice(startIndex, endIndex).map(item => {
         return {
           ...item,
-          animal_status: parseInt(item.animal_status)
+          com_status: parseInt(item.com_status)
         }
       })
     },

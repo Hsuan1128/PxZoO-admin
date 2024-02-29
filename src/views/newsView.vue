@@ -253,7 +253,7 @@ export default {
       this.data = this.data.slice(startIndex, endIndex).map(item => {
         return {
           ...item,
-          animal_status: parseInt(item.animal_status)
+          news_status: parseInt(item.news_status)
         }
       })
     },
