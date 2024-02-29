@@ -61,7 +61,7 @@
         <RouterLink to="/animal">動物管理</RouterLink>
       </li>
 
-      <li @click="toggle('vote')">
+      <!-- <li @click="toggle('vote')">
         <img
           src="../assets/images/sidebar/star.svg"
           alt="star"
@@ -77,7 +77,7 @@
             <RouterLink to="/votes">投票紀錄</RouterLink>
           </li>
         </ul>
-      </li>
+      </li> -->
 
       <li>
         <img
