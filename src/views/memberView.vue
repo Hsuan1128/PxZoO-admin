@@ -23,6 +23,7 @@
           stripe
           :columns="columns"
           ref="table"
+          no-data-text="查無會員資料"
           :data="currentPageData"
           class="custom-table"
         >
@@ -146,7 +147,7 @@ export default {
       .get(`${import.meta.env.VITE_API_URL}/member.php`)
       .then((res) => {
         this.data = res.data;
-
+        this.total = this.data.length;
         this.updateCurrentPageData();
       })
       .catch((error) => {
@@ -163,11 +164,11 @@ export default {
       // 重新從數據源（可能是伺服器或其他地方）獲取新頁碼的資料，以便更新顯示在頁面上。
 
       axios
-        .get(`${import.meta.env.VITE_API_URL}/member.php?type=member`)
+        .get(`${import.meta.env.VITE_API_URL}/member.php`)
         .then((response) => {
           this.data = response.data; // 假設返回的數據是一個數組
           this.total = this.data.length;
-          this.updatecurrentPageData();
+          this.updateCurrentPageData();
         })
         .catch((error) => {
           console.error("Error fetching data: ", error);
@@ -175,7 +176,7 @@ export default {
     },
     filterHandle() {
       axios
-        .get(`${import.meta.env.VITE_API_URL}/memberSearch.php?type=member`, {
+        .get(`${import.meta.env.VITE_API_URL}/memberSearch.php`, {
           params: { searchTerm: this.searchTerm },
         })
         .then((response) => {

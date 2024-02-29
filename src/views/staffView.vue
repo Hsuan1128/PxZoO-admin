@@ -35,7 +35,7 @@
             <strong> {{ row.name }}</strong>
           </template>
           <template #status="{ row, index }">
-            <template v-if="auth === 1">
+            <template v-if="auth == 1">
               <Switch
                 v-if="index !== 0"
                 size="large"
