@@ -128,7 +128,6 @@ export default {
           data: bodyFormData,
         })
           .then((res) => {
-            console.log(res);
             if (res && res.data) {
               if (res.data.code == 1 && res.data.staInfo.sta_status == 1) {
                 this.updateToken(res.data.session_id);
@@ -139,13 +138,11 @@ export default {
                 });
               } else if (res.data.staInfo.sta_status == 0) {
                 alert("已停權");
-              } else {
-                alert("登入失敗");
               }
             }
           })
           .catch((error) => {
-            console.log(error);
+            alert("帳號密碼錯誤");
           });
       }
     },
