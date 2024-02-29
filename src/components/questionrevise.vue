@@ -5,12 +5,12 @@
             <div class="Revise_content">
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">題目內容</label>
-                    <input type="text" v-model="rowdata.question_text" :placeholder="question_text">
+                    <input  class="revise_text" type="text" v-model="rowdata.question_text" :placeholder="question_text">
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">選項A</label>
-                    <input type="text" v-model="rowdata.question_option_a" :placeholder="question_option_a">
+                    <input class="revise_text" type="text" v-model="rowdata.question_option_a"   :placeholder="question_option_a">
                 </div>
                 <!-- <div class="Revise_content_align">
                 <label for="" class="pcInnerText">圖片A</label>
@@ -18,7 +18,7 @@
             </div> -->
 
                 <div class="Revise_content_align revise_img">
-                    <label for="" class="pcInnerText">圖片A</label>
+                    <label  class="pcInnerText">圖片A</label>
                     <label class="pcInnerText revise_imgtext ">
                         <span v-if="file_a">{{ file_a }}</span>
                         <span v-else>{{ rowdata.question_img_a }}</span>
@@ -29,14 +29,14 @@
                             </p>
                             <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon" />
                         </div>
-                        <input type="file" id="question_img_a" name="news_pic" accept="image/png, image/jpeg"
+                        <input  type="file" id="question_img_a" name="news_pic" accept="image/png, image/jpeg"
                             @change="handleFileChange('question_img_a', $event, 'question_img_a')">
                     </label>
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">選項B</label>
-                    <input type="
+                    <input class="revise_text" type="
                 text" v-model="rowdata.question_option_b" :placeholder="question_option_b">
                 </div>
 
@@ -45,7 +45,7 @@
                 <input type="file" id="question_img_b" :placeholder="rowdata.question_img_b" @change="handleFileChange('question_img_b', $event)">
             </div> -->
                   <div class="Revise_content_align revise_img">
-                    <label for="" class="pcInnerText">圖片B</label>
+                    <label class="pcInnerText">圖片B</label>
                     <label class="pcInnerText revise_imgtext ">
                         <span v-if="file_b">{{ file_b }}</span>
                         <span v-else>{{ rowdata.question_img_b }}</span>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">選項C</label>
-                    <input type="text" v-model="rowdata.question_option_c" :placeholder="question_option_c">
+                    <input class="revise_text" type="text" v-model="rowdata.question_option_c" :placeholder="question_option_c">
                 </div>
                 <div class="Revise_content_align revise_img">
                     <label for="" class="pcInnerText">圖片C</label>
@@ -83,7 +83,7 @@
 
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">選項D</label>
-                    <input type="text" v-model="rowdata.question_option_d" :placeholder="question_option_d">
+                    <input class="revise_text" type="text" v-model="rowdata.question_option_d" :placeholder="question_option_d">
                 </div>
                 <div class="Revise_content_align revise_img">
                     <label for="" class="pcInnerText">圖片A</label>
@@ -104,7 +104,7 @@
 
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">正確答案</label>
-                    <input type="text" v-model="rowdata.question_correctanswer" :placeholder="question_correctanswer">
+                    <input class="revise_text" type="text" v-model="rowdata.question_correctanswer" :placeholder="question_correctanswer">
                 </div>
 
 
@@ -180,7 +180,10 @@ export default {
             question_answer_illustrate:this.rowdata.question_answer_illustrate,
             confirmData: new FormData(),
             uploadImagePlaceholder: '請上傳圖片',
-
+            file_a:'',
+            file_b:'',
+            file_c:'',
+            file_d:'',
         };
     },
     methods: {
@@ -363,12 +366,6 @@ export default {
                     display: none;
                 }
 
-                p {
-                    width: 85%;
-                    height: 2vw;
-                    padding-inline: 8px;
-                    border: none;
-                }
 
                 .revise_text {
                     padding: 0.5vw 0.5vw;

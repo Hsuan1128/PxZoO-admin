@@ -192,7 +192,7 @@
 <script>
 import axios from 'axios'; // 引入 axios
 import animalConfirm from "@/components/animalConfirm.vue"
-import { DatePicker } from "view-ui-plus";
+import { DatePicker, TreeChildConfig } from "view-ui-plus";
 export default {
   props: {
     addSwitch: false,
@@ -314,30 +314,52 @@ export default {
     // },
     // 提交表单数
     saveAnimaldata() {
-      // 使用 FormData 來處理文件上傳
-      let formData = new FormData();
-      for (let key in this.formData) {
-        formData.append(key, this.formData[key]);
+      if(this.formData.animal_species !== ''
+      && this.formData.animal_name !== ''
+      && this.formData.category_name !== '' 
+      && this.formData.location_name !== ''
+      && this.formData.animal_enterdate !== '' 
+      && this.formData.animal_lifespan !== ''
+      && this.formData.animal_area !== ''
+      && this.formData.animal_area !== ''
+      && this.formData.animal_food !== ''
+      && this.formData.animal_description !== ''
+      && this.formData.animal_features !== ''
+      && this.formData.animal_pic_a !== ''
+      && this.formData.animal_icon !== ''
+      && this.formData.animal_sound !== ''
+      && this.formData.animal_small_pic !== ''
+      ){
+        console.log(this.formData.animal_species)
+        // 使用 FormData 來處理文件上傳
+        let formData = new FormData();
+        for (let key in this.formData) {
+          formData.append(key, this.formData[key]);
 
-      }
-      // console.log(this.formData)
-      axios.post(`${import.meta.env.VITE_API_URL}/animaladd.php`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data', // 指定文件上傳格式
-        },
-      })
-        .then(response => {
-          // console.log(response.data);
-          // console.log(this.formData)
-          // 提交成功後的處理
-          this.updateaddSwitch();
-          // 觸發關閉表單的方法
-          location.reload();
+        }
+        console.log(this.formData)
+        axios.post(`${import.meta.env.VITE_API_URL}/animaladd.php`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data', // 指定文件上傳格式
+          },
         })
-        .catch(error => {
-          // console.error('Error:', error);
-          // 提交失敗時的處理
-        });
+          .then(response => {
+            // console.log(response.data);
+            // console.log(this.formData)
+            // 提交成功後的處理
+            this.updateaddSwitch();
+            // 觸發關閉表單的方法
+            location.reload();
+          })
+          .catch(error => {
+            // console.error('Error:', error);
+            // 提交失敗時的處理
+          });
+      }else{
+        console.log('no')
+        alert("請填寫所有欄位");
+      }
+      
     }
   },
   components: {

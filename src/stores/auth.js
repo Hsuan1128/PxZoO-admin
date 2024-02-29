@@ -2,18 +2,15 @@
 
 import { defineStore } from "pinia";
 
-// 创建名为 "userStore" 的存储库
 const userStore = defineStore({
   id: "userStore",
   state: () => ({
-    token: localStorage.getItem("token") || "", // 用户令牌
+    token: localStorage.getItem("token") || "",
   }),
   getters: {
-    // 计算属性，返回欢迎消息
     getUserName: (state) => `歡迎 ${state.name}`,
   },
   actions: {
-    // 检查用户登录状态
     checkLogin() {
       const storageToken = localStorage.getItem("token");
       if (this.token) {
@@ -24,7 +21,7 @@ const userStore = defineStore({
         return "";
       }
     },
-    // 更新用户令牌
+
     updateToken(payload) {
       if (payload) {
         this.token = payload;
@@ -34,23 +31,22 @@ const userStore = defineStore({
         localStorage.removeItem("token");
       }
     },
-    // 更新用户姓名
+
     updateName(payload) {
       this.name = payload;
     },
-    // 更新用户数据
+
     updateUserData(val) {
-      console.log(val);
       this.userData = {
         pos: val.sta_pos,
         id: val.sta_id,
         validation: val.mem_validation,
         state: val.mem_state,
-        role: "editor", // 如果有权限可以把权限角色记载数据库
+        role: "editor",
       };
       localStorage.setItem("userData", JSON.stringify(this.userData));
     },
-    // 检查用户数据
+
     checkUserData() {
       const storageUserData = localStorage.getItem("userData");
       if (Object.keys(this.userData).length > 0) {

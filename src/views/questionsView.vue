@@ -170,7 +170,7 @@ export default {
         },
       ],
 
-      
+   
       searchTerm:'',//搜尋
       data: [],
       rowdata: [],
@@ -184,6 +184,7 @@ export default {
     };
   },
   methods: {
+    
 //switch
 switchChange(status, row) {
    
@@ -289,7 +290,6 @@ switchChange(status, row) {
         });
     },
   },
-  
   created() {
  // 初始化數據
  axios.get(`${import.meta.env.VITE_API_URL}/questionShow.php`)
