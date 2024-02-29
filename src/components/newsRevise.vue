@@ -18,11 +18,11 @@
                     </select>
                 </div>
 
-                <div class="Revise_content_align">
+                <!-- <div class="Revise_content_align">
                     <label class="pcInnerText">
                         分類圖片  
                     </label>
-                    <label class="pcInnerText revise_imgtext ">
+                    <label class="pcInnerText revise_imgtext">
                     <span v-if="typefileName">{{ typefileName }}</span>
                     <span v-else>{{rowdata.news_typepic}}</span>   
                     <div class="iconBtn pcInnerText">
@@ -34,7 +34,7 @@
                     </div>
                     <input type="file" id="typepic" name="typepic" accept="image/png, image/jpeg" @change="handleFileChange('news_typepic', $event, 'news_typepic')"/>
                     </label>
-                </div>
+                </div> -->
 
                 <div class="Revise_content_align">
                     <label for="" class="pcInnerText">消息日期</label>
@@ -117,29 +117,29 @@ export default {
     },
     data() {
         return {
-            // news_title: '',
-            // news_type: '',
-            // news_typepic:  '',
-            // news_date:  '',
-            // news_pic:  '',
-            // news_text_1:  '',
-            // news_text_2:  '',
-            // news_text_3:  '',
-            // news_text_4:  '',
+            news_title: '',
+            news_type: '',
+            news_typepic:  '',
+            news_date:  '',
+            news_pic:  '',
+            news_text_1:  '',
+            news_text_2:  '',
+            news_text_3:  '',
+            news_text_4:  '',
 
             hasChanges: false,
-            news_title: this.rowdata.news_title,
-            news_type: this.rowdata.news_type,
-            news_typepic:  this.rowdata.news_typepic,
-            news_date:  this.rowdata.news_date,
-            news_pic:  this.rowdata.news_pic,
-            news_text_1:  this.rowdata.news_text_1,
-            news_text_2:  this.rowdata.news_text_2,
-            news_text_3:  this.rowdata.news_text_3,
-            news_text_4:  this.rowdata.news_text_4,
+            // news_title: this.rowdata.news_title,
+            // news_type: this.rowdata.news_type,
+            // news_typepic:  this.rowdata.news_typepic,
+            // news_date:  this.rowdata.news_date,
+            // news_pic:  this.rowdata.news_pic,
+            // news_text_1:  this.rowdata.news_text_1,
+            // news_text_2:  this.rowdata.news_text_2,
+            // news_text_3:  this.rowdata.news_text_3,
+            // news_text_4:  this.rowdata.news_text_4,
             ConfirmSwitch: false,
             confirmData: new FormData(),
-            typefileName: '',
+            // typefileName: '',
             fileName: '',
             };
             
@@ -170,15 +170,17 @@ export default {
             console.log(file)
             // // 當選擇文件時，將文件對象存儲到 formData 中的指定字段
             // this.formData[field] = event.target.files[0];
-            
+            this.fileName = this.rowdata[field].name;
+            console.log(this.fileName);
+
             // 根據文件類型更新相應的文件名
-            if (fileType === 'news_typepic') {
-                this.typefileName = this.rowdata[field].name;
-                console.log(this.typefileName);
-            } else if (fileType === 'news_pic') {
-                this.fileName = this.rowdata[field].name;
-                console.log(this.fileName);
-            }
+            // if (fileType === 'news_typepic') {
+            //     this.typefileName = this.rowdata[field].name;
+            //     console.log(this.typefileName);
+            // } else if (fileType === 'news_pic') {
+            //     this.fileName = this.rowdata[field].name;
+            //     console.log(this.fileName);
+            // }
         },
 
         prepareConfirmData() {
@@ -187,12 +189,26 @@ export default {
                 console.log(key, this.rowdata)
                 formData.append(key, this.rowdata[key]);
             }
+
+            if (this.rowdata.news_type.toLowerCase() === '最新活動') {
+                console.log('orangeFrame');
+                formData.append('news_typepic', 'orangeFrame.svg');
+            } else if (this.rowdata.news_type.toLowerCase() === '園區動態') {
+                console.log('greenFrame');
+                formData.append('news_typepic', 'greenFrame.svg');
+            } else if (this.rowdata.news_type.toLowerCase() === '動物知識') {
+                console.log('blueFrame');
+                formData.append('news_typepic', 'blueFrame.svg');
+            }
+
             //把資料傳送到newsConfirm的組件
             this.confirmData = formData
             console.log(this.confirmData)
         },
 
         transferData() {
+            
+            
             if (this.rowdata.news_title !== this.news_title ||
                 this.rowdata.news_type !== this.news_type ||
                 this.rowdata.news_typepic !== this.news_typepic ||
@@ -202,6 +218,7 @@ export default {
                 this.rowdata.news_text_2 !== this.news_text_2 ||
                 this.rowdata.news_text_3 !== this.news_text_3 ||
                 this.rowdata.news_text_4 !== this.news_text_4) {
+
                     this.prepareConfirmData();
                     axios.post(`${import.meta.env.VITE_API_URL}/newsRevises.php`, this.confirmData, {
                         headers: {

@@ -215,6 +215,9 @@ export default {
     axios.get(`${import.meta.env.VITE_API_URL}/reportShow.php`)
       .then(response => {
         this.data = response.data; // 假設返回的數據是一個數組
+        this.total = this.data.length;
+        console.log(this.data);
+        this.updatedata();
       })
       .catch(error => {
         console.error("Error fetching data: ", error);

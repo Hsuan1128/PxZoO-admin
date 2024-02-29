@@ -186,7 +186,7 @@ export default {
     remove(index) {
       const rowData = this.data[index]; // 獲取要刪除的資料列
       const news_id = rowData.news_id; // 假設資料中有一個名為 news_id 的欄位作為唯一標識
-      const confirmed = window.confirm("確定要刪除此商品嗎?");
+      const confirmed = window.confirm("確定要刪除此資料嗎?");
       if (!confirmed) {
         return; //不執行刪除
       }

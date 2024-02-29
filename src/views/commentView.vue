@@ -151,7 +151,7 @@ export default {
     
     //查詢
     filterHandle(){
-      axios.get(`${import.meta.env.VITE_API_URL}/commentSearch.php?type=comment`, { params: { searchTerm: this.searchTerm } })
+      axios.get(`${import.meta.env.VITE_API_URL}/commentSearch.php`, { params: { searchTerm: this.searchTerm } })
       .then(response => {
         if (response.data.errMsg){
           this.data = [];
@@ -174,7 +174,7 @@ export default {
 
       // 重新從數據源（可能是伺服器或其他地方）獲取新頁碼的資料，以便更新顯示在頁面上。
 
-      axios.get(`${import.meta.env.VITE_API_URL}/commentShow.php?type=comment`)
+      axios.get(`${import.meta.env.VITE_API_URL}/commentShow.php`)
       .then(response => {
         this.data = response.data; // 假設返回的數據是一個數組
         this.total = this.data.length;
@@ -241,7 +241,15 @@ export default {
     // axios.get(`${import.meta.env.VITE_API_URL}/ticketsShow.php`)
     axios.get(`${import.meta.env.VITE_API_URL}/commentShow.php`)
     .then(response => {
-      this.data = response.data; // 假設返回的數據是一個數組
+      this.data = response.data.map(item=>{
+          return {
+            ...item,
+            com_status: parseInt(item.com_status)
+          }
+        }); // 假設返回的數據是一個數組
+      this.total = this.data.length;
+      console.log(this.data);
+      this.updatedata();
     })
     .catch(error => {
       console.error("Error fetching data: ", error);
