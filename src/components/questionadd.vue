@@ -19,7 +19,7 @@
               <label class="pcInnerText">圖片A</label>
 
               <label class="pcInnerText questionadd_imgtext ">
-              <span v-if="fileName">{{ fileName }}</span>
+              <span v-if="fileName_a">{{ fileName_a }}</span>
               <span v-else>請選擇檔案</span>   
               <div class="iconBtn pcInnerText">
                 <p class="iconText">
@@ -28,7 +28,7 @@
                 </p>
                 <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
               </div>
-              <input type="file" id="question_pic" name="question_pic"  placeholder="請上傳圖片" @change="handleFileChange('question_img_a', $event)">
+              <input type="file" id="question_pic" name="question_pic"  placeholder="請上傳圖片" @change="handleFileChange('question_img_a', $event,'question_img_a')">
               </label>
           </div>
 
@@ -46,7 +46,7 @@
               <label class="pcInnerText">圖片B</label>
 
               <label class="pcInnerText questionadd_imgtext ">
-              <span v-if="fileName">{{ fileName }}</span>
+              <span v-if="fileName_b">{{ fileName_b }}</span>
               <span v-else>請選擇檔案</span>   
               <div class="iconBtn pcInnerText">
                 <p class="iconText">
@@ -55,7 +55,7 @@
                 </p>
                 <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
               </div>
-              <input type="file" id="question_pic" name="question_pic"  placeholder="請上傳圖片" @change="handleFileChange('question_img_b', $event)">
+              <input type="file" id="question_pic" name="question_pic"  placeholder="請上傳圖片" @change="handleFileChange('question_img_b', $event,'question_img_b')">
               </label>
           </div>
 
@@ -72,7 +72,7 @@
               <label class="pcInnerText">圖片C</label>
 
               <label class="pcInnerText questionadd_imgtext ">
-              <span v-if="fileName">{{ fileName }}</span>
+              <span v-if="fileName_c">{{ fileName_c }}</span>
               <span v-else>請選擇檔案</span>   
               <div class="iconBtn pcInnerText">
                 <p class="iconText">
@@ -81,7 +81,7 @@
                 </p>
                 <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
               </div>
-              <input type="file" id="question_pic" name="question_pic"  placeholder="請上傳圖片" @change="handleFileChange('question_img_c', $event)">
+              <input type="file" id="question_pic" name="question_pic"  placeholder="請上傳圖片" @change="handleFileChange('question_img_c', $event,'question_img_c')">
               </label>
           </div>
 
@@ -97,7 +97,7 @@
               <label class="pcInnerText">圖片D</label>
 
               <label class="pcInnerText questionadd_imgtext ">
-              <span v-if="fileName">{{ fileName }}</span>
+              <span v-if="fileName_d">{{ fileName_d }}</span>
               <span v-else>請選擇檔案</span>   
               <div class="iconBtn pcInnerText">
                 <p class="iconText">
@@ -106,7 +106,7 @@
                 </p>
                 <img src="@/assets/images/login/icon/btnArrow.svg" alt="" class="arrowIcon"/>
               </div>
-              <input  class="questionadd_text"  type="file" id="question_pic" name="question_pic"  placeholder="請上傳圖片" @change="handleFileChange('question_img_d', $event)">
+              <input  class="questionadd_text"  type="file" id="question_pic" name="question_pic"  placeholder="請上傳圖片" @change="handleFileChange('question_img_d', $event,'question_img_d')">
               </label>
           </div>
 
@@ -148,27 +148,46 @@ export default {
     formData: {
         question_text: '',
         question_option_a: '',
-        question_img_a: null,
+        question_img_a: '',
         question_option_b: '',
-        question_img_b: null,
+        question_img_b: '',
         question_option_c: '',
-        question_img_c: null,
+        question_img_c: '',
         question_option_d: '',
-        question_img_d: null,
+        question_img_d: '',
         question_correctanswer: '',
         question_answer_illustrate: '',
        
-      }
+      },
+      fileName_a:'',
+      fileName_b:'',
+      fileName_c:'',
+      fileName_d:'',
   };
   },
   methods: {
-      // 更新开关状态
+        // 更新開關狀態
     updateaddSwitch() {
       this.$emit('update-switch', !this.addSwitch);
     },
-    handleFileChange(field, event) {
+    handleFileChange(field, event,fileType) {
       // 當文件選擇時觸發，將文件對象存儲到 formData 中
       this.formData[field] = event.target.files[0];
+
+       // 根據文件類型更新相應的文件名
+       if (fileType === 'question_img_a') {
+        this.fileName_a = this.formData[field].name;
+        console.log(this.fileName_a);
+    } else if (fileType === 'question_img_b') {
+        this.fileName_b = this.formData[field].name;
+        console.log(this.fileName_b);
+      } else if (fileType === 'question_img_c') {
+        this.fileName_c = this.formData[field].name;
+        console.log(this.fileName_c);
+      } else if (fileType === 'question_img_d') {
+        this.fileName_d = this.formData[field].name;
+        console.log(this.fileName_d);
+      }
     },
     // 提交表单数据
     saveQuestion() {
