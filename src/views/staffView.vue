@@ -29,30 +29,36 @@
           :data="currentPageData"
           ref="table"
           class="custom-table"
+          no-data-text="查人員資料"
         >
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
-          <template #status="{ row }">
-            <Switch
-              v-if="auth == 1"
-              size="large"
-              v-model="row.sta_status"
-              :true-value="1"
-              :false-value="0"
-              true-color="#13ce66"
-              false-color="#ff9900"
-              @on-change="switchChange($event, row)"
-            >
-              <template #open>
-                <span>正常</span>
-              </template>
-              <template #close>
-                <span>停權</span>
-              </template>
-            </Switch>
-            <div v-else></div>
+          <template #status="{ row, index }">
+            <template v-if="auth === 1">
+              <Switch
+                v-if="index !== 0"
+                size="large"
+                v-model="row.sta_status"
+                :true-value="1"
+                :false-value="0"
+                true-color="#13ce66"
+                false-color="#ff9900"
+                @on-change="switchChange($event, row)"
+              >
+                <template #open>
+                  <span>正常</span>
+                </template>
+                <template #close>
+                  <span>停權</span>
+                </template>
+              </Switch>
+            </template>
+            <template v-else-if="auth !== 1">
+              <!-- 當auth不等於1時的代碼 -->
+            </template>
           </template>
+
           <template #action="{ row, index }" class="actionArea">
             <Button
               v-if="auth == 1"
@@ -63,14 +69,7 @@
               ><img src="../assets/images/formicon/revise.svg" alt=""
             /></Button>
             <div v-else></div>
-            <Button
-              v-if="auth == 1"
-              type="error"
-              class="trash"
-              size="small"
-              @click="delSta(row, index)"
-              ><img src="../assets/images/formicon/delete.svg" alt=""
-            /></Button>
+
             <div v-else></div
           ></template>
         </Table>
