@@ -453,7 +453,7 @@ export default {
       }
 
       select {
-        padding: 0.5vw 0.5vw;
+        padding: 0 0.2vw;
         background-color: #fff;
         border: 2px #3F3F3F solid;
         width: 100%;
