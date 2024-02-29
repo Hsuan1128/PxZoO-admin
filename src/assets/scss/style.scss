@@ -1,7 +1,6 @@
 //變數
 @use "sass:math";
 @import "base/reset";
-@import "base/var";
 @import "base/color";
 @import "base/font";
 
@@ -18,17 +17,8 @@
 @import "page/backLogin";
 @import "page/home";
 @import "page/staff";
-@import "page/member";
-// @import "page/comment";
-// @import "page/report";
-// @import "page/news";
 @import "page/animal";
-// @import "page/voteActivity";
-// @import "page/votes";
-// @import "page/questions";
-@import "page/tickets"; //有css樣式在裡面
-// @import "page/orders";
+@import "page/tickets";
 @import "page/charts";
+@import "page/notFound";
 
-//套件
-@import "plugin/bootstrap";

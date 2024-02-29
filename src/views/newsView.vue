@@ -7,7 +7,7 @@
         <div class="searchArea">
           <button class="search pcInnerText">查詢</button>
           <div class="inputArea">
-            <input type="text" placeholder="請輸入消息資訊" v-model.trim="searchTerm"/>
+            <input type="text" placeholder="請輸入消息資訊" v-model.trim="searchTerm" />
             <button class="scope">
               <img src="../assets/images/formicon/scope.svg" alt="scope" />
             </button>
@@ -15,20 +15,13 @@
         </div>
       </div>
       <div class="formArea">
-        <Table
-          stripe
-          :columns="columns"
-          :data="data"
-          no-data-text="查無消息資料" 
-          ref="table"
-          class="custom-table"
-        >
+        <Table stripe :columns="columns" :data="data" no-data-text="查無消息資料" ref="table" class="custom-table">
           <template #name="{ row }">
             <strong> {{ row.name }}</strong>
           </template>
           <template #status="{ row }">
-            <Switch  size="large" v-model="row.news_status" :true-value="1" :false-value="0"  true-color="#13ce66"
-            false-color="#ff9900" @on-change="switchChange($event, row)"> 
+            <Switch size="large" v-model="row.news_status" :true-value="1" :false-value="0" true-color="#13ce66"
+              false-color="#ff9900" @on-change="switchChange($event, row)">
               <template #open>
                 <span>上架</span>
               </template>
@@ -38,21 +31,10 @@
             </Switch>
           </template>
           <template #action="{ row, index }">
-            <Button
-              type="primary"
-              class="trash"
-              size="small"
-              style="margin-right: 5px"
-              @click="NewsModification(row)"
-              ><img src="../assets/images/formicon/revise.svg" alt=""
-            /></Button>
-            <Button
-              type="error"
-              class="trash"
-              size="small"
-              @click="remove(index)"
-              ><img src="../assets/images/formicon/delete.svg" alt="" /></Button
-          ></template>
+            <Button type="primary" class="trash" size="small" style="margin-right: 5px"
+              @click="NewsModification(row)"><img src="../assets/images/formicon/revise.svg" alt="" /></Button>
+            <Button type="error" class="trash" size="small" @click="remove(index)"><img
+                src="../assets/images/formicon/delete.svg" alt="" /></Button></template>
         </Table>
         <!-- <template>
           <Page :total="100" />
@@ -60,7 +42,8 @@
       </div>
 
       <div class="pages">
-        <Page class="pcInnerText"  prev-text="|<" next-text=">|" :current="currentPage" :total="total" size="small"  @on-change="handleChangePage" />
+        <Page class="pcInnerText" prev-text="|<" next-text=">|" :current="currentPage" :total="total" size="small"
+          @on-change="handleChangePage" />
       </div>
 
       <div class="add" @click="addSwitch = !addSwitch">
@@ -68,9 +51,9 @@
         <p class="pcInnerText">新增</p>
       </div>
     </div>
-    
+
     <newsrevise v-show="ReviseSwitch" :rowdata="rowdata" :ReviseSwitch="ReviseSwitch"
-      @update-switch="ReviseSwitch = $event"  />
+      @update-switch="ReviseSwitch = $event" />
 
     <newsadd v-show="addSwitch" :addSwitch="addSwitch" @update-switch="addSwitch = $event" />
 
@@ -158,19 +141,19 @@ export default {
           align: "left",
         },
       ],
-      
+
       //全部資訊
       data: [],
-      rowdata:[],
+      rowdata: [],
 
       //新增
-      addSwitch : false,
+      addSwitch: false,
 
       //修改
-      ReviseSwitch:false,
-      
+      ReviseSwitch: false,
+
       //查詢
-      searchTerm:'',
+      searchTerm: '',
 
       //分頁
       total: 0, // 總條數
@@ -225,46 +208,54 @@ export default {
     },
 
     //查詢
-    filterHandle(){
+    filterHandle() {
       axios.get(`${import.meta.env.VITE_API_URL}/newsSearch.php?type=news`, { params: { searchTerm: this.searchTerm } })
-      .then(response => {
-        this.data = response.data;
-        this.total = this.data.length;
-        this.currentPage = 1
-        this.updatedata();
-      })
-      .catch(error => {
-        console.error('搜尋出錯:', error);
-      });
+        .then(response => {
+          if (response.data.errMsg) {
+            this.data = [];
+          } else {
+            this.data = response.data;
+            this.total = this.data.length;
+          }
+          this.updatedata();
+        })
+        .catch(error => {
+          console.error('搜尋出錯:', error);
+        });
     },
 
     //分頁
     handleChangePage(page) {
-     // 當使用者改變當前頁面時，這個函數被呼叫。
+      // 當使用者改變當前頁面時，這個函數被呼叫。
       // page 參數代表使用者所選擇的新頁碼。
       this.currentPage = page;
 
       // 重新從數據源（可能是伺服器或其他地方）獲取新頁碼的資料，以便更新顯示在頁面上。
 
       axios.get(`${import.meta.env.VITE_API_URL}/newsShow.php?type=news`)
-      .then(response => {
-        this.data = response.data; // 假設返回的數據是一個數組
-        this.total = this.data.length;
-        this.updatedata();
-      })
-      .catch(error => {
-        console.error("Error fetching data: ", error);
-      });
+        .then(response => {
+          this.data = response.data; // 假設返回的數據是一個數組
+          this.total = this.data.length;
+          this.updatedata();
+        })
+        .catch(error => {
+          console.error("Error fetching data: ", error);
+        });
     },
     updatedata() {
-     // 這個函數用來更新當前頁面所顯示的資料
+      // 這個函數用來更新當前頁面所顯示的資料
 
       // 計算起始索引 (startIndex) 和結束索引
       // 這些索引表示當前頁面在整個資料陣列中的範圍。
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
-        // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
-      this.data = this.data.slice(startIndex, endIndex);
+      // 從完整資料陣列 (this.orders) 中提取出當前頁面的部分資料。
+      this.data = this.data.slice(startIndex, endIndex).map(item => {
+        return {
+          ...item,
+          news_status: parseInt(item.news_status)
+        }
+      })
     },
 
     //switch
@@ -310,24 +301,25 @@ export default {
   created() {
     // axios.get(`${import.meta.env.VITE_API_URL}/ticketsShow.php`)
     axios.get(`${import.meta.env.VITE_API_URL}/newsShow.php`)
-    .then(response => {
-      this.data = response.data; // 假設返回的數據是一個數組
-      this.total = this.data.length;
-      console.log(this.data);
-      this.updatedata();
-    })
-    .catch(error => {
-      console.error("Error fetching data: ", error);
-    });
+      .then(response => {
+        this.data = response.data; // 假設返回的數據是一個數組
+        this.total = this.data.length;
+        console.log(this.data);
+        this.updatedata();
+      })
+      .catch(error => {
+        console.error("Error fetching data: ", error);
+      });
   },
 
   //查詢
-  watch:{
-    searchTerm(newTerm, oldTerm){
+  watch: {
+    searchTerm() {
+      this.currentPage = 1
       this.filterHandle()
     }
   },
-  
+
 };
 </script>
 <style>

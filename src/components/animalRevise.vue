@@ -6,7 +6,7 @@
                 <div class="Revise_content_align">
                     <label for="animal_species" class="pcInnerText">動物種類</label>
                     <input type="text" maxlength="10"
-                    class="revise_text"  
+                    class="revise_text pcInnerText"  
                     v-model="editData.animalSpecies">
                 </div>
     
@@ -14,25 +14,25 @@
                     <label for="animal_name" 
                     class="pcInnerText">動物名稱</label>
                     <input type="text" maxlength="10"
-                    class="revise_text"
+                    class="revise_text pcInnerText"
                     v-model="editData.animalName">
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="category_name" 
                     class="pcInnerText">館別名稱</label>
-                    <select name="category_name" 
+                    <select name="category_name" class="pcInnerText"
                     v-model="editData.categoryName">
-                    <option v-for="category in categoriesName">{{category}}</option>
+                    <option class="pcInnerText" v-for="category in categoriesName">{{category}}</option>
                     </select> 
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="location_name" class="pcInnerText">館別位置</label>
-                    <select name="location_name" 
+                    <select name="location_name" class="pcInnerText" 
                     v-model="editData.locationName">
-                    <option :value="rowdata.location_name">目前位置：{{ rowdata.location_name }}</option>
-                    <option v-for="location in selectlocation">{{location.location_name}}</option>
+                    <option class="pcInnerText" :value="rowdata.location_name">目前位置：{{ rowdata.location_name }}</option>
+                    <option class="pcInnerText" v-for="location in selectlocation">{{location.location_name}}</option>
                     </select> 
                 </div>
     
@@ -45,35 +45,35 @@
     
                 <div class="Revise_content_align">
                     <label for="animal_lifespan" class="pcInnerText">平均壽命</label>
-                    <textarea class="Revise_textarea" 
+                    <textarea class="Revise_textarea pcInnerText" 
                     maxlength="100" rows="7" 
                     v-model="editData.animalLifespan"></textarea>
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="animal_area" class="pcInnerText">分布地區</label>
-                    <textarea class="Revise_textarea" 
+                    <textarea class="Revise_textarea pcInnerText" 
                     maxlength="100" rows="7"  
                     v-model="editData.animalArea"></textarea>
                 </div>
 
                 <div class="Revise_content_align">
-                    <label for="animal_food" 
-                    class="pcInnerText">食性</label>
-                    <textarea class="Revise_textarea" 
+                    <label for="animal_food" class="pcInnerText">食性</label>
+                    <textarea class="Revise_textarea pcInnerText" 
                     maxlength="150" rows="9" v-model="editData.animalFood"></textarea>
                 </div>
 
                 <div class="Revise_content_align">
                     <label for="animal_features" class="pcInnerText">特徵</label>
-                    <textarea class="Revise_textarea" 
+                    <textarea class="Revise_textarea pcInnerText" 
                     maxlength="150" rows="9" 
                     v-model="editData.animalFeatures"></textarea>
                 </div>
 
                 <div class="Revise_content_align">
-                    <label for="animal_description" class="pcInnerText">介紹</label>
-                    <textarea class="Revise_textarea" v-model="editData.animalDescription"></textarea>
+                    <label for="animal_description" 
+                    class="pcInnerText">介紹</label>
+                    <textarea class="Revise_textarea pcInnerText" v-model="editData.animalDescription"></textarea>
                 </div>
 
                 <div class="Revise_content_align">
@@ -277,10 +277,10 @@ export default {
         axios.get(`${import.meta.env.VITE_API_URL}/locationShow.php`)
         .then(response => {
         this.mysqlLocation = response.data; // 假設返回的數據是一個數組
-        console.log(this.mysqlLocation)
+        // console.log(this.mysqlLocation)
         })
         .catch(error => {
-        console.error("Error fetching data: ", error);
+        // console.error("Error fetching data: ", error);
         });
     },
     methods: {
@@ -394,7 +394,7 @@ export default {
                     location.reload();
                 })
                 .catch(error => {
-                    console.error('更新錯誤:', error);
+                    // console.error('更新錯誤:', error);
                 });
             } else {
                 this.updateReviseSwitch();
@@ -410,7 +410,6 @@ export default {
             switch (field) {
                 case 'animal_pic_a':
                     this.fileNamea = this.editFiles[field].name;
-                    
                     break;
                 case 'animal_pic_b':
                     this.fileNameb = this.editFiles[field].name;

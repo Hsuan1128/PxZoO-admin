@@ -52,6 +52,7 @@ export default {
   }
 };
 </script>
+
 <style lang="scss">
 .ivu-switch-large {
   width: 66px;

@@ -1,0 +1,74 @@
+.notFound {
+  height: 100vh;
+  width: 100%;
+  margin-left: 200px;
+  width: calc(100% - 200px);
+  max-width: 1920px;
+  background-color: $primaryColorGreen;
+  background-image: url("/src/assets/images/404/grid.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: $mainTextColor;
+  
+  @media (width <= 1024px) {
+    height: 90vh;
+  }
+  @media (width <= 768px) {
+    height: 80vh;
+  }
+  .errorTitle {
+    position: absolute;
+    top: 12vw;
+    right: 36.5vw;
+    text-align: center;
+    color: $primaryColorYellow;
+    @media (width <= 1024px) {
+      top: 40vw;
+    }
+    @media (width <= 768px) {
+      top: 40vw;
+      right: 35%;
+    }
+  }
+  .cautionSign {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    bottom: 0;
+    right: 31.3vw;
+    @media (width <= 768px) {
+      width: 150px;
+      height: 150px;
+    }
+  }
+  .errorChicken {
+    position: absolute;
+    width: 100px;
+    height: 120px;
+    bottom: 0;
+    left: 19.5vw;
+    @media (width <= 768px) {
+      width: 50px;
+      height: 60px;
+      left: 15vw;
+    }
+  }
+  .errorAlpaca {
+    position: absolute;
+    width: 180px;
+    height: 220px;
+    bottom: 0;
+    right: 16vw;
+    @media (width <= 768px) {
+      width: 90px;
+      height: 110px;
+      right: 10vw;
+    }
+  }
+}

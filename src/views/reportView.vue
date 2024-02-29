@@ -72,7 +72,7 @@ export default {
         {
           title: "檢舉人編號",
           key: "mem_id",
-          width: 120,
+          width: 100,
           align: "left",
         },
         {
@@ -84,13 +84,13 @@ export default {
         {
           title: "檢舉留言編號",
           key: "com_id",
-          width: 130,
+          width: 100,
           align: "left",
         },
         {
           title: "檢舉原因",
           key: "report_text",
-          // width: 400,
+          width: 400,
           align: "left",
         },
         {
@@ -159,15 +159,18 @@ export default {
     //查詢
     filterHandle() {
       axios.get(`${import.meta.env.VITE_API_URL}/reportSearch.php?type=report`, { params: { searchTerm: this.searchTerm } })
-        .then(response => {
+      .then(response => {
+        if (response.data.errMsg){
+          this.data = [];
+        }else{
           this.data = response.data;
           this.total = this.data.length;
-          this.currentPage = 1
-          this.updatedata();
-        })
-        .catch(error => {
-          console.error('搜尋出錯:', error);
-        });
+        }
+        this.updatedata();
+      })
+      .catch(error => {
+        console.error('搜尋出錯:', error);
+      });
     },
 
     //分頁
@@ -220,8 +223,9 @@ export default {
 
   watch: {
     //查詢
-    searchTerm(newTerm, oldTerm) {
+    searchTerm() {
       this.filterHandle()
+      this.currentPage = 1
     }
   },
 };

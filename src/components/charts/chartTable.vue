@@ -1,7 +1,11 @@
 <template>
 
   <table>
-    <caption>{{title}}</caption>
+    <caption>
+      {{title}}
+      <span>(單位: {{measure}})</span>
+    </caption>
+
     <thead>
       <tr>
         <th>統計日期</th>
@@ -13,7 +17,6 @@
         <th :class="'option'+i">{{ item }}</th>
         <td v-for="(dataItem, index) in data[i]" :key="index">
           <span> {{ dataItem }} </span> 
-          {{ measure }}
         </td>
       </tr>
     </tbody>
@@ -37,15 +40,15 @@ export default {
   },
   mounted(){
     if(this.frame[0].includes("金額")){
-        this.title='銷售金額';
-        this.measure='元';
-      }else if(this.frame[0].includes("票券")) {
-        this.title='入園人數';
-        this.measure='人';
-      }else{
-        this.title='票種統計';
-        this.measure='張';
-      }
+      this.title='銷售金額';
+      this.measure='元';
+    }else if(this.frame[0].includes("票券")) {
+      this.title='入園人數';
+      this.measure='人';
+    }else{
+      this.title='票種統計';
+      this.measure='張';
+    }
   },
 }
 </script>

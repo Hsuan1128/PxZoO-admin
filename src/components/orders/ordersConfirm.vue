@@ -2,15 +2,15 @@
   <div class="confirm_bg">
     <div class="confirm">
       <div class="confirm_content">
-        <p class="pcInnerText">訂單資訊有變更，是否儲存</p>
+        <p class="pcInnerText">訂單資訊有變更，是否繼續編輯</p>
         <div class="confirm_btns">
-          <button class="defaultBtn pcInnerText" @click="confirmSave">
-            儲存
-            <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
+          <button class="defaultBtn pcInnerText" @click="keepEdit">
+            編輯
+            <img src="@/assets/images/login/icon/btnArrow.svg" alt="btn_decoration" />
           </button>
           <button class="defaultBtn pcInnerText" @click="resetAlterStatus">
-            取消
-            <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
+            返回列表
+            <img src="@/assets/images/login/icon/btnArrow.svg" alt="btn_decoration" />
           </button>
         </div>
       </div>
@@ -23,18 +23,13 @@
 
 <script>
 export default {
-  props: {},
-  data() {
-    return {};
-  },
   methods: {
-    confirmSave() {
-      this.$emit('confirmSave');
+    keepEdit() {
+      this.$emit('keepEdit');
     },
     resetAlterStatus() {
       this.$emit('newAlterStatus');
     },
   },
-  components: {},
 };
 </script>

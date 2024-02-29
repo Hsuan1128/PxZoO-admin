@@ -51,17 +51,17 @@
       <div class="Revise_btns">
         <button v-show="ordStatus && this.alterStatus !== false" class="defaultBtn pcInnerText" @click="orderSave">
           儲存
-          <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
+          <img src="@/assets/images/login/icon/btnArrow.svg" alt="btn_decoration" />
         </button>
 
         <button class="defaultBtn pcInnerText" @click="closeRevise">
           返回列表
-          <img src="@/assets/images/login/icon/btnArrow.svg" alt="" />
+          <img src="@/assets/images/login/icon/btnArrow.svg" alt="btn_decoration" />
         </button>
       </div>
     </div>
 
-    <ordersConfirm v-show="openConfirm" @confirmSave="orderSave" @newAlterStatus="updateAlterStatus" />
+    <ordersConfirm v-show="openConfirm" @keepEdit="closeConfirm" @newAlterStatus="updateAlterStatus" />
 
   </div>
 </template>
@@ -72,8 +72,7 @@ import ordersConfirm from "@/components/orders/ordersConfirm.vue"
 
 export default {
   components: {
-    ordersSwitch,
-    ordersConfirm,
+    ordersSwitch, ordersConfirm,
   },
   props: {
     orderData: {
@@ -109,6 +108,9 @@ export default {
       this.alterStatus = false;
       this.$emit('closeRevise', false);
     },
+    closeConfirm() {
+      this.openConfirm = false;
+    }
   },
   computed: {
     formattedOrderDetailQty() {
@@ -133,7 +135,6 @@ export default {
       return `${this.orderData.sta_pos} ${this.orderData.ord_altertime} 更新`;
     },
   },
-  created(){},
 };
 </script>
 

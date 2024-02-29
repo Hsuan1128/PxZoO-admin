@@ -11,7 +11,7 @@
               入園人數
               <span>{{ peopleOpen ? "▼" : "▲" }}</span>
             </div>
-            <p><span> {{ this.people[2][2] }} </span> 人</p>
+            <p><span> {{ formatPeople[2][2] }} </span> 人</p>
           </section>
           
           <section :class="{click: tiqtyOpen}" @click="toggle('tiqty')">
@@ -19,7 +19,7 @@
               票種統計
               <span>{{ tiqtyOpen ? "▼" : "▲" }}</span>
             </div>
-            <p><span> {{ this.ticket[5][2] }} </span> 張</p>
+            <p><span> {{ formatTicket[5][2] }} </span> 張</p>
           </section>
 
           <section :class="{click: moneyOpen}" @click="toggle('money')">
@@ -27,23 +27,23 @@
               銷售金額
               <span>{{ moneyOpen ? "▼" : "▲" }}</span>
             </div>
-            <p><span> {{ this.money[2][2] }} </span> 元</p>
+            <p><span> {{ formatMoney[2][2] }} </span> 元</p>
           </section>
       </div>
       <div class="formArea chartsBody">
 
         <section class="people" v-if="peopleOpen">
-          <chartTable :labels="labels" :data="people" :frame="peopleFrame" />
+          <chartTable :labels="labels" :data="formatPeople" :frame="peopleFrame" />
           <peopleChart :labels="labels" :data="people" :frame="peopleFrame"/>
         </section>
 
         <section class="tiqty" v-if="tiqtyOpen">
-          <chartTable :labels="labels" :data="ticket" :frame="ticketFrame" />
+          <chartTable :labels="labels" :data="formatTicket" :frame="ticketFrame" />
           <ticketChart :labels="labels" :data="ticket" :frame="ticketFrame"/>
         </section>
 
         <section class="money" v-if="moneyOpen">
-          <chartTable :labels="labels" :data="money" :frame="moneyFrame" />
+          <chartTable :labels="labels" :data="formatMoney" :frame="moneyFrame" />
           <moneyChart :labels="labels" :data="money" :frame="moneyFrame"/>
         </section>
 
@@ -75,8 +75,11 @@ export default {
       moneyOpen: false,
       loaded: false,
       people: {},
+      formatPeople:{},
       ticket: {},
+      formatTicket:{},
       money: {},
+      formatMoney:{},
       labels: ["上上月", "上月", "本月"],
       peopleFrame: ["數位票券", "實體票券", "人數總計"],
       ticketFrame: ["成人票", "學生票", "團體票", "兒童票", "愛心票", "票數總計"],
@@ -87,11 +90,14 @@ export default {
     async fetchPeopleData() {
       try{ // 取得入園人數資料
         let response = await axios.get(`${import.meta.env.VITE_API_URL}/chartPeople.php`);
+        let data = this.formatFetchData(response.data);
 
-        this.people=this.formatFetchData(response.data);
+        this.people = JSON.parse(JSON.stringify(data));
+        // 使用 JSON.parse 和 JSON.stringify 實現深拷貝
         // 回傳資料順序: digitalTicket、entityTicket、peopleTotal 
 
-        console.log('people', this.people);
+        this.formatPeople = this.formatNumber(data);
+        // 將數字千分位格式化
 
       }catch(error){
         console.error('this', error);
@@ -100,9 +106,14 @@ export default {
     async fetchTicketData() {
       try{ // 取得票種銷售資料
         let response = await axios.get(`${import.meta.env.VITE_API_URL}/chartTicket.php`);
+        let data = this.formatFetchData(response.data);
 
-        this.ticket=this.formatFetchData(response.data);
+        this.ticket=JSON.parse(JSON.stringify(data));
+        // 使用 JSON.parse 和 JSON.stringify 實現深拷貝
         // 回傳資料順序: 成人票、學生票、團體票、兒童票、愛心票、總計
+
+        this.formatTicket=this.formatNumber(data);
+        // 將數字千分位格式化
 
       }catch(error){
         console.error(error);
@@ -111,9 +122,14 @@ export default {
     async fetchMoneyData() {
       try{ // 取得金額統計資料
         let response = await axios.get(`${import.meta.env.VITE_API_URL}/chartMoney.php`);
+        let data = this.formatFetchData(response.data);
 
-        this.money=this.formatFetchData(response.data);
+        this.money=JSON.parse(JSON.stringify(data));
+        // 使用 JSON.parse 和 JSON.stringify 實現深拷貝
         // 回傳資料順序: tiprice、couprice、payprice
+
+        this.formatMoney=this.formatNumber(data);
+        // 將數字千分位格式化
 
         this.loaded=true;
 
@@ -138,6 +154,18 @@ export default {
 
       return sortData;
 
+    },
+    formatNumber(payload){
+      if(!Array.isArray(payload)){
+        payload= Object.values(payload);
+      }
+
+      for (let i = 0; i < payload.length; i++) {
+        for (let j = 0; j < payload[i].length; j++) {
+          payload[i][j]=payload[i][j].toLocaleString('zh-TW', { useGrouping: true });
+        }
+      }
+      return payload;
     },
     toggle(chart){
       this[`${chart}Open`] = true; //模板字面量
