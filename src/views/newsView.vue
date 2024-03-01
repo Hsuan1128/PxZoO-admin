@@ -189,10 +189,7 @@ export default {
       const confirmed = window.confirm("確定要刪除此資料嗎?");
       if (!confirmed) {
         return; //不執行刪除
-      }
-
-      // 向後端發送 DELETE 請求
-      axios.delete(`${import.meta.env.VITE_API_URL}/newsDelete.php`, {
+      }axios.delete(`${import.meta.env.VITE_API_URL}/newsDelete.php`, {
         data: { id: news_id } // 傳遞要刪除的資料列的 ID
       })
         .then(response => {

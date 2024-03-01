@@ -30,7 +30,8 @@
         </template>
         <template #close>
           <span>下架</span>
-        </template></Switch>
+        </template>
+      </Switch>
           </template>
           <template #action="{ row, index }">
             <Button type="primary" class="trash" size="small" style="margin-right: 5px"
