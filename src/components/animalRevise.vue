@@ -240,6 +240,7 @@ export default {
                 animalName: '',
 
                 categoryName: '',
+                oldLocationName: '',
                 locationName: '',
                 animalEnterdate: '',
 
@@ -303,6 +304,7 @@ export default {
             for (let key in this.editData) {
                 // console.log(key, this.editData)
                 formData.append(key, this.editData[key]);
+                // console.log(this.editData[key]);
             }
             for (let key in this.editFiles) {
                 formFile.append(key, this.editFiles[key]);
@@ -458,6 +460,9 @@ export default {
                     this.editData.animalFood = newVal.animal_food
                     this.editData.animalFeatures = newVal.animal_features
                     this.editData.animalDescription = newVal.animal_description
+                    
+                    
+                    this.editData.oldLocationName = newVal.location_name;
                     
 
                     this.editFiles.animal_pic_a = newVal.animal_pic_a
