@@ -35,10 +35,8 @@ export default {
   methods:{
     bindStatus(value){
       if(value){
-        console.log("if");
         this.$emit('newStatus', false);
       }else{
-        console.log("else");
         this.$emit('newStatus', this.reverseStatus);
       }
     },

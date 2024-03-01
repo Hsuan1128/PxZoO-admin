@@ -40,7 +40,7 @@
 </template>
   
 <script>
-import { getStaId } from '@/stores/getStaId.js';
+import { getStaId } from '@/assets/js/getStaId.js';
 import axios from 'axios';
 import sidebar from "@/components/sidebar.vue";
 import grass from "@/components/grass.vue";
@@ -154,9 +154,6 @@ export default {
           this.orders = [];
         }else{
           this.orders = response.data;
-          console.log('this',this.orders);
-          // console.log('typeof ',typeof this.orders[0].ord_payprice);
-          // this.orders.ord_payprice
           for(var key in this.orders){
             let order = this.orders[key];
             
@@ -186,12 +183,10 @@ export default {
       })
         .then(response => {
           this.orderDetail = response.data;
-          
           // for(var key in this.orderDetail){
           //   let order = this.orderDetail[key];
           //   order.allqty=this.formatNumber(order.allqty);
           // }
-          // console.log(this.orderDetail);
         })
         .catch(error => {
           console.error("Error fetching data: ", error);

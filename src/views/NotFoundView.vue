@@ -25,19 +25,10 @@
 
 <script>
 import sidebar from "@/components/sidebar.vue";
-import { goHome } from "@/assets/js/common.js";
 
 export default {
   components: {
     sidebar,
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    useGoHome() {
-      goHome(this);
-    },
   },
 };
 </script>

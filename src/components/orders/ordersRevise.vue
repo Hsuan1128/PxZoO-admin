@@ -95,7 +95,7 @@ export default {
       this.alterStatus = status;
     },
     orderSave() {
-      this.$emit('newDetail', 1, this.alterStatus, false);
+      this.$emit('newDetail', this.alterStatus, false);
     },
     closeRevise() {
       if (this.alterStatus !== false && this.orderData.ord_altertime === null) {
