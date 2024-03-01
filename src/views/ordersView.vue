@@ -158,9 +158,9 @@ export default {
             let order = this.orders[key];
             
             order.allqty=this.formatNumber(parseInt(order.allqty));
-            order.ord_tiprice=this.formatNumber(order.ord_tiprice);
-            order.ord_couprice=this.formatNumber(order.ord_couprice);
-            order.ord_payprice=this.formatNumber(order.ord_payprice);
+            order.ord_tiprice=this.formatNumber(parseInt(order.ord_tiprice));
+            order.ord_couprice=this.formatNumber(parseInt(order.ord_couprice));
+            order.ord_payprice=this.formatNumber(parseInt(order.ord_payprice));
             if(order.cou_name===null){
               order.cou_name='不使用優惠券';
             }
