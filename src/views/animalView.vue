@@ -113,6 +113,12 @@ export default {
           // width: 160,
           align: "left",
         },
+        {
+          title: "動物票數",
+          key: "animal_vote",
+          // width: 160,
+          align: "left",
+        },
 
         {
           title: "狀態",
