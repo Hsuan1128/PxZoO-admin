@@ -113,12 +113,6 @@ export default {
           // width: 160,
           align: "left",
         },
-        {
-          title: "動物票數",
-          key: "animal_vote",
-          // width: 160,
-          align: "left",
-        },
 
         {
           title: "狀態",
@@ -260,7 +254,7 @@ export default {
     AnimalModification(row) {
       this.ReviseSwitch = !this.ReviseSwitch
       this.rowdata = row;
-      // console.log(this.rowdata)
+      // console.log(this.rowdata.animai_pic_a)
     }
   },
   components: {
