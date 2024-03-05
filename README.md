@@ -3,7 +3,7 @@ PxZoO 後台
 
 ![image](https://hackmd.io/_uploads/HyMALfNpp.png)
 
-- [PxZoO 後台](#pxzoo-後台)
+- [README 目錄](#pxzoo-後台)
   - [專案架構](#專案架構)
   - [前台介紹](#前台介紹)
   - [系統說明](#系統說明)
@@ -26,20 +26,19 @@ PxZoO 後台
 | - api    | PHP 內容       | [API](https://github.com/yhkekeke/PxZoO_API)  |
 | - img    | 資料庫的圖片內容 | 見 API 的 img 資料夾  |
 
-:::
 
 ## 前台介紹
 * `管理員` 的權限如下:
     1. 「後台管理」瀏覽、查詢所有管理員資料。
     2. 「會員管理」瀏覽、查詢所有會員資料，並修改處理狀態（正常or停權）。
-    3. 「留言管理|會員留言」瀏覽、查詢所有留言資料，並修改處理狀態（上架or下架）。
-    4. 「留言管理|檢舉留言」瀏覽、查詢所有檢舉資料，並瀏覽檢舉明細、修改處理狀態（未審核or審核通過or審核未通過）。
+    3. 「留言管理 | 會員留言」瀏覽、查詢所有留言資料，並修改處理狀態（上架or下架）。
+    4. 「留言管理 | 檢舉留言」瀏覽、查詢所有檢舉資料，並瀏覽檢舉明細、修改處理狀態（未審核or審核通過or審核未通過）。
     5. 「消息管理」瀏覽、查詢、新增、刪除、修改所有消息資料，並修改處理狀態（上架or下架）。
     6. 「動物管理」瀏覽、查詢、新增、修改所有消息資料，並修改處理狀態（上架or下架）。
     7. 「學堂管理」瀏覽、查詢、新增、刪除、修改所有學堂資料，並修改處理狀態（上架or下架）。
     8. 「門票管理」瀏覽、修改所有門票資料。
-    9. 「銷售管理|購票訂單」瀏覽、查詢所有訂單資料，可瀏覽訂單明細，並修改處理狀態（已用票or已取票）、紀錄更新情形。
-    10. 「銷售管理|銷售統計」瀏覽近 3 個月入園人數、票種統計、銷售金額之統計明細與報表。
+    9. 「銷售管理 | 購票訂單」瀏覽、查詢所有訂單資料，可瀏覽訂單明細，並修改處理狀態（已用票or已取票）、紀錄更新情形。
+    10. 「銷售管理 | 銷售統計」瀏覽近 3 個月入園人數、票種統計、銷售金額之統計明細與報表。
 * `超級管理員` 擁有 `管理員` 的所有權限，還可以在「後台管理」修改管理員狀態（正常or停權）、編輯自己與其他管理員資料、新增管理員。
 
 ## 系統說明
@@ -134,6 +133,6 @@ npm run dev
 
 ## 其他介紹資料
 * [專案簡報](https://docs.google.com/spreadsheets/d/1d7xajKl-_hGmBGOUZ3mqe0n8COaip61Ku1Xc3MEIni4/edit#gid=1055140317&range=E5)
-* [專案 Demo 影片]() (製作中，待更新)
+* [專案 Demo 影片](https://www.youtube.com/watch?v=wMNHY-WFYpA&ab_channel=%E7%B7%AF%E8%82%B2TibaMe%E5%B0%B1%E6%A5%AD%E9%A4%8A%E6%88%90%E7%8F%AD)
 * [專案技術文件](https://drive.google.com/drive/folders/1dhqDJZqMZtEm1SKmbbDQ95awtH3yeofr)
 * [專案 UI/UX 設計稿](https://www.figma.com/file/YCfP69MYr9OBUSBmMqePIr/%E7%B7%AF%E8%82%B2-%7C-%E5%9C%98%E9%AB%94%E5%B0%88%E9%A1%8C-6-PxZoO?type=design&node-id=515%3A9347&mode=design&t=DTzDguwhyjsUlTiD-1)
