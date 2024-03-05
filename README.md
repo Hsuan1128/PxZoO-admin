@@ -27,7 +27,7 @@ PxZoO 後台
 | - img    | 資料庫的圖片內容 | 見 API 的 img 資料夾  |
 
 
-## 前台介紹
+## 後台介紹
 * `管理員` 的權限如下:
     1. 「後台管理」瀏覽、查詢所有管理員資料。
     2. 「會員管理」瀏覽、查詢所有會員資料，並修改處理狀態（正常or停權）。
@@ -109,11 +109,11 @@ git clone https://github.com/Hsuan1128/PxZoO-admin.git
 cd PxZoO-admin
 ```
 
-1. 前台安裝套件
+1. 後台安裝套件
 ```sh
 npm install
 ```
-1. 運行前台專案
+1. 運行後台專案
 ```sh
 npm run dev
 ```
