@@ -85,9 +85,9 @@ PxZoO 後台
 | - stores | pinia 檔案放置處  |
 | - views | 畫面放置處     |
 | - assets   | 靜態資源放置處  |
-| ---- images | 圖片放置處      |
-| ---- js     | 共用 .js 放置處 |
-| ---- scss   | scss 檔案放置處 
+| -- images | 圖片放置處      |
+| -- js     | 共用 .js 放置處 |
+| -- scss   | scss 檔案放置處 
 
 ## 測試帳號密碼
 * [專案正式上線網址](https://tibamef2e.com/chd104/g4/)
@@ -96,7 +96,7 @@ PxZoO 後台
 密碼： PxZoOexample
 ```
 
-後台需要登入才能看到內容。
+* 後台需要登入才能看到內容。
 
 ## 在 Local 端的安裝＆運行步驟
 1. 取得後台專案
